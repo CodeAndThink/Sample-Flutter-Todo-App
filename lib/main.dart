@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/todo/todo_screen.dart';
+import 'package:todo_app/views/auth/login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'configs/configs.dart';
 
@@ -30,7 +30,7 @@ class MainApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       home: const Scaffold(
         body: Center(
-          child: TodoScreen(),
+          child: LoginScreen(),
         ),
       ),
     );

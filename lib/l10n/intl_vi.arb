@@ -1,6 +1,15 @@
 {
   "@@locale": "vi",
 
+  "loginScreenTitle": "Đăng nhập",
+  "loginButtonTitle": "Đăng nhập",
+  "registerButtonTitle": "Đăng ký",
+  "usernameHint" : "Username",
+  "passwordHint" : "Password",
+
+  "registerScreenTitle": "Đăng ký",
+  "repasswordHint" : "Password",
+
   "todoScreenTitle" : "Danh sách cần làm",
   "addNewTaskButtonTitle" : "Thêm nhiệm vụ",
 

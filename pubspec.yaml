@@ -39,3 +39,5 @@ flutter:
   - assets/icons/note.svg
   - assets/icons/cele.svg
   - assets/icons/back.svg
+  - assets/icons/selectDate.svg
+  - assets/icons/selectTime.svg

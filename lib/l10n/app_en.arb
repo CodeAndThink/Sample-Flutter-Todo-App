@@ -1,6 +1,15 @@
 {
   "@@locale": "en",
 
+  "loginScreenTitle": "Login",
+  "loginButtonTitle": "Login",
+  "registerButtonTitle": "Register",
+  "usernameHint" : "Username",
+  "passwordHint" : "Password",
+
+  "registerScreenTitle": "Register",
+  "repasswordHint" : "Password",
+
   "todoScreenTitle" : "My Todo List",
   "addNewTaskButtonTitle" : "Add New Task",
 

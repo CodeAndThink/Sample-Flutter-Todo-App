@@ -34,6 +34,11 @@ class AppTheme {
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
+            bodyMedium: TextStyle(
+                fontSize: 16,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w400,
+                color: Colors.black),
             bodySmall: TextStyle(
                 fontSize: 14,
                 fontStyle: FontStyle.normal,
@@ -86,6 +91,11 @@ class AppTheme {
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
+            bodyMedium: TextStyle(
+                fontSize: 16,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
             bodySmall: TextStyle(
                 fontSize: 14,
                 fontStyle: FontStyle.normal,
