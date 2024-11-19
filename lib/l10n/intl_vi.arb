@@ -1,0 +1,22 @@
+{
+  "@@locale": "vi",
+
+  "todoScreenTitle" : "Danh sách cần làm",
+  "addNewTaskButtonTitle" : "Thêm nhiệm vụ",
+
+  "saveButtonTitle" : "Lưu",
+
+  "taskTitleLabel" : "Tên nhiệm vụ",
+  "taskHint" : "Tên nhiệm vụ",
+
+  "categoryLabel" : "Thể loại",
+
+  "dateLabel" : "Ngày",
+  "dateHint" : "Ngày",
+
+  "timeLabel" : "Thời gian",
+  "timeHint" : "Thời gian",
+
+  "notesLabel" : "Ghi chú",
+  "notesHint" : "Ghi chú"
+}

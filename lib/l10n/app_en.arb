@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+
+  "todoScreenTitle" : "My Todo List",
+  "addNewTaskButtonTitle" : "Add New Task",
+
+  "saveButtonTitle" : "Save",
+
+  "taskTitleLabel" : "Task Title",
+  "taskHint" : "Task Title",
+
+  "categoryLabel" : "Category",
+
+  "dateLabel" : "Date",
+  "dateHint" : "Date",
+
+  "timeLabel" : "Time",
+  "timeHint" : "Time",
+
+  "notesLabel" : "Notes",
+  "notesHint" : "Notes"
+}
