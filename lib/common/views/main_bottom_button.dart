@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MainBottomButton extends StatelessWidget {
-  const MainBottomButton({super.key, required this.ontap, required this.buttonLabel});
+  const MainBottomButton(
+      {super.key, required this.ontap, required this.buttonLabel});
   final VoidCallback ontap;
   final String buttonLabel;
 
@@ -12,16 +13,16 @@ class MainBottomButton extends StatelessWidget {
       style: ButtonStyle(
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(28),
-              )),
-          backgroundColor: WidgetStatePropertyAll(
-              Theme.of(context).colorScheme.primary)),
+            borderRadius: BorderRadius.circular(28),
+          )),
+          backgroundColor:
+              WidgetStatePropertyAll(Theme.of(context).colorScheme.primary)),
       child: Text(
         buttonLabel,
         style: Theme.of(context)
             .textTheme
             .headlineMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.surface),
+            ?.copyWith(color: Colors.white),
       ),
     );
   }

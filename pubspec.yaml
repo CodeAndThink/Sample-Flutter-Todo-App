@@ -18,6 +18,8 @@ dependencies:
     sdk: flutter
   intl: ^0.19.0
   flutter_svg: ^2.0.14
+  validators: ^3.0.0
+  skeletonizer: ^1.4.2
 
 flutter_launcher_icons:
   android: true
@@ -41,3 +43,6 @@ flutter:
   - assets/icons/back.svg
   - assets/icons/selectDate.svg
   - assets/icons/selectTime.svg
+  - assets/icons/lang.svg
+  - assets/icons/signout.svg
+  - assets/gifs/loading.gif

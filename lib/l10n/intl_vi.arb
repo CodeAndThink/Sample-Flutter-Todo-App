@@ -1,31 +1,191 @@
 {
   "@@locale": "vi",
-
+  "ok": "OK",
+  "@ok": {
+    "description": "Nhãn cho hành động xác nhận"
+  },
+  "cancel": "Hủy",
+  "@cancel": {
+    "description": "Nhãn cho hành động hủy bỏ"
+  },
+  "apply": "Áp dụng",
+  "@apply": {
+    "description": "Nhãn cho hành động áp dụng thay đổi"
+  },
+  "back": "Quay lại",
+  "@back": {
+    "description": "Nhãn cho hành động quay lại màn hình trước"
+  },
+  "error": "Lỗi",
+  "@error": {
+    "description": "Thông báo lỗi chung"
+  },
+  "success": "Thành công",
+  "@success": {
+    "description": "Thông báo thành công chung"
+  },
+  "completed" : "Hoàn thành",
+  "@completed": {
+    "description": "Nhãn cho section hoàn thành"
+  },
   "loginScreenTitle": "Đăng nhập",
+  "@loginScreenTitle": {
+    "description": "Tiêu đề cho màn hình đăng nhập"
+  },
   "loginButtonTitle": "Đăng nhập",
+  "@loginButtonTitle": {
+    "description": "Nhãn cho nút đăng nhập"
+  },
   "registerButtonTitle": "Đăng ký",
-  "usernameHint" : "Username",
-  "passwordHint" : "Password",
-
+  "@registerButtonTitle": {
+    "description": "Nhãn cho nút đăng ký"
+  },
+  "usernameHint": "Username",
+  "@usernameHint": {
+    "description": "Gợi ý cho trường nhập tên người dùng"
+  },
+  "passwordHint": "Password",
+  "@passwordHint": {
+    "description": "Gợi ý cho trường nhập mật khẩu"
+  },
+  "loginSuccess": "Đăng nhập thành công!",
+  "@loginSuccess": {
+    "description": "Thông báo hiển thị khi đăng nhập thành công"
+  },
+  "loginFailure": "Đăng nhập thất bại!",
+  "@loginFailure": {
+    "description": "Thông báo hiển thị khi đăng nhập thất bại"
+  },
+  "registerSuccess": "Đăng ký thành công!",
+  "@registerSuccess": {
+    "description": "Thông báo hiển thị khi đăng ký thành công"
+  },
+  "registerFailure": "Đăng ký thất bại!",
+  "@registerFailure": {
+    "description": "Thông báo hiển thị khi đăng ký thất bại"
+  },
   "registerScreenTitle": "Đăng ký",
-  "repasswordHint" : "Password",
-
-  "todoScreenTitle" : "Danh sách cần làm",
-  "addNewTaskButtonTitle" : "Thêm nhiệm vụ",
-
-  "saveButtonTitle" : "Lưu",
-
-  "taskTitleLabel" : "Tên nhiệm vụ",
-  "taskHint" : "Tên nhiệm vụ",
-
-  "categoryLabel" : "Thể loại",
-
-  "dateLabel" : "Ngày",
-  "dateHint" : "Ngày",
-
-  "timeLabel" : "Thời gian",
-  "timeHint" : "Thời gian",
-
-  "notesLabel" : "Ghi chú",
-  "notesHint" : "Ghi chú"
+  "@registerScreenTitle": {
+    "description": "Tiêu đề cho màn hình đăng ký"
+  },
+  "repasswordHint": "Password",
+  "@repasswordHint": {
+    "description": "Gợi ý cho trường nhập lại mật khẩu"
+  },
+  "todoScreenTitle": "Danh sách cần làm",
+  "@todoScreenTitle": {
+    "description": "Tiêu đề cho màn hình danh sách cần làm"
+  },
+  "addNewTaskButtonTitle": "Thêm nhiệm vụ",
+  "@addNewTaskButtonTitle": {
+    "description": "Nhãn cho nút thêm nhiệm vụ mới"
+  },
+  "addNewTaskScreenTitle": "Thêm nhiệm vụ",
+  "@addNewTaskScreenTitle": {
+    "description": "Tiêu đề cho màn hình thêm nhiệm vụ mới"
+  },
+  "saveButtonTitle": "Lưu",
+  "@saveButtonTitle": {
+    "description": "Nhãn cho nút lưu thay đổi"
+  },
+  "taskTitleLabel": "Tên nhiệm vụ",
+  "@taskTitleLabel": {
+    "description": "Nhãn cho trường nhập tiêu đề nhiệm vụ"
+  },
+  "taskHint": "Tên nhiệm vụ",
+  "@taskHint": {
+    "description": "Gợi ý cho trường nhập tiêu đề nhiệm vụ"
+  },
+  "categoryLabel": "Thể loại",
+  "@categoryLabel": {
+    "description": "Nhãn cho mục chọn thể loại"
+  },
+  "dateLabel": "Ngày",
+  "@dateLabel": {
+    "description": "Nhãn cho mục chọn ngày"
+  },
+  "dateHint": "Ngày",
+  "@dateHint": {
+    "description": "Gợi ý cho trường nhập ngày"
+  },
+  "timeLabel": "Thời gian",
+  "@timeLabel": {
+    "description": "Nhãn cho mục chọn thời gian"
+  },
+  "timeHint": "Thời gian",
+  "@timeHint": {
+    "description": "Gợi ý cho trường nhập thời gian"
+  },
+  "notesLabel": "Ghi chú",
+  "@notesLabel": {
+    "description": "Nhãn cho trường nhập ghi chú"
+  },
+  "notesHint": "Ghi chú",
+  "@notesHint": {
+    "description": "Gợi ý cho trường nhập ghi chú"
+  },
+  "createNewNoteError": "Lỗi khi tạo ghi chú mới!",
+  "@createNewNoteError": {
+    "description": "Thông báo lỗi khi tạo ghi chú mới thất bại"
+  },
+  "createNewNoteSuccess": "Tạo ghi chú mới thành công!",
+  "@createNewNoteSuccess": {
+    "description": "Thông báo thành công khi tạo ghi chú mới"
+  },
+  "deleteNoteError": "Lỗi khi xóa ghi chú!",
+  "@deleteNoteError": {
+    "description": "Thông báo lỗi khi xóa ghi chú thất bại"
+  },
+  "deleteNoteSuccess": "Xóa ghi chú thành công!",
+  "@deleteNoteSuccess": {
+    "description": "Thông báo thành công khi xóa ghi chú"
+  },
+  "updateNoteError": "Lỗi khi cập nhật ghi chú!",
+  "@updateNoteError": {
+    "description": "Thông báo lỗi khi cập nhật ghi chú thất bại"
+  },
+  "updateNoteSuccess": "Cập nhật ghi chú thành công!",
+  "@updateNoteSuccess": {
+    "description": "Thông báo thành công khi cập nhật ghi chú"
+  },
+  "fetchDataError": "Lỗi khi tải dữ liệu!",
+  "@fetchDataError": {
+    "description": "Thông báo lỗi khi tải dữ liệu thất bại"
+  },
+  "fetchDataSuccess": "Tải dữ liệu thành công!",
+  "@fetchDataSuccess": {
+    "description": "Thông báo thành công khi tải dữ liệu"
+  },
+  "usernameEmptyWarning": "Tên người dùng không được để trống!",
+  "@usernameEmptyWarning": {
+    "description": "Cảnh báo khi tên người dùng để trống"
+  },
+  "passwordEmptyWarning": "Mật khẩu không được để trống!",
+  "@passwordEmptyWarning": {
+    "description": "Cảnh báo khi mật khẩu để trống"
+  },
+  "usernameInvalidWarning": "Tên người dùng không hợp lệ!",
+  "@usernameInvalidWarning": {
+    "description": "Cảnh báo khi tên người dùng không hợp lệ"
+  },
+  "passwordInvalidWarning": "Mật khẩu không hợp lệ!",
+  "@passwordInvalidWarning": {
+    "description": "Cảnh báo khi mật khẩu không hợp lệ"
+  },
+  "repasswordNotSameWarning": "Mật khẩu xác nhận không khớp!",
+  "@repasswordNotSameWarning": {
+    "description": "Cảnh báo khi mật khẩu xác nhận không trùng khớp"
+  },
+  "taskTitleEmptyWarning": "Tiêu đề công việc không được để trống!",
+  "@taskTitleEmptyWarning": {
+    "description": "Cảnh báo khi tiêu đề công việc để trống"
+  },
+  "dateEmptyWarning": "Ngày không được để trống!",
+  "@dateEmptyWarning": {
+    "description": "Cảnh báo khi trường ngày để trống"
+  },
+  "textHolder": "Không có gì để hiển thị!",
+  "@textHolder": {
+    "description": "Văn bản hiển thị khi không có nội dung"
+  }
 }

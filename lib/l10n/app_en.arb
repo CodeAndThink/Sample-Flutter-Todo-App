@@ -1,31 +1,191 @@
 {
   "@@locale": "en",
-
+  "ok": "OK",
+  "@ok": {
+    "description": "Label for confirmation actions"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Label for cancelling actions"
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Label for applying changes"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Label for navigating to the previous screen"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Generic error message"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Generic success message"
+  },
+  "completed" : "Completed",
+  "@completed": {
+    "description": "Label of completed section"
+  },
   "loginScreenTitle": "Login",
+  "@loginScreenTitle": {
+    "description": "Title for the login screen"
+  },
   "loginButtonTitle": "Login",
+  "@loginButtonTitle": {
+    "description": "Button label for logging in"
+  },
   "registerButtonTitle": "Register",
-  "usernameHint" : "Username",
-  "passwordHint" : "Password",
-
+  "@registerButtonTitle": {
+    "description": "Button label for registration"
+  },
+  "usernameHint": "Username",
+  "@usernameHint": {
+    "description": "Hint for the username input field"
+  },
+  "passwordHint": "Password",
+  "@passwordHint": {
+    "description": "Hint for the password input field"
+  },
+  "loginSuccess": "Login Successfully!",
+  "@loginSuccess": {
+    "description": "Message shown when login is successful"
+  },
+  "loginFailure": "Login Failure!",
+  "@loginFailure": {
+    "description": "Message shown when login fails"
+  },
+  "registerSuccess": "Register Successfully!",
+  "@registerSuccess": {
+    "description": "Message shown when register is successful"
+  },
+  "registerFailure": "Register Failure!",
+  "@registerFailure": {
+    "description": "Message shown when register fails"
+  },
   "registerScreenTitle": "Register",
-  "repasswordHint" : "Password",
-
-  "todoScreenTitle" : "My Todo List",
-  "addNewTaskButtonTitle" : "Add New Task",
-
-  "saveButtonTitle" : "Save",
-
-  "taskTitleLabel" : "Task Title",
-  "taskHint" : "Task Title",
-
-  "categoryLabel" : "Category",
-
-  "dateLabel" : "Date",
-  "dateHint" : "Date",
-
-  "timeLabel" : "Time",
-  "timeHint" : "Time",
-
-  "notesLabel" : "Notes",
-  "notesHint" : "Notes"
+  "@registerScreenTitle": {
+    "description": "Title for the registration screen"
+  },
+  "repasswordHint": "Password",
+  "@repasswordHint": {
+    "description": "Hint for the re-enter password input field"
+  },
+  "todoScreenTitle": "My Todo List",
+  "@todoScreenTitle": {
+    "description": "Title for the todo list screen"
+  },
+  "addNewTaskButtonTitle": "Add New Task",
+  "@addNewTaskButtonTitle": {
+    "description": "Button label for adding a new task"
+  },
+  "addNewTaskScreenTitle": "Add New Task",
+  "@addNewTaskScreenTitle": {
+    "description": "Title for the add new task screen"
+  },
+  "saveButtonTitle": "Save",
+  "@saveButtonTitle": {
+    "description": "Button label for saving changes"
+  },
+  "taskTitleLabel": "Task Title",
+  "@taskTitleLabel": {
+    "description": "Label for the task title input field"
+  },
+  "taskHint": "Task Title",
+  "@taskHint": {
+    "description": "Hint for the task title input field"
+  },
+  "categoryLabel": "Category",
+  "@categoryLabel": {
+    "description": "Label for the category selection"
+  },
+  "dateLabel": "Date",
+  "@dateLabel": {
+    "description": "Label for the date selection"
+  },
+  "dateHint": "Date",
+  "@dateHint": {
+    "description": "Hint for the date input field"
+  },
+  "timeLabel": "Time",
+  "@timeLabel": {
+    "description": "Label for the time selection"
+  },
+  "timeHint": "Time",
+  "@timeHint": {
+    "description": "Hint for the time input field"
+  },
+  "notesLabel": "Notes",
+  "@notesLabel": {
+    "description": "Label for the notes input field"
+  },
+  "notesHint": "Notes",
+  "@notesHint": {
+    "description": "Hint for the notes input field"
+  },
+  "createNewNoteError": "Create New Note Error!",
+  "@createNewNoteError": {
+    "description": "Error message shown when creating a note fails"
+  },
+  "createNewNoteSuccess": "Create New Note Success!",
+  "@createNewNoteSuccess": {
+    "description": "Success message shown when creating a note succeeds"
+  },
+  "deleteNoteError": "Delete Note Error!",
+  "@deleteNoteError": {
+    "description": "Error message shown when deleting a note fails"
+  },
+  "deleteNoteSuccess": "Delete Note Success!",
+  "@deleteNoteSuccess": {
+    "description": "Success message shown when deleting a note succeeds"
+  },
+  "updateNoteError": "Update Note Error!",
+  "@updateNoteError": {
+    "description": "Error message shown when updating a note fails"
+  },
+  "updateNoteSuccess": "Update Note Success!",
+  "@updateNoteSuccess": {
+    "description": "Success message shown when updating a note succeeds"
+  },
+  "fetchDataError": "Fetch Data Error!",
+  "@fetchDataError": {
+    "description": "Error message shown when fetching data fails"
+  },
+  "fetchDataSuccess": "Fetch Data Success!",
+  "@fetchDataSuccess": {
+    "description": "Success message shown when fetching data succeeds"
+  },
+  "usernameEmptyWarning": "Username is not Empty!",
+  "@usernameEmptyWarning": {
+    "description": "Warning message shown when the username field is empty"
+  },
+  "passwordEmptyWarning": "Password is not Empty!",
+  "@passwordEmptyWarning": {
+    "description": "Warning message shown when the password field is empty"
+  },
+  "usernameInvalidWarning": "Username is Invalid!",
+  "@usernameInvalidWarning": {
+    "description": "Warning message shown when the username format is invalid"
+  },
+  "passwordInvalidWarning": "Password is Invalid!",
+  "@passwordInvalidWarning": {
+    "description": "Warning message shown when the password format is invalid"
+  },
+  "repasswordNotSameWarning": "Confirm Password is not the same!",
+  "@repasswordNotSameWarning": {
+    "description": "Warning message shown when the confirm password does not match"
+  },
+  "taskTitleEmptyWarning": "Task Title is not Empty!",
+  "@taskTitleEmptyWarning": {
+    "description": "Warning message shown when the task title field is empty"
+  },
+  "dateEmptyWarning": "Date is not Empty!",
+  "@dateEmptyWarning": {
+    "description": "Warning message shown when the date field is empty"
+  },
+  "textHolder": "Nothing to show here!",
+  "@textHolder": {
+    "description": "Placeholder text shown when there is no content"
+  }
 }
