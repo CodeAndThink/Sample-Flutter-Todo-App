@@ -24,9 +24,13 @@
   "@success": {
     "description": "Generic success message"
   },
-  "completed" : "Completed",
+  "completed": "Completed",
   "@completed": {
     "description": "Label of completed section"
+  },
+  "reload": "Reload",
+  "@reload": {
+    "description": "Label for reloading actions"
   },
   "loginScreenTitle": "Login",
   "@loginScreenTitle": {
@@ -187,5 +191,29 @@
   "textHolder": "Nothing to show here!",
   "@textHolder": {
     "description": "Placeholder text shown when there is no content"
+  },
+  "error_generic": "Something went wrong. Please try again.",
+  "@error_generic": {
+    "description": "This is a generic error message that can be used in various parts of the app when something goes wrong."
+  },
+  "error_network": "Network error. Please check your internet connection.",
+  "@error_network": {
+    "description": "This error message is shown when there is no internet connection or a network issue."
+  },
+  "error_invalid_input": "Invalid input. Please check the fields and try again.",
+  "@error_invalid_input": {
+    "description": "This error message is shown when the user inputs invalid data in a form."
+  },
+  "error_permission": "Permission denied. You do not have access to this feature.",
+  "@error_permission": {
+    "description": "This message appears when the user does not have permission to access a certain feature in the app."
+  },
+  "error_not_found": "The requested item could not be found.",
+  "@error_not_found": {
+    "description": "This message is shown when a requested item (like a user profile or product) cannot be found."
+  },
+  "error_server": "Server error. Please try again later.",
+  "@error_server": {
+    "description": "This error message is displayed when there is a problem with the server or backend service."
   }
 }

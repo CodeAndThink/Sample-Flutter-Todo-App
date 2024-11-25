@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/manager/auth_manager.dart';
+import 'package:todo_app/manager/connection_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
@@ -7,9 +8,6 @@ import 'package:todo_app/network/api_provider.dart';
 class TodoViewmodel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
-  bool _isSuccess = false;
-  bool get isSuccess => _isSuccess;
 
   String _error = "";
   String get error => _error;
@@ -40,7 +38,10 @@ class TodoViewmodel extends ChangeNotifier {
     _authManager.removeUserToken();
   }
 
-  void updateNote(NoteModel newNote) async {
+  void updateNote(NoteModel oldNote) async {
+    final newNote = oldNote;
+    newNote.status = !newNote.status;
+
     _listUpdate(newNote);
 
     _silentLoading();
@@ -48,6 +49,9 @@ class TodoViewmodel extends ChangeNotifier {
     final response = await _provider.updateNote(newNote);
 
     _setError(response.error ?? "");
+    if (response.error != null) {
+      _listUpdate(oldNote);
+    }
   }
 
   void fetchNote() async {
@@ -69,28 +73,15 @@ class TodoViewmodel extends ChangeNotifier {
   }
 
   void deleteNote(NoteModel note) async {
-    final newNote = note;
-    newNote.status = !newNote.status;
+    _dataDeleteUpdate(note);
 
     final response = await _provider.deleteNote(note.id!);
 
-    if (response.error != null) {
-      _setError(response.error ?? "");
-    } else {
-      _isSuccess = true;
-    }
-  }
+    _setError(response.error ?? "");
 
-  void dataDeleteUpdate(NoteModel note) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      for (var note in _data) {
-        if (note.id == note.id) {
-          _doneData.remove(note);
-          _todoData.remove(note);
-          break;
-        }
-      }
-    });
+    if (response.error != null) {
+      fetchNote();
+    }
   }
 
   //MARK: Private Functions
@@ -149,6 +140,15 @@ class TodoViewmodel extends ChangeNotifier {
         _doneData.removeWhere((note) => note.id == newNote.id);
         _todoData.add(newNote);
       }
+
+      notifyListeners();
+    });
+  }
+
+  void _dataDeleteUpdate(NoteModel deleteNote) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _todoData.removeWhere((note) => note.id == deleteNote.id);
+      _doneData.removeWhere((note) => note.id == deleteNote.id);
 
       notifyListeners();
     });

@@ -11,4 +11,5 @@ class Configs {
   static Color noteCategoryBackgroundColor = const Color(0xFFDBECF6);
   static Color calendarCategoryBackgroundColor = const Color(0xFFE7E2F3);
   static Color celeCategoryBackgroundColor = const Color(0xFFFEF5D3);
+
 }

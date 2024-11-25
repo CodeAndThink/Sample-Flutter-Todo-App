@@ -24,9 +24,13 @@
   "@success": {
     "description": "Thông báo thành công chung"
   },
-  "completed" : "Hoàn thành",
+  "completed": "Hoàn thành",
   "@completed": {
     "description": "Nhãn cho section hoàn thành"
+  },
+  "reload": "Tải lại",
+  "@reload": {
+    "description": "Nhãn cho hành động tải lại dữ liệu"
   },
   "loginScreenTitle": "Đăng nhập",
   "@loginScreenTitle": {
@@ -187,5 +191,29 @@
   "textHolder": "Không có gì để hiển thị!",
   "@textHolder": {
     "description": "Văn bản hiển thị khi không có nội dung"
+  },
+  "error_generic": "Đã có lỗi xảy ra. Vui lòng thử lại.",
+  "@error_generic": {
+    "description": "Đây là thông báo lỗi chung, có thể sử dụng trong nhiều phần của ứng dụng khi có sự cố xảy ra."
+  },
+  "error_network": "Lỗi mạng. Vui lòng kiểm tra kết nối internet của bạn.",
+  "@error_network": {
+    "description": "Thông báo lỗi này sẽ hiển thị khi không có kết nối internet hoặc có sự cố về mạng."
+  },
+  "error_invalid_input": "Dữ liệu nhập không hợp lệ. Vui lòng kiểm tra lại các trường và thử lại.",
+  "@error_invalid_input": {
+    "description": "Thông báo lỗi này sẽ hiển thị khi người dùng nhập dữ liệu không hợp lệ vào một mẫu đơn."
+  },
+  "error_permission": "Lỗi quyền truy cập. Bạn không có quyền sử dụng tính năng này.",
+  "@error_permission": {
+    "description": "Thông báo này hiển thị khi người dùng không có quyền truy cập vào một tính năng nào đó trong ứng dụng."
+  },
+  "error_not_found": "Không tìm thấy mục yêu cầu.",
+  "@error_not_found": {
+    "description": "Thông báo này hiển thị khi một mục yêu cầu (ví dụ: hồ sơ người dùng hoặc sản phẩm) không thể tìm thấy."
+  },
+  "error_server": "Lỗi server. Vui lòng thử lại sau.",
+  "@error_server": {
+    "description": "Thông báo lỗi này được hiển thị khi có vấn đề với server hoặc dịch vụ backend."
   }
 }

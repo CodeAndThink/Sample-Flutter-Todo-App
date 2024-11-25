@@ -19,6 +19,7 @@ dependencies:
   flutter_svg: ^2.0.14
   validators: ^3.0.0
   flutter_secure_storage: ^9.2.2
+  connectivity_plus: ^6.1.0
 
 flutter_launcher_icons:
   android: true

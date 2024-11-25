@@ -173,7 +173,30 @@ class _TodoScreenState extends State<TodoScreen> {
                           ));
                     } else if (vm.error.isNotEmpty) {
                       return Center(
-                        child: Text(vm.error),
+                        child: SizedBox(
+                          height: screenHeight * 0.3,
+                          width: screenWidth * 0.8,
+                          child: Column(
+                            children: [
+                              Text(
+                                vm.error,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 4,
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Provider.of<TodoViewmodel>(context,
+                                            listen: false)
+                                        .fetchNote();
+                                  },
+                                  child: Text(
+                                      AppLocalizations.of(context)!.reload))
+                            ],
+                          ),
+                        ),
                       );
                     } else {
                       return Center(
@@ -240,13 +263,11 @@ class _TodoScreenState extends State<TodoScreen> {
           bool isBottom = index == inputData.length - 1;
 
           return Dismissible(
-            key: ValueKey(index),
+            key: ValueKey(inputData[index].id),
             direction: DismissDirection.horizontal,
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
               } else if (direction == DismissDirection.endToStart) {
-                Provider.of<TodoViewmodel>(context, listen: false)
-                    .dataDeleteUpdate(inputData[index]);
                 Provider.of<TodoViewmodel>(context, listen: false)
                     .deleteNote(inputData[index]);
               }
@@ -280,11 +301,8 @@ class _TodoScreenState extends State<TodoScreen> {
                 });
               },
               checkBoxAction: (value) {
-                final newNote = inputData[index];
-                newNote.status = !newNote.status;
-
                 Provider.of<TodoViewmodel>(context, listen: false)
-                    .updateNote(newNote);
+                    .updateNote(inputData[index]);
               },
               isTop: isTop,
               isBottom: isBottom,
