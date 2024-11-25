@@ -298,6 +298,8 @@ class _TodoScreenState extends State<TodoScreen> {
                     builder: (context) => const AddNewTaskScreen(),
                   ),
                 ).then((_) {
+                  Provider.of<AddNewTaskViewmodel>(context, listen: false)
+                      .setData(null);
                   todoViewmodel.fetchNote();
                 });
               },

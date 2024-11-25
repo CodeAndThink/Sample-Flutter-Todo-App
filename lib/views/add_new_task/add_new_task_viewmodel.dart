@@ -45,7 +45,7 @@ class AddNewTaskViewmodel extends ChangeNotifier {
     isCreate ? _createNote(newNote) : _updateData(newNote);
   }
 
-  void setData(NoteModel inputData) {
+  void setData(NoteModel? inputData) {
     _data = inputData;
   }
 
