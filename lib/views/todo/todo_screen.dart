@@ -265,9 +265,11 @@ class _TodoScreenState extends State<TodoScreen> {
 
           return Dismissible(
             key: ValueKey(inputData[index].id),
-            direction: DismissDirection.horizontal,
+            direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
+                Provider.of<TodoViewmodel>(context, listen: false)
+                    .fetchNote();
               } else if (direction == DismissDirection.endToStart) {
                 Provider.of<TodoViewmodel>(context, listen: false)
                     .deleteNote(inputData[index]);

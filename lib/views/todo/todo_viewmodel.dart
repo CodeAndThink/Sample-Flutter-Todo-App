@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/manager/auth_manager.dart';
-import 'package:todo_app/manager/connection_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
