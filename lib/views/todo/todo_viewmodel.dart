@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/manager/auth_manager.dart';
+import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
@@ -13,6 +15,8 @@ class TodoViewmodel extends ChangeNotifier {
   String get error => _error;
 
   late ApiProvider _provider;
+  late UserManager _userManager;
+  late AuthManager _authManager;
 
   List<NoteModel> _data = [];
 
@@ -22,43 +26,42 @@ class TodoViewmodel extends ChangeNotifier {
   final List<NoteModel> _doneData = [];
   List<NoteModel> get doneData => _doneData;
 
-  TodoViewmodel(provider) {
+  TodoViewmodel(provider, userManager, authManager) {
     _provider = provider;
+    _userManager = userManager;
+    _authManager = authManager;
   }
 
   //MARK: Public Functions
 
   void signout() {
     _provider.signOut();
+    _userManager.removeUserData();
+    _authManager.removeUserToken();
   }
 
-  void updateNote(NoteModel oldNote) async {
-    final newNote = oldNote;
-    newNote.status = !newNote.status;
-
-    _dataUpdate(newNote);
+  void updateNote(NoteModel newNote) async {
+    _listUpdate(newNote);
 
     _silentLoading();
 
     final response = await _provider.updateNote(newNote);
 
-    _silentStopLoading();
-
     _setError(response.error ?? "");
   }
 
   void fetchNote() async {
-    _startLoading();
+    _silentLoading();
 
     final response = await _provider.fetchNotes();
 
-    _stopLoading();
+    if (_data != response.data) {
+      _data = response.data ?? [];
 
-    _data = response.data ?? [];
+      _dataFilter();
 
-    _dataFilter();
-
-    _setError(response.error ?? "");
+      _setError(response.error ?? "");
+    }
   }
 
   void deleteNote(NoteModel note) async {
@@ -89,14 +92,11 @@ class TodoViewmodel extends ChangeNotifier {
   //MARK: Private Functions
 
   void _silentLoading() {
-    _isLoading = false;
-    _error = "";
-    notifyListeners();
-  }
-
-  void _silentStopLoading() {
-    _isLoading = false;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isLoading = false;
+      _error = "";
+      notifyListeners();
+    });
   }
 
   void _dataFilter() {
@@ -128,27 +128,24 @@ class TodoViewmodel extends ChangeNotifier {
     });
   }
 
-  void _dataUpdate(NoteModel newNote) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      for (var note in _data) {
-        if (newNote.id == note.id && newNote.status) {
-          _doneData.add(newNote);
-          _todoData.remove(newNote);
-          break;
-        }
-        if (newNote.id == note.id && !newNote.status) {
-          _doneData.remove(newNote);
-          _todoData.add(newNote);
-          break;
-        }
-      }
-    });
-  }
-
   void _setError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _error = errorMessage;
       _isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  void _listUpdate(NoteModel newNote) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (newNote.status) {
+        _todoData.removeWhere((note) => note.id == newNote.id);
+        _doneData.add(newNote);
+      } else {
+        _doneData.removeWhere((note) => note.id == newNote.id);
+        _todoData.add(newNote);
+      }
+
       notifyListeners();
     });
   }

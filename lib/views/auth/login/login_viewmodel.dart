@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/manager/auth_manager.dart';
+import 'package:todo_app/manager/user_manager.dart';
+import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
 class LoginViewmodel extends ChangeNotifier {
@@ -12,12 +15,37 @@ class LoginViewmodel extends ChangeNotifier {
   String get token => _token;
 
   late ApiProvider _provider;
+  late UserManager _userManager;
+  late AuthManager _authManager;
 
-  LoginViewmodel(provider) {
+  LoginViewmodel(provider, userManager, authManager) {
     _provider = provider;
+    _userManager = userManager;
+    _authManager = authManager;
   }
 
   //MARK: Public Functions
+  void checkLastLogin() async {
+    final lastUserLogin = await _userManager.getUserData();
+    if (lastUserLogin != null) {
+      final username = lastUserLogin.username;
+      final password = lastUserLogin.password;
+      login(username, password);
+    }
+  }
+
+  void login(String username, String password) async {
+    _startLoading();
+    final response = await _provider.signIn(username, password);
+    _stopLoading();
+    _token = response.data ?? "";
+    if (_token.isNotEmpty) {
+      _authManager.saveUserToken(_token);
+      final newUser = UserModel(username: username, password: password);
+      _userManager.saveUserData(newUser);
+    }
+    _setError(response.error ?? "");
+  }
 
   void resetAttributes() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -52,13 +80,5 @@ class LoginViewmodel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
-  }
-
-  void login(String username, String password) async {
-    _startLoading();
-    final response = await _provider.signIn(username, password);
-    _stopLoading();
-    _token = response.data ?? "";
-    _setError(response.error ?? "");
   }
 }

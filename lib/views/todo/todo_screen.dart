@@ -74,6 +74,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         toolbarHeight: screenHeight * 0.11,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Center(
@@ -136,6 +137,9 @@ class _TodoScreenState extends State<TodoScreen> {
               ),
               SizedBox(
                   height: screenHeight * 0.75 - 56,
+
+//MARK: Consumer - Main List
+
                   child: Consumer<TodoViewmodel>(builder: (context, vm, child) {
                     if (vm.isLoading) {
                       return const Loading();
@@ -191,11 +195,14 @@ class _TodoScreenState extends State<TodoScreen> {
                         ),
                       );
                     }
-                  }))
+                  })
+
+//========================================================
+                  )
             ],
           ),
 
-          //MARK: Bottom Button
+//MARK: Add New Task Button
 
           Positioned(
               left: 16,
@@ -217,12 +224,14 @@ class _TodoScreenState extends State<TodoScreen> {
                 buttonLabel:
                     AppLocalizations.of(context)!.addNewTaskButtonTitle,
               ))
+
+//========================================================
         ],
       ),
     );
   }
 
-  //MARK: Listview Section
+//MARK: Listview
 
   Widget _listViewSection(List<NoteModel> inputData) {
     return SliverList(
@@ -236,7 +245,6 @@ class _TodoScreenState extends State<TodoScreen> {
             direction: DismissDirection.horizontal,
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
-                
               } else if (direction == DismissDirection.endToStart) {
                 Provider.of<TodoViewmodel>(context, listen: false)
                     .dataDeleteUpdate(inputData[index]);
@@ -272,9 +280,12 @@ class _TodoScreenState extends State<TodoScreen> {
                   todoViewmodel.fetchNote();
                 });
               },
-              checkBoxAction: () {
+              checkBoxAction: (value) {
+                final newNote = inputData[index];
+                newNote.status = !newNote.status;
+
                 Provider.of<TodoViewmodel>(context, listen: false)
-                    .updateNote(inputData[index]);
+                    .updateNote(newNote);
               },
               isTop: isTop,
               isBottom: isBottom,
@@ -285,4 +296,6 @@ class _TodoScreenState extends State<TodoScreen> {
       ),
     );
   }
+
+//========================================================
 }

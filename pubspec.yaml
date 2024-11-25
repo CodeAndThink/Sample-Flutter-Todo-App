@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   provider: ^6.1.2
   supabase_flutter: ^2.8.0
-  shared_preferences: ^2.3.2
   permission_handler: ^11.3.1
   flutter_launcher_icons: ^0.13.1
   flutter_localizations:
@@ -19,7 +18,7 @@ dependencies:
   intl: ^0.19.0
   flutter_svg: ^2.0.14
   validators: ^3.0.0
-  skeletonizer: ^1.4.2
+  flutter_secure_storage: ^9.2.2
 
 flutter_launcher_icons:
   android: true

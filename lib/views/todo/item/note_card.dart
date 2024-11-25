@@ -7,7 +7,7 @@ import 'package:todo_app/utilis/converse_time.dart';
 class NoteCard extends StatelessWidget {
   final NoteModel data;
   final VoidCallback onTap;
-  final VoidCallback checkBoxAction;
+  final Function(bool value) checkBoxAction;
   final bool isTop;
   final bool isBottom;
 
@@ -131,8 +131,9 @@ class NoteCard extends StatelessWidget {
                       side: BorderSide(
                           color: Theme.of(context).colorScheme.primary),
                       value: data.status,
-                      onChanged: (_) {
-                        checkBoxAction();
+                      onChanged: (value) {
+                        
+                        checkBoxAction(value!);
                       },
                     )
                   ],

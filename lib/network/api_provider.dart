@@ -4,6 +4,10 @@ import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/models/result.dart';
 
 class ApiProvider {
+
+  //MARK: Shared class
+  static final shared = ApiProvider();
+
   //MARK: Authentication
 
   Future<Result<String>> signIn(String username, String password) async {

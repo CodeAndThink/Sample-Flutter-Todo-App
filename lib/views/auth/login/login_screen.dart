@@ -37,6 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
     super.didChangeDependencies();
 
     Provider.of<LoginViewmodel>(context, listen: false).resetAttributes();
+
+    Provider.of<LoginViewmodel>(context, listen: false).checkLastLogin();
   }
 
   void _resetErrorText() {
@@ -115,6 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 16,
                       ),
+                      
+//MARK: Username
+                      
                       CustomTextBox(
                         controller: _username,
                         hintText: AppLocalizations.of(context)!.usernameHint,
@@ -122,9 +127,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         textError: _errorUsernameText,
                         onTap: _resetErrorText,
                       ),
+                      
+//========================================================
+
                       const SizedBox(
                         height: 16,
                       ),
+
+//MARK: Password
+
                       CustomTextBox(
                         controller: _password,
                         hintText: AppLocalizations.of(context)!.passwordHint,
@@ -133,9 +144,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         textError: _errorPasswordText,
                         onTap: _resetErrorText,
                       ),
+
+//========================================================
+
                       const SizedBox(
                         height: 16,
                       ),
+                      
+//MARK: Login Button
+                      
                       SizedBox(
                         height: 56,
                         child: MainBottomButton(
@@ -153,6 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonLabel:
                                 AppLocalizations.of(context)!.loginButtonTitle),
                       ),
+
+//========================================================
+
+//MARK: Register Button
+
                       TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -165,30 +187,32 @@ class _LoginScreenState extends State<LoginScreen> {
                             AppLocalizations.of(context)!.registerButtonTitle,
                             style: Theme.of(context).textTheme.bodySmall,
                           ))
+                    
+//========================================================
                     ],
                   ),
                 ),
               ),
             ])),
           ),
+
+//MARK: Consumer
+
           Consumer<LoginViewmodel>(
             builder: (context, vm, child) {
               if (vm.isLoading) {
                 return const Loading();
               } else if (vm.token.isNotEmpty) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _showAlert(context, AppLocalizations.of(context)!.success,
-                      AppLocalizations.of(context)!.loginSuccess, () {
-                    Provider.of<LoginViewmodel>(context, listen: false)
-                        .resetAttributes();
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              TodoScreen(toggleLocale: widget.toggleLocale)),
-                      (route) => false,
-                    );
-                  });
+                  Provider.of<LoginViewmodel>(context, listen: false)
+                      .resetAttributes();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TodoScreen(toggleLocale: widget.toggleLocale)),
+                    (route) => false,
+                  );
                 });
                 return Container();
               } else if (vm.error.isNotEmpty) {
@@ -205,6 +229,8 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             },
           )
+
+//========================================================
         ],
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:todo_app/manager/auth_manager.dart';
+import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/theme/theme.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_viewmodel.dart';
@@ -19,16 +21,18 @@ void main() async {
     anonKey: Configs.apiSubabaseKey,
   );
 
-  final ApiProvider apiProvider = ApiProvider();
-
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => TodoViewmodel(apiProvider)),
-      ChangeNotifierProvider(create: (context) => LoginViewmodel(apiProvider)),
       ChangeNotifierProvider(
-          create: (context) => RegisterViewmodel(apiProvider)),
+          create: (context) => TodoViewmodel(
+              ApiProvider.shared, UserManager.shared, AuthManager.shared)),
       ChangeNotifierProvider(
-          create: (context) => AddNewTaskViewmodel(apiProvider, null)),
+          create: (context) => LoginViewmodel(
+              ApiProvider.shared, UserManager.shared, AuthManager.shared)),
+      ChangeNotifierProvider(
+          create: (context) => RegisterViewmodel(ApiProvider.shared)),
+      ChangeNotifierProvider(
+          create: (context) => AddNewTaskViewmodel(ApiProvider.shared, null)),
     ],
     child: const MainApp(),
   ));
