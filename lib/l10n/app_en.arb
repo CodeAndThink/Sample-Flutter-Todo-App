@@ -52,6 +52,14 @@
   "@passwordHint": {
     "description": "Hint for the password input field"
   },
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {
+    "description": "This text is displayed on the registration screen as a prompt for users who already have an account to navigate to the login screen."
+  },
+  "becomeNewMember": "Become a new member?",
+  "@becomeNewMember": {
+    "description": "This text is displayed on the login screen as a prompt for users to navigate to the registration screen to create a new account."
+  },
   "loginSuccess": "Login Successfully!",
   "@loginSuccess": {
     "description": "Message shown when login is successful"

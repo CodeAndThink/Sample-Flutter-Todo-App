@@ -4,7 +4,6 @@ import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/models/result.dart';
 
 class ApiProvider {
-
   //MARK: Shared class
   static final shared = ApiProvider();
 
@@ -38,7 +37,10 @@ class ApiProvider {
 
   Future<Result<List<NoteModel>>> fetchNotes() async {
     try {
-      final response = await Supabase.instance.client.from('Notes').select();
+      final response = await Supabase.instance.client
+          .from('Notes')
+          .select()
+          .eq('date', DateTime.now());
       final data = response.map((json) => NoteModel.fromJson(json)).toList();
       return Result(data: data);
     } catch (e) {

@@ -52,6 +52,14 @@
   "@passwordHint": {
     "description": "Gợi ý cho trường nhập mật khẩu"
   },
+  "alreadyHaveAccount": "Bạn đã có tài khoản?",
+  "@alreadyHaveAccount": {
+    "description": "Văn bản này hiển thị trên màn hình đăng ký để nhắc người dùng đã có tài khoản chuyển sang màn hình đăng nhập."
+  },
+  "becomeNewMember": "Trở thành thành viên mới?",
+  "@becomeNewMember": {
+    "description": "Văn bản này hiển thị trên màn hình đăng nhập để nhắc người dùng chuyển sang màn hình đăng ký để tạo tài khoản mới."
+  },
   "loginSuccess": "Đăng nhập thành công!",
   "@loginSuccess": {
     "description": "Thông báo hiển thị khi đăng nhập thành công"

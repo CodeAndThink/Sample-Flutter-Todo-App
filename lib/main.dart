@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/manager/auth_manager.dart';
+import 'package:todo_app/manager/setting_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/theme/theme.dart';
@@ -21,6 +22,8 @@ void main() async {
     anonKey: Configs.apiSubabaseKey,
   );
 
+  final lastLocale = await SettingManager.shared.getUserLocale();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -34,26 +37,36 @@ void main() async {
       ChangeNotifierProvider(
           create: (context) => AddNewTaskViewmodel(ApiProvider.shared, null)),
     ],
-    child: const MainApp(),
+    child: MainApp(
+      lastLocale: lastLocale,
+    ),
   ));
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key});
+  const MainApp({super.key, required this.lastLocale});
+  final Locale lastLocale;
 
   @override
   MainAppState createState() => MainAppState();
 }
 
 class MainAppState extends State<MainApp> {
-  Locale _locale = const Locale('en', 'US');
+  late Locale _locale;
 
   void _toggleLocale() {
     setState(() {
       _locale = _locale.languageCode == 'en'
           ? const Locale('vi', 'VN')
           : const Locale('en', 'US');
+      SettingManager.shared.saveUserLocale(_locale.languageCode);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _locale = widget.lastLocale;
   }
 
   @override

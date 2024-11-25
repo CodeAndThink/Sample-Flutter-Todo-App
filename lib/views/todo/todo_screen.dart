@@ -74,7 +74,8 @@ class _TodoScreenState extends State<TodoScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 0.0,
+        shadowColor: Theme.of(context).colorScheme.primary,
         toolbarHeight: screenHeight * 0.11,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Center(

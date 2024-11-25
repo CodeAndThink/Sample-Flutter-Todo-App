@@ -130,6 +130,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(
                       height: 16,
                     ),
+
+//MARK: Username Textbox
+
                     CustomTextBox(
                       controller: _username,
                       hintText: AppLocalizations.of(context)!.usernameHint,
@@ -137,9 +140,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textError: _errorUsernameText,
                       onTap: _resetErrorText,
                     ),
+
+//========================================================
+
                     const SizedBox(
                       height: 16,
                     ),
+
+//MARK: Password Textbox
+
                     CustomTextBox(
                       controller: _password,
                       hintText: AppLocalizations.of(context)!.passwordHint,
@@ -148,9 +157,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textError: _errorPasswordText,
                       onTap: _resetErrorText,
                     ),
+
+//========================================================
+
                     const SizedBox(
                       height: 16,
                     ),
+
+//MARK: Confirm Password Textbox
+
                     CustomTextBox(
                       controller: _repassword,
                       hintText: AppLocalizations.of(context)!.repasswordHint,
@@ -159,9 +174,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textError: _errorRepasswordText,
                       onTap: _resetErrorText,
                     ),
+
+//========================================================
+
                     const SizedBox(
                       height: 16,
                     ),
+
+//MARK: Register Button
+
                     SizedBox(
                       height: 56,
                       child: MainBottomButton(
@@ -180,20 +201,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           buttonLabel: AppLocalizations.of(context)!
                               .registerButtonTitle),
                     ),
+
+//========================================================
+
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.alreadyHaveAccount,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+
+//MARK: Move To Login Screen Button
+
                     TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                         child: Text(
                           AppLocalizations.of(context)!.loginButtonTitle,
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: Colors.blueAccent),
                         ))
+
+//========================================================
                   ],
                 ),
               ),
             ),
           ])),
         ),
+
+//MARK: Consumer
+
         Consumer<RegisterViewmodel>(
           builder: (context, vm, child) {
             if (vm.isLoading) {
@@ -222,6 +264,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             }
           },
         )
+
+//========================================================
       ]),
     );
   }

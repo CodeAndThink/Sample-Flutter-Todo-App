@@ -117,9 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 16,
                       ),
-                      
+
 //MARK: Username
-                      
+
                       CustomTextBox(
                         controller: _username,
                         hintText: AppLocalizations.of(context)!.usernameHint,
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textError: _errorUsernameText,
                         onTap: _resetErrorText,
                       ),
-                      
+
 //========================================================
 
                       const SizedBox(
@@ -150,9 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 16,
                       ),
-                      
+
 //MARK: Login Button
-                      
+
                       SizedBox(
                         height: 56,
                         child: MainBottomButton(
@@ -173,6 +173,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //========================================================
 
+                      const SizedBox(
+                        height: 16,
+                      ),
+
+                      Text(
+                        AppLocalizations.of(context)!.becomeNewMember,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+
 //MARK: Register Button
 
                       TextButton(
@@ -185,9 +194,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text(
                             AppLocalizations.of(context)!.registerButtonTitle,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(color: Colors.blueAccent),
                           ))
-                    
+
 //========================================================
                     ],
                   ),
