@@ -135,11 +135,11 @@ class _TodoScreenState extends State<TodoScreen> {
               SizedBox(
                 height: screenHeight * 0.08 < 76 ? 76 : screenHeight * 0.08,
               ),
-              SizedBox(
-                  height: screenHeight * 0.75 - 56,
 
 //MARK: Consumer - Main List
 
+              SizedBox(
+                  height: screenHeight * 0.75 - 56,
                   child: Consumer<TodoViewmodel>(builder: (context, vm, child) {
                     if (vm.isLoading) {
                       return const Loading();
@@ -195,12 +195,11 @@ class _TodoScreenState extends State<TodoScreen> {
                         ),
                       );
                     }
-                  })
-
-//========================================================
-                  )
+                  }))
             ],
           ),
+
+//========================================================
 
 //MARK: Add New Task Button
 
