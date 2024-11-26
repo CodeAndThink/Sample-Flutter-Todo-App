@@ -74,7 +74,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
     if (picked != null) {
       setState(() {
-        _time.text = picked.format(context);
+        _time.text = ConverseTime().timeFormat(picked, context);
       });
     }
   }
@@ -162,6 +162,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                           const SizedBox(
                             height: 8,
                           ),
+
+                          //MARK: Task Title
+
                           CustomTextBox(
                             controller: _taskTitle,
                             hintText: AppLocalizations.of(context)!.taskHint,
@@ -169,11 +172,16 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                             textError: _errorTaskTitleText,
                             onTap: _resetErrorText,
                           )
+
+                          //========================================================
                         ],
                       ),
                       const SizedBox(
                         height: 24,
                       ),
+
+                      //MARK: Category
+
                       Row(
                         children: [
                           Text(
@@ -222,9 +230,15 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                               isSetAlpha: _categorySelected != 2)
                         ],
                       ),
+
+                      //========================================================
+
                       const SizedBox(
                         height: 24,
                       ),
+
+                      //MARK: Date & Time
+
                       Row(
                         children: [
                           Expanded(
@@ -270,9 +284,15 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                           ),
                         ],
                       ),
+
+                      //========================================================
+
                       const SizedBox(
                         height: 24,
                       ),
+
+                      //Mark: Note's Content
+
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -291,10 +311,15 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                           ),
                         ],
                       ),
+
+                      //========================================================
                     ],
                   ),
                 ),
               ),
+
+              //MARK: Save button
+
               Positioned(
                   bottom: 24,
                   height: 56,
@@ -316,6 +341,11 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                     },
                     buttonLabel: AppLocalizations.of(context)!.saveButtonTitle,
                   )),
+
+              //========================================================
+
+              //MARK: Consumer
+
               Center(
                 child: Consumer<AddNewTaskViewmodel>(
                   builder: (context, vm, child) {
@@ -359,6 +389,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                   },
                 ),
               )
+
+              //========================================================
             ],
           ),
         ));

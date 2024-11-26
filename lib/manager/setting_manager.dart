@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingManager {
   static final shared = SettingManager();
 
-  Future<void> saveUserLocale(String languageCode) async {
+  Future<void> saveUserLocale(String languageCode, String countryCode) async {
     final storage = await SharedPreferences.getInstance();
-    await storage.setString("userLocale", languageCode);
+    await storage.setString("userLocale", "$languageCode-$countryCode");
   }
 
   Future<Locale> getUserLocale() async {
@@ -14,7 +14,9 @@ class SettingManager {
     final languageCode = storage.getString("userLocale");
 
     if (languageCode != null) {
-      return Locale(languageCode);
+      final langCode = languageCode.split('-')[0];
+      final counCode = languageCode.split('-')[1];
+      return Locale(langCode, counCode);
     }
 
     return const Locale('en', 'US');

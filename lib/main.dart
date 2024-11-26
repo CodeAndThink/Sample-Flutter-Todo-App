@@ -52,14 +52,15 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAppState extends State<MainApp> {
-  late Locale _locale;
+  Locale _locale = const Locale('en', 'US');
 
   void _toggleLocale() {
     setState(() {
       _locale = _locale.languageCode == 'en'
           ? const Locale('vi', 'VN')
           : const Locale('en', 'US');
-      SettingManager.shared.saveUserLocale(_locale.languageCode);
+      SettingManager.shared
+          .saveUserLocale(_locale.languageCode, _locale.countryCode!);
     });
   }
 

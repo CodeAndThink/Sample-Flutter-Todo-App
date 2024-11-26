@@ -28,14 +28,14 @@ class _TodoScreenState extends State<TodoScreen> {
   void initState() {
     super.initState();
 
-    // _scrollController.addListener(() {
-    //   if (_scrollController.position.atEdge) {
-    //     bool isTop = _scrollController.position.pixels == 200;
-    //     if (isTop) {
-    //       Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
-    //     }
-    //   }
-    // });
+    _scrollController.addListener(() {
+      if (_scrollController.position.atEdge) {
+        bool isTop = _scrollController.position.pixels == 100;
+        if (isTop) {
+          Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
+        }
+      }
+    });
 
     Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
   }
@@ -72,184 +72,200 @@ class _TodoScreenState extends State<TodoScreen> {
     final formattedDate = formatDate(currentDate);
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        shadowColor: Theme.of(context).colorScheme.primary,
-        toolbarHeight: screenHeight * 0.11,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Center(
-          child: Text(
-            formattedDate,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(color: Colors.white),
-          ),
-        ),
-        leading: IconButton(
-            onPressed: () {
-              widget.toggleLocale();
-            },
-            icon: SvgPicture.asset("assets/icons/lang.svg",
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcATop))),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Provider.of<TodoViewmodel>(context, listen: false).signout();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LoginScreen(toggleLocale: widget.toggleLocale)),
-                  (route) => false,
-                );
-              },
-              icon: SvgPicture.asset(
-                "assets/icons/signout.svg",
-                colorFilter:
-                    const ColorFilter.mode(Colors.redAccent, BlendMode.srcATop),
-              ))
-        ],
-      ),
-      body: Stack(
-        children: [
-          Container(
-            height: screenHeight * 0.09 < 126 ? 126 : screenHeight * 0.09,
-            width: screenWidth,
-            color: Theme.of(context).colorScheme.primary,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.todoScreenTitle,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineLarge
-                        ?.copyWith(color: Colors.white),
-                  ),
-                ]),
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: screenHeight * 0.08 < 76 ? 76 : screenHeight * 0.08,
+      body: SafeArea(
+        top: false,
+        bottom: false,
+        child: Stack(
+          children: [
+            Container(
+              height: screenHeight * 0.26 < 222 ? 222 : screenHeight * 0.26,
+              width: screenWidth,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
               ),
-    
-    //MARK: Consumer - Main List
-    
-              SizedBox(
-                  height: screenHeight * 0.75 - 56,
-                  child: Consumer<TodoViewmodel>(builder: (context, vm, child) {
-                    if (vm.isLoading) {
-                      return const Loading();
-                    } else if (vm.error.isEmpty) {
-                      return Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: CustomScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            controller: _scrollController,
-                            slivers: [
-                              _listViewSection(vm.todoData),
-                              SliverToBoxAdapter(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 24,
-                                  ),
-                                  Text(
-                                    AppLocalizations.of(context)!.completed,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall,
-                                  ),
-                                  const SizedBox(
-                                    height: 24,
-                                  )
-                                ],
-                              )),
-                              _listViewSection(vm.doneData)
-                            ],
-                          ));
-                    } else if (vm.error.isNotEmpty) {
-                      return Center(
-                        child: SizedBox(
-                          height: screenHeight * 0.3,
-                          width: screenWidth * 0.8,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: screenHeight > screenWidth ? 44 : 24,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                widget.toggleLocale();
+                              },
+                              icon: SvgPicture.asset("assets/icons/lang.svg",
+                                  colorFilter: const ColorFilter.mode(
+                                      Colors.white, BlendMode.srcATop))),
+                          Expanded(
+                            child: Text(
+                              formattedDate,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Provider.of<TodoViewmodel>(context,
+                                        listen: false)
+                                    .signout();
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen(
+                                          toggleLocale: widget.toggleLocale)),
+                                  (route) => false,
+                                );
+                              },
+                              icon: SvgPicture.asset(
+                                "assets/icons/signout.svg",
+                                colorFilter: const ColorFilter.mode(
+                                    Colors.redAccent, BlendMode.srcATop),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.todoScreenTitle,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(color: Colors.white),
+                    ),
+                  ]),
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height:
+                      screenHeight * 0.185 < 158 ? 158 : screenHeight * 0.185,
+                ),
+
+                //MARK: Consumer - Main List
+
+                SizedBox(
+                    height: screenHeight > screenWidth
+                        ? screenHeight * 0.82 - 96
+                        : screenHeight * 0.61 - 96,
+                    child:
+                        Consumer<TodoViewmodel>(builder: (context, vm, child) {
+                      if (vm.isLoading) {
+                        return const Loading();
+                      } else if (vm.error.isEmpty) {
+                        return Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: CustomScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              controller: _scrollController,
+                              slivers: [
+                                _listViewSection(vm.todoData),
+                                SliverToBoxAdapter(
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 24,
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context)!.completed,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall,
+                                    ),
+                                    const SizedBox(
+                                      height: 24,
+                                    )
+                                  ],
+                                )),
+                                _listViewSection(vm.doneData)
+                              ],
+                            ));
+                      } else if (vm.error.isNotEmpty) {
+                        return Center(
+                          child: SizedBox(
+                            height: screenHeight * 0.3,
+                            width: screenWidth * 0.8,
+                            child: Column(
+                              children: [
+                                Text(
+                                  vm.error,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 4,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Provider.of<TodoViewmodel>(context,
+                                              listen: false)
+                                          .fetchNote();
+                                    },
+                                    child: Text(
+                                        AppLocalizations.of(context)!.reload))
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Center(
                           child: Column(
                             children: [
-                              Text(
-                                vm.error,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 4,
+                              Image.asset(
+                                "assets/images/logo.png",
+                                height: 48,
+                                width: 48,
                               ),
                               const SizedBox(
                                 height: 16,
                               ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Provider.of<TodoViewmodel>(context,
-                                            listen: false)
-                                        .fetchNote();
-                                  },
-                                  child: Text(
-                                      AppLocalizations.of(context)!.reload))
+                              Text(
+                                AppLocalizations.of(context)!.textHolder,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              )
                             ],
                           ),
-                        ),
-                      );
-                    } else {
-                      return Center(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              "assets/images/logo.png",
-                              height: 48,
-                              width: 48,
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.textHolder,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            )
-                          ],
-                        ),
-                      );
-                    }
-                  }))
-            ],
-          ),
-    
-    //========================================================
-    
-    //MARK: Add New Task Button
-    
-          Positioned(
-              left: 16,
-              right: 16,
-              bottom: 24,
-              height: 56,
-              child: MainBottomButton(
-                ontap: () {
-                  final todoViewmodel =
-                      Provider.of<TodoViewmodel>(context, listen: false);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddNewTaskScreen()),
-                  ).then((_) {
-                    todoViewmodel.fetchNote();
-                  });
-                },
-                buttonLabel:
-                    AppLocalizations.of(context)!.addNewTaskButtonTitle,
-              ))
-    
-    //========================================================
-        ],
+                        );
+                      }
+                    }))
+              ],
+            ),
+
+            //========================================================
+
+            //MARK: Add New Task Button
+
+            Positioned(
+                left: 16,
+                right: 16,
+                bottom: 24,
+                height: 56,
+                child: MainBottomButton(
+                  ontap: () {
+                    final todoViewmodel =
+                        Provider.of<TodoViewmodel>(context, listen: false);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddNewTaskScreen()),
+                    ).then((_) {
+                      todoViewmodel.fetchNote();
+                    });
+                  },
+                  buttonLabel:
+                      AppLocalizations.of(context)!.addNewTaskButtonTitle,
+                ))
+
+            //========================================================
+          ],
+        ),
       ),
     );
   }

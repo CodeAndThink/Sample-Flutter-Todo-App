@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ConverseTime {
@@ -8,9 +9,26 @@ class ConverseTime {
     return TimeOfDay(hour: hour, minute: minute);
   }
 
-  String timeFormat(String inputTime, BuildContext context) {
-    final time = parseTimeOfDay(inputTime);
-    final result = time.format(context);
-    return result;
+  String timeFormat(dynamic inputTime, BuildContext context) {
+    final TimeOfDay time;
+    if (inputTime is String) {
+      time = parseTimeOfDay(inputTime);
+    } else {
+      time = inputTime;
+    }
+
+    final Locale currentLocale = Localizations.localeOf(context);
+    if (Platform.isAndroid) {
+      return time.format(context);
+    }
+    if (Platform.isIOS) {
+      if (currentLocale.languageCode == 'en') {
+        return MaterialLocalizations.of(context)
+            .formatTimeOfDay(time, alwaysUse24HourFormat: false);
+      } else if (currentLocale.languageCode == 'vi') {
+        return time.format(context);
+      }
+    }
+    return time.format(context);
   }
 }
