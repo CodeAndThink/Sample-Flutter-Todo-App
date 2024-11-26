@@ -28,16 +28,15 @@ class _TodoScreenState extends State<TodoScreen> {
   void initState() {
     super.initState();
 
-    _scrollController.addListener(() {
-      if (_scrollController.position.atEdge) {
-        bool isTop = _scrollController.position.pixels == 0;
-        if (isTop) {
-          print("Đang ở đầu danh sách");
-        } else {
-          print("Đang ở cuối danh sách");
-        }
-      }
-    });
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.atEdge) {
+    //     bool isTop = _scrollController.position.pixels == 200;
+    //     if (isTop) {
+    //       Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
+    //     }
+    //   }
+    // });
+
     Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
   }
 
@@ -136,9 +135,9 @@ class _TodoScreenState extends State<TodoScreen> {
               SizedBox(
                 height: screenHeight * 0.08 < 76 ? 76 : screenHeight * 0.08,
               ),
-
-//MARK: Consumer - Main List
-
+    
+    //MARK: Consumer - Main List
+    
               SizedBox(
                   height: screenHeight * 0.75 - 56,
                   child: Consumer<TodoViewmodel>(builder: (context, vm, child) {
@@ -148,6 +147,7 @@ class _TodoScreenState extends State<TodoScreen> {
                       return Padding(
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: CustomScrollView(
+                            physics: const BouncingScrollPhysics(),
                             controller: _scrollController,
                             slivers: [
                               _listViewSection(vm.todoData),
@@ -222,11 +222,11 @@ class _TodoScreenState extends State<TodoScreen> {
                   }))
             ],
           ),
-
-//========================================================
-
-//MARK: Add New Task Button
-
+    
+    //========================================================
+    
+    //MARK: Add New Task Button
+    
           Positioned(
               left: 16,
               right: 16,
@@ -247,8 +247,8 @@ class _TodoScreenState extends State<TodoScreen> {
                 buttonLabel:
                     AppLocalizations.of(context)!.addNewTaskButtonTitle,
               ))
-
-//========================================================
+    
+    //========================================================
         ],
       ),
     );
@@ -268,8 +268,7 @@ class _TodoScreenState extends State<TodoScreen> {
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
-                Provider.of<TodoViewmodel>(context, listen: false)
-                    .fetchNote();
+                Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
               } else if (direction == DismissDirection.endToStart) {
                 Provider.of<TodoViewmodel>(context, listen: false)
                     .deleteNote(inputData[index]);
@@ -282,39 +281,50 @@ class _TodoScreenState extends State<TodoScreen> {
               child: const Icon(Icons.save, color: Colors.white),
             ),
             secondaryBackground: Container(
-              color: Colors.red,
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: const Icon(Icons.delete, color: Colors.white),
-            ),
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Icon(Icons.delete,
+                    color: Theme.of(context).colorScheme.surface)),
             child: NoteCard(
-              data: inputData[index],
-              onTap: () {
-                final todoViewmodel =
-                    Provider.of<TodoViewmodel>(context, listen: false);
-                Provider.of<AddNewTaskViewmodel>(context, listen: false)
-                    .setData(inputData[index]);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddNewTaskScreen(),
-                  ),
-                ).then((_) {
+                data: inputData[index],
+                onTap: () {
+                  final todoViewmodel =
+                      Provider.of<TodoViewmodel>(context, listen: false);
                   Provider.of<AddNewTaskViewmodel>(context, listen: false)
-                      .setData(null);
-                  todoViewmodel.fetchNote();
-                });
-              },
-              checkBoxAction: (value) {
-                Provider.of<TodoViewmodel>(context, listen: false)
-                    .updateNote(inputData[index]);
-              },
-              isTop: isTop,
-              isBottom: isBottom,
-            ),
+                      .setData(inputData[index]);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddNewTaskScreen(),
+                    ),
+                  ).then((_) {
+                    Provider.of<AddNewTaskViewmodel>(context, listen: false)
+                        .setData(null);
+                    todoViewmodel.fetchNote();
+                  });
+                },
+                checkBoxAction: (value) {
+                  Provider.of<TodoViewmodel>(context, listen: false)
+                      .updateNote(inputData[index]);
+                },
+                isTop: isTop,
+                isBottom: isBottom),
           );
         },
         childCount: inputData.length,
+      ),
+    );
+  }
+
+//========================================================
+
+//MARK: Bottom Notification
+
+  void bottomNotification(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.endScrollNotification),
       ),
     );
   }

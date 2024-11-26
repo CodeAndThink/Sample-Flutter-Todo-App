@@ -14,13 +14,21 @@ class Alert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
-      content: Text(content),
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+      ),
+      content: Text(
+        content,
+        textAlign: TextAlign.center,
+      ),
       actions: [
         Center(
           child: ElevatedButton(
             onPressed: action,
-            child: Text(AppLocalizations.of(context)!.ok),
+            child: Text(
+              AppLocalizations.of(context)!.ok,
+            ),
           ),
         ),
       ],

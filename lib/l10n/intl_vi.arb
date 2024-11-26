@@ -4,6 +4,10 @@
   "@ok": {
     "description": "Nhãn cho hành động xác nhận"
   },
+  "delete": "Xoá",
+  "@delete": {
+    "description": "Nhãn cho hành động xoá"
+  },
   "cancel": "Hủy",
   "@cancel": {
     "description": "Nhãn cho hành động hủy bỏ"
@@ -51,6 +55,18 @@
   "passwordHint": "Password",
   "@passwordHint": {
     "description": "Gợi ý cho trường nhập mật khẩu"
+  },
+  "usernameLabel": "Tên người dùng",
+  "@usernameLabel": {
+    "description": "Nhãn cho trường nhập tên người dùng"
+  },
+  "passwordLabel": "Mật khẩu",
+  "@passwordLabel": {
+    "description": "Nhãn cho trường nhập mật khẩu"
+  },
+  "repasswordLabel": "Xác nhận mật khẩu",
+  "@repasswordLabel": {
+    "description": "Nhãn cho trường nhập lại mật khẩu để xác nhận"
   },
   "alreadyHaveAccount": "Bạn đã có tài khoản?",
   "@alreadyHaveAccount": {
@@ -223,5 +239,9 @@
   "error_server": "Lỗi server. Vui lòng thử lại sau.",
   "@error_server": {
     "description": "Thông báo lỗi này được hiển thị khi có vấn đề với server hoặc dịch vụ backend."
+  },
+  "endScrollNotification": "Đây là cuối danh sách!",
+  "@endScrollNotification": {
+    "description": "Thông báo này xuất hiện khi người dùng kéo đến điểm cuối của danh sách"
   }
 }

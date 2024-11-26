@@ -4,20 +4,49 @@ import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilis/converse_time.dart';
 
-class NoteCard extends StatelessWidget {
+class NoteCard extends StatefulWidget {
   final NoteModel data;
   final VoidCallback onTap;
   final Function(bool value) checkBoxAction;
   final bool isTop;
   final bool isBottom;
 
-  const NoteCard(
-      {super.key,
-      required this.data,
-      required this.onTap,
-      required this.checkBoxAction,
-      required this.isTop,
-      required this.isBottom});
+  const NoteCard({
+    super.key,
+    required this.data,
+    required this.onTap,
+    required this.checkBoxAction,
+    required this.isTop,
+    required this.isBottom,
+  });
+
+  @override
+  NoteCardState createState() => NoteCardState();
+}
+
+class NoteCardState extends State<NoteCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+
+    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.0)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   String _cateIconSelected(int cateNumber) {
     switch (cateNumber) {
@@ -46,11 +75,11 @@ class NoteCard extends StatelessWidget {
   }
 
   List<double> borderRadiusCal() {
-    if (isTop && isBottom) {
+    if (widget.isTop && widget.isBottom) {
       return [10, 10, 10, 10];
-    } else if (isTop) {
+    } else if (widget.isTop) {
       return [10, 10, 0, 0];
-    } else if (isBottom) {
+    } else if (widget.isBottom) {
       return [0, 0, 10, 10];
     } else {
       return [0, 0, 0, 0];
@@ -59,84 +88,92 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Opacity(
-        opacity: data.status ? 0.5 : 1,
-        child: SizedBox(
-          height: 80,
-          child: Card(
-            margin: const EdgeInsets.all(1),
-            color: Theme.of(context).colorScheme.secondary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(borderRadiusCal()[0]),
-                topRight: Radius.circular(borderRadiusCal()[1]),
-                bottomLeft: Radius.circular(borderRadiusCal()[2]),
-                bottomRight: Radius.circular(borderRadiusCal()[3]),
+    return FadeTransition(
+      opacity: _opacityAnimation,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: Opacity(
+          opacity: widget.data.status ? 0.5 : 1,
+          child: SizedBox(
+            height: 80,
+            child: Card(
+              margin: const EdgeInsets.all(1),
+              color: Theme.of(context).colorScheme.secondary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(borderRadiusCal()[0]),
+                  topRight: Radius.circular(borderRadiusCal()[1]),
+                  bottomLeft: Radius.circular(borderRadiusCal()[2]),
+                  bottomRight: Radius.circular(borderRadiusCal()[3]),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Center(
-                child: Row(
-                  children: [
-                    ClipOval(
-                      child: Container(
-                        color: _cateIconBackgroundColor(data.category),
-                        width: 48,
-                        height: 48,
-                        child: Center(
-                          child: SvgPicture.asset(
-                            _cateIconSelected(data.category),
-                            width: 24,
-                            height: 24,
-                            fit: BoxFit.contain,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: Center(
+                  child: Row(
+                    children: [
+                      ClipOval(
+                        child: Container(
+                          color: _cateIconBackgroundColor(widget.data.category),
+                          width: 48,
+                          height: 48,
+                          child: Center(
+                            child: SvgPicture.asset(
+                              _cateIconSelected(widget.data.category),
+                              width: 24,
+                              height: 24,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            data.taskTitle,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall
-                                ?.copyWith(
-                                    decoration: data.status
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.data.taskTitle,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                      decoration: widget.data.status
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none),
+                            ),
+                            if (widget.data.time != null) ...[
+                              const SizedBox(height: 2),
+                              Text(
+                                ConverseTime()
+                                    .timeFormat(widget.data.time!, context)
+                                    .toString(),
+                                style: TextStyle(
+                                    decoration: widget.data.status
                                         ? TextDecoration.lineThrough
                                         : TextDecoration.none),
-                          ),
-                          if (data.time != null) ...[
-                            const SizedBox(height: 2),
-                            Text(
-                              ConverseTime()
-                                  .timeFormat(data.time!, context)
-                                  .toString(),
-                              style: TextStyle(
-                                  decoration: data.status
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none),
-                            ),
+                              ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
-                    ),
-                    Checkbox(
-                      side: BorderSide(
-                          color: Theme.of(context).colorScheme.primary),
-                      value: data.status,
-                      onChanged: (value) {
-                        
-                        checkBoxAction(value!);
-                      },
-                    )
-                  ],
+                      Checkbox(
+                        side: BorderSide(
+                            color: Theme.of(context).colorScheme.primary),
+                        value: widget.data.status,
+                        onChanged: (value) {
+                          _controller.forward();
+                          _controller.addStatusListener((status) {
+                            if (status == AnimationStatus.completed) {
+                              widget.checkBoxAction(value!);
+                              _controller.removeStatusListener((status) {});
+                            }
+                          });
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

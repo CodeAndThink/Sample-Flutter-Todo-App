@@ -4,6 +4,10 @@
   "@ok": {
     "description": "Label for confirmation actions"
   },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Label for delete actions"
+  },
   "cancel": "Cancel",
   "@cancel": {
     "description": "Label for cancelling actions"
@@ -56,6 +60,18 @@
   "@alreadyHaveAccount": {
     "description": "This text is displayed on the registration screen as a prompt for users who already have an account to navigate to the login screen."
   },
+  "usernameLabel": "Username",
+  "@usernameLabel": {
+    "description": "Label for the username input field"
+  },
+  "passwordLabel": "Password",
+  "@passwordLabel": {
+    "description": "Label for the password input field"
+  },
+  "repasswordLabel": "Confirm Password",
+  "@repasswordLabel": {
+    "description": "Label for the confirm password input field"
+  },
   "becomeNewMember": "Become a new member?",
   "@becomeNewMember": {
     "description": "This text is displayed on the login screen as a prompt for users to navigate to the registration screen to create a new account."
@@ -80,7 +96,7 @@
   "@registerScreenTitle": {
     "description": "Title for the registration screen"
   },
-  "repasswordHint": "Password",
+  "repasswordHint": "Confirm Password",
   "@repasswordHint": {
     "description": "Hint for the re-enter password input field"
   },
@@ -223,5 +239,9 @@
   "error_server": "Server error. Please try again later.",
   "@error_server": {
     "description": "This error message is displayed when there is a problem with the server or backend service."
+  },
+  "endScrollNotification": "This is the end of list",
+  "@endScrollNotification": {
+    "description": "This is notification when user scroll to the last of the to do list"
   }
 }

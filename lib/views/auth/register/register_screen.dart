@@ -107,8 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Stack(children: [
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
-          child: Center(
-              child: Wrap(children: [
+          child: Wrap(children: [
             Container(
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -116,122 +115,153 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.registerScreenTitle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.copyWith(
-                              color: Theme.of(context).colorScheme.primary),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.registerScreenTitle,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge
+                            ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.usernameLabel,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
 
-//MARK: Username Textbox
+                          //MARK: Username Textbox
 
-                    CustomTextBox(
-                      controller: _username,
-                      hintText: AppLocalizations.of(context)!.usernameHint,
-                      lineNumber: 1,
-                      textError: _errorUsernameText,
-                      onTap: _resetErrorText,
-                    ),
+                          CustomTextBox(
+                            controller: _username,
+                            hintText:
+                                AppLocalizations.of(context)!.usernameHint,
+                            lineNumber: 1,
+                            textError: _errorUsernameText,
+                            onTap: _resetErrorText,
+                          ),
 
-//========================================================
+                          //========================================================
 
-                    const SizedBox(
-                      height: 16,
-                    ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.passwordLabel,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
 
-//MARK: Password Textbox
+                          //MARK: Password Textbox
 
-                    CustomTextBox(
-                      controller: _password,
-                      hintText: AppLocalizations.of(context)!.passwordHint,
-                      lineNumber: 1,
-                      isSecure: true,
-                      textError: _errorPasswordText,
-                      onTap: _resetErrorText,
-                    ),
+                          CustomTextBox(
+                            controller: _password,
+                            hintText:
+                                AppLocalizations.of(context)!.passwordHint,
+                            lineNumber: 1,
+                            isSecure: true,
+                            textError: _errorPasswordText,
+                            onTap: _resetErrorText,
+                          ),
 
-//========================================================
+                          //========================================================
 
-                    const SizedBox(
-                      height: 16,
-                    ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.repasswordLabel,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
 
-//MARK: Confirm Password Textbox
+                          //MARK: Confirm Password Textbox
 
-                    CustomTextBox(
-                      controller: _repassword,
-                      hintText: AppLocalizations.of(context)!.repasswordHint,
-                      lineNumber: 1,
-                      isSecure: true,
-                      textError: _errorRepasswordText,
-                      onTap: _resetErrorText,
-                    ),
+                          CustomTextBox(
+                            controller: _repassword,
+                            hintText:
+                                AppLocalizations.of(context)!.repasswordHint,
+                            lineNumber: 1,
+                            isSecure: true,
+                            textError: _errorRepasswordText,
+                            onTap: _resetErrorText,
+                          ),
 
-//========================================================
+                          //========================================================
 
-                    const SizedBox(
-                      height: 16,
-                    ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                        ],
+                      ),
+                      //MARK: Register Button
 
-//MARK: Register Button
+                      Row(children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: 56,
+                            child: MainBottomButton(
+                                ontap: () {
+                                  if (_username.text.isNotEmpty &&
+                                      _password.text.isNotEmpty &&
+                                      _repassword.text == _password.text &&
+                                      isEmail(_username.text)) {
+                                    Provider.of<RegisterViewmodel>(context,
+                                            listen: false)
+                                        .register(
+                                            _username.text, _password.text);
+                                  } else {
+                                    _validateInput();
+                                  }
+                                },
+                                buttonLabel: AppLocalizations.of(context)!
+                                    .registerButtonTitle),
+                          ),
+                        ),
+                      ]),
+                      
+                      //========================================================
 
-                    SizedBox(
-                      height: 56,
-                      child: MainBottomButton(
-                          ontap: () {
-                            if (_username.text.isNotEmpty &&
-                                _password.text.isNotEmpty &&
-                                _repassword.text == _password.text &&
-                                isEmail(_username.text)) {
-                              Provider.of<RegisterViewmodel>(context,
-                                      listen: false)
-                                  .register(_username.text, _password.text);
-                            } else {
-                              _validateInput();
-                            }
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.alreadyHaveAccount,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+
+                      //MARK: Move To Login Screen Button
+
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
                           },
-                          buttonLabel: AppLocalizations.of(context)!
-                              .registerButtonTitle),
-                    ),
+                          child: Text(
+                            AppLocalizations.of(context)!.loginButtonTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(color: Colors.blueAccent),
+                          ))
 
-//========================================================
-
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.alreadyHaveAccount,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-
-//MARK: Move To Login Screen Button
-
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)!.loginButtonTitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: Colors.blueAccent),
-                        ))
-
-//========================================================
-                  ],
-                ),
+                      //========================================================
+                    ]),
               ),
             ),
-          ])),
+          ]),
         ),
 
 //MARK: Consumer
