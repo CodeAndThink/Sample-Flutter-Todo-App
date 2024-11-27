@@ -232,7 +232,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ]),
-                      
+
                       //========================================================
 
                       const SizedBox(
@@ -337,7 +337,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return Alert(
           title: title,
           content: content,
-          action: action,
+          mainAction: action,
+          mainActionLabel: AppLocalizations.of(context)!.ok,
         );
       },
     );

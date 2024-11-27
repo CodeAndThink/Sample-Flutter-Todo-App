@@ -4,6 +4,14 @@
   "@ok": {
     "description": "Nhãn cho hành động xác nhận"
   },
+  "warning": "Cảnh báo",
+  "@warning": {
+    "description": "Cảnh báo chung"
+  },
+  "exitWarning": "Tất cả thay đổi sẽ mất nếu bạn thoát!",
+  "@exitWarning": {
+    "description": "Đây "
+  },
   "delete": "Xoá",
   "@delete": {
     "description": "Nhãn cho hành động xoá"

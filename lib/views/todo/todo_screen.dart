@@ -83,62 +83,77 @@ class _TodoScreenState extends State<TodoScreen> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,
               ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: screenHeight > screenWidth ? 44 : 24,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 16),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                widget.toggleLocale();
-                              },
-                              icon: SvgPicture.asset("assets/icons/lang.svg",
-                                  colorFilter: const ColorFilter.mode(
-                                      Colors.white, BlendMode.srcATop))),
-                          Expanded(
-                            child: Text(
-                              formattedDate,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
+              child: Stack(
+                children: [
+                  Positioned(
+                      right: screenWidth * 0.6,
+                      top: screenWidth * 0.2,
+                      child: Image.asset('assets/images/circle_shape_big.png')),
+                  Positioned(
+                      left: screenWidth * 0.8,
+                      top: 0,
+                      child:
+                          Image.asset('assets/images/circle_shape_small.png')),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: screenHeight > screenWidth ? 44 : 24,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 16),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    widget.toggleLocale();
+                                  },
+                                  icon: SvgPicture.asset(
+                                      "assets/icons/lang.svg",
+                                      colorFilter: const ColorFilter.mode(
+                                          Colors.white, BlendMode.srcATop))),
+                              Expanded(
+                                child: Text(
+                                  formattedDate,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    Provider.of<TodoViewmodel>(context,
+                                            listen: false)
+                                        .signout();
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen(
+                                              toggleLocale:
+                                                  widget.toggleLocale)),
+                                      (route) => false,
+                                    );
+                                  },
+                                  icon: SvgPicture.asset(
+                                    "assets/icons/signout.svg",
+                                    colorFilter: const ColorFilter.mode(
+                                        Colors.redAccent, BlendMode.srcATop),
+                                  ))
+                            ],
                           ),
-                          IconButton(
-                              onPressed: () {
-                                Provider.of<TodoViewmodel>(context,
-                                        listen: false)
-                                    .signout();
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen(
-                                          toggleLocale: widget.toggleLocale)),
-                                  (route) => false,
-                                );
-                              },
-                              icon: SvgPicture.asset(
-                                "assets/icons/signout.svg",
-                                colorFilter: const ColorFilter.mode(
-                                    Colors.redAccent, BlendMode.srcATop),
-                              ))
-                        ],
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.todoScreenTitle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.copyWith(color: Colors.white),
-                    ),
-                  ]),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.todoScreenTitle,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                      ]),
+                ],
+              ),
             ),
             Column(
               children: [

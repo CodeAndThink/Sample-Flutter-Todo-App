@@ -281,7 +281,8 @@ class _LoginScreenState extends State<LoginScreen> {
         return Alert(
           title: title,
           content: content,
-          action: action,
+          mainAction: action,
+          mainActionLabel: AppLocalizations.of(context)!.ok,
         );
       },
     );

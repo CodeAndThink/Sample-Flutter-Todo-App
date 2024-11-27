@@ -47,3 +47,5 @@ flutter:
   - assets/icons/lang.svg
   - assets/icons/signout.svg
   - assets/gifs/loading.gif
+  - assets/images/circle_shape_big.png
+  - assets/images/circle_shape_small.png

@@ -4,6 +4,14 @@
   "@ok": {
     "description": "Label for confirmation actions"
   },
+  "warning": "Warning",
+  "@warning": {
+    "description": "Generic warning message"
+  },
+  "exitWarning": "All changes will lost after exit!",
+  "@exitWarning": {
+    "description": "This is warning message when user exit but not save data"
+  },
   "delete": "Delete",
   "@delete": {
     "description": "Label for delete actions"

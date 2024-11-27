@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-class CustomTextBox extends StatelessWidget {
-  const CustomTextBox({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.lineNumber,
-    this.isSecure,
-    this.textError,
-    required this.onTap,
-  });
+class DateTimeTextBox extends StatelessWidget {
+  const DateTimeTextBox(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      required this.iconPath,
+      this.errorText,
+      required this.action});
   final TextEditingController controller;
   final String hintText;
-  final int lineNumber;
-  final bool? isSecure;
-  final String? textError;
-  final VoidCallback onTap;
+  final String iconPath;
+  final String? errorText;
+  final Future<void> Function(BuildContext context) action;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +21,8 @@ class CustomTextBox extends StatelessWidget {
         valueListenable: controller,
         builder: (context, value, child) {
           return TextField(
-            onTap: onTap,
             controller: controller,
-            keyboardType: TextInputType.multiline,
-            maxLines: lineNumber,
-            obscureText: isSecure == null ? false : isSecure!,
+            readOnly: true,
             decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: Theme.of(context)
@@ -43,16 +38,13 @@ class CustomTextBox extends StatelessWidget {
                     width: 2.0,
                   ),
                 ),
-                suffixIcon: value.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () => controller.clear(),
-                      )
-                    : null,
-                errorText: textError),
-                onChanged: (_) {
-                  
-                },
+                suffixIcon: IconButton(
+                  icon: SvgPicture.asset(iconPath),
+                  onPressed: () async {
+                    action(context);
+                  },
+                ),
+                errorText: errorText),
           );
         });
   }
