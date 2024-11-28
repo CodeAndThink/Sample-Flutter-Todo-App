@@ -163,13 +163,16 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   @override
   void dispose() {
     super.dispose();
+    _taskTitle.dispose();
+    _date.dispose();
+    _time.dispose();
+    _content.dispose();
     _vm.removeListener(_listener);
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final screenHeight = screenSize.height;
 
     return Scaffold(
         body: SafeArea(

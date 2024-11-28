@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/setting_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
+import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/theme/theme.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
@@ -11,6 +12,7 @@ import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/views/auth/login/login_view_model.dart';
 import 'package:todo_app/views/auth/register/register_view_model.dart';
+import 'package:todo_app/views/todo/todo_screen.dart';
 import 'package:todo_app/views/todo/todo_view_model.dart';
 import 'configs/configs.dart';
 
@@ -23,6 +25,8 @@ void main() async {
   );
 
   final lastLocale = await SettingManager.shared.getUserLocale();
+
+  final lastUserLogin = await UserManager.shared.getUserData();
 
   runApp(MultiProvider(
     providers: [
@@ -39,13 +43,15 @@ void main() async {
     ],
     child: MainApp(
       lastLocale: lastLocale,
+      lastUserLogin: lastUserLogin,
     ),
   ));
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key, required this.lastLocale});
+  const MainApp({super.key, required this.lastLocale, this.lastUserLogin});
   final Locale lastLocale;
+  final UserModel? lastUserLogin;
 
   @override
   MainAppState createState() => MainAppState();
@@ -84,7 +90,11 @@ class MainAppState extends State<MainApp> {
       ],
       home: Scaffold(
         body: Center(
-          child: LoginScreen(toggleLocale: _toggleLocale),
+          child: widget.lastUserLogin != null
+              ? Supabase.instance.client.auth.currentSession!.isExpired == false
+                  ? TodoScreen(toggleLocale: _toggleLocale)
+                  : LoginScreen(toggleLocale: _toggleLocale)
+              : LoginScreen(toggleLocale: _toggleLocale),
         ),
       ),
     );

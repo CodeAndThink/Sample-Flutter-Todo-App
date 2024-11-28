@@ -122,8 +122,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     super.dispose();
-
     _vm.removeListener(_listener);
+    _username.dispose();
+    _password.dispose();
+    _repassword.dispose();
   }
 
   @override
