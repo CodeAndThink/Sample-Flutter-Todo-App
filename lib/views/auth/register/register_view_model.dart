@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/network/api_provider.dart';
 
-class RegisterViewmodel extends ChangeNotifier {
+class RegisterViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -13,7 +13,7 @@ class RegisterViewmodel extends ChangeNotifier {
 
   late ApiProvider _provider;
 
-  RegisterViewmodel(provider) {
+  RegisterViewModel(provider) {
     _provider = provider;
   }
 

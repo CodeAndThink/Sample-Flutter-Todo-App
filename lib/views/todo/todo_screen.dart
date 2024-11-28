@@ -8,10 +8,10 @@ import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilis/capitalize.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_screen.dart';
-import 'package:todo_app/views/add_new_task/add_new_task_viewmodel.dart';
+import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/todo/item/note_card.dart';
-import 'package:todo_app/views/todo/todo_viewmodel.dart';
+import 'package:todo_app/views/todo/todo_view_model.dart';
 
 class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key, required this.toggleLocale});
@@ -32,12 +32,12 @@ class _TodoScreenState extends State<TodoScreen> {
       if (_scrollController.position.atEdge) {
         bool isTop = _scrollController.position.pixels == 100;
         if (isTop) {
-          Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
+          Provider.of<TodoViewModel>(context, listen: false).fetchNote();
         }
       }
     });
 
-    Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
+    Provider.of<TodoViewModel>(context, listen: false).fetchNote();
   }
 
   String formatDate(DateTime date) {
@@ -124,7 +124,7 @@ class _TodoScreenState extends State<TodoScreen> {
                               ),
                               IconButton(
                                   onPressed: () {
-                                    Provider.of<TodoViewmodel>(context,
+                                    Provider.of<TodoViewModel>(context,
                                             listen: false)
                                         .signout();
                                     Navigator.pushAndRemoveUntil(
@@ -169,7 +169,7 @@ class _TodoScreenState extends State<TodoScreen> {
                         ? screenHeight * 0.82 - 96
                         : screenHeight * 0.61 - 96,
                     child:
-                        Consumer<TodoViewmodel>(builder: (context, vm, child) {
+                        Consumer<TodoViewModel>(builder: (context, vm, child) {
                       if (vm.isLoading) {
                         return const Loading();
                       } else if (vm.error.isEmpty) {
@@ -218,7 +218,7 @@ class _TodoScreenState extends State<TodoScreen> {
                                 ),
                                 ElevatedButton(
                                     onPressed: () {
-                                      Provider.of<TodoViewmodel>(context,
+                                      Provider.of<TodoViewModel>(context,
                                               listen: false)
                                           .fetchNote();
                                     },
@@ -265,7 +265,7 @@ class _TodoScreenState extends State<TodoScreen> {
                 child: MainBottomButton(
                   ontap: () {
                     final todoViewmodel =
-                        Provider.of<TodoViewmodel>(context, listen: false);
+                        Provider.of<TodoViewModel>(context, listen: false);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -299,9 +299,9 @@ class _TodoScreenState extends State<TodoScreen> {
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
-                Provider.of<TodoViewmodel>(context, listen: false).fetchNote();
+                Provider.of<TodoViewModel>(context, listen: false).fetchNote();
               } else if (direction == DismissDirection.endToStart) {
-                Provider.of<TodoViewmodel>(context, listen: false)
+                Provider.of<TodoViewModel>(context, listen: false)
                     .deleteNote(inputData[index]);
               }
             },
@@ -321,8 +321,8 @@ class _TodoScreenState extends State<TodoScreen> {
                 data: inputData[index],
                 onTap: () {
                   final todoViewmodel =
-                      Provider.of<TodoViewmodel>(context, listen: false);
-                  Provider.of<AddNewTaskViewmodel>(context, listen: false)
+                      Provider.of<TodoViewModel>(context, listen: false);
+                  Provider.of<AddNewTaskViewModel>(context, listen: false)
                       .setData(inputData[index]);
                   Navigator.push(
                     context,
@@ -330,13 +330,13 @@ class _TodoScreenState extends State<TodoScreen> {
                       builder: (context) => const AddNewTaskScreen(),
                     ),
                   ).then((_) {
-                    Provider.of<AddNewTaskViewmodel>(context, listen: false)
+                    Provider.of<AddNewTaskViewModel>(context, listen: false)
                         .setData(null);
                     todoViewmodel.fetchNote();
                   });
                 },
                 checkBoxAction: (value) {
-                  Provider.of<TodoViewmodel>(context, listen: false)
+                  Provider.of<TodoViewModel>(context, listen: false)
                       .updateNote(inputData[index]);
                 },
                 isTop: isTop,

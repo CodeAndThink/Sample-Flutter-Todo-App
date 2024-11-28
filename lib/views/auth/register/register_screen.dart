@@ -6,7 +6,7 @@ import 'package:todo_app/common/views/alert.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
-import 'package:todo_app/views/auth/register/register_viewmodel.dart';
+import 'package:todo_app/views/auth/register/register_view_model.dart';
 import 'package:validators/validators.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -25,9 +25,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _errorPasswordText;
   String? _errorRepasswordText;
 
+  late RegisterViewModel _vm;
+  late VoidCallback _listener;
+
   @override
   void initState() {
     super.initState();
+
+    _vm = Provider.of<RegisterViewModel>(context, listen: false);
+    _listener = () {
+      _stateHandling();
+    };
+
+    _vm.addListener(_listener);
+  }
+
+  void _stateHandling() {
+    if (_vm.isLoading) {
+      const Loading();
+    } else if (_vm.token.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showAlert(context, AppLocalizations.of(context)!.success,
+            AppLocalizations.of(context)!.registerSuccess, () {
+          Provider.of<RegisterViewModel>(context, listen: false)
+              .resetAttributes();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        });
+      });
+    } else if (_vm.error.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showAlert(context, AppLocalizations.of(context)!.error,
+            AppLocalizations.of(context)!.registerFailure, () {
+          Navigator.pop(context);
+        });
+      });
+    }
   }
 
   void _resetErrorText() {
@@ -90,6 +122,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     super.dispose();
+
+    _vm.removeListener(_listener);
   }
 
   @override
@@ -219,7 +253,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       _password.text.isNotEmpty &&
                                       _repassword.text == _password.text &&
                                       isEmail(_username.text)) {
-                                    Provider.of<RegisterViewmodel>(context,
+                                    Provider.of<RegisterViewModel>(context,
                                             listen: false)
                                         .register(
                                             _username.text, _password.text);
@@ -266,34 +300,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: Consumer
 
-        Consumer<RegisterViewmodel>(
-          builder: (context, vm, child) {
-            if (vm.isLoading) {
-              return const Loading();
-            } else if (vm.token.isNotEmpty) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                _showAlert(context, AppLocalizations.of(context)!.success,
-                    AppLocalizations.of(context)!.registerSuccess, () {
-                  Provider.of<RegisterViewmodel>(context, listen: false)
-                      .resetAttributes();
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                });
-              });
-              return Container();
-            } else if (vm.error.isNotEmpty) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                _showAlert(context, AppLocalizations.of(context)!.error,
-                    AppLocalizations.of(context)!.registerFailure, () {
-                  Navigator.pop(context);
-                });
-              });
+        // Consumer<RegisterViewModel>(
+        //   builder: (context, vm, child) {
+        //     if (vm.isLoading) {
+        //       return const Loading();
+        //     } else if (vm.token.isNotEmpty) {
+        //       WidgetsBinding.instance.addPostFrameCallback((_) {
+        //         _showAlert(context, AppLocalizations.of(context)!.success,
+        //             AppLocalizations.of(context)!.registerSuccess, () {
+        //           Provider.of<RegisterViewModel>(context, listen: false)
+        //               .resetAttributes();
+        //           Navigator.of(context).popUntil((route) => route.isFirst);
+        //         });
+        //       });
+        //       return Container();
+        //     } else if (vm.error.isNotEmpty) {
+        //       WidgetsBinding.instance.addPostFrameCallback((_) {
+        //         _showAlert(context, AppLocalizations.of(context)!.error,
+        //             AppLocalizations.of(context)!.registerFailure, () {
+        //           Navigator.pop(context);
+        //         });
+        //       });
 
-              return Container();
-            } else {
-              return Container();
-            }
-          },
-        )
+        //       return Container();
+        //     } else {
+        //       return Container();
+        //     }
+        //   },
+        // )
 
 //========================================================
       ]),

@@ -4,7 +4,7 @@ import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
-class TodoViewmodel extends ChangeNotifier {
+class TodoViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -23,7 +23,7 @@ class TodoViewmodel extends ChangeNotifier {
   final List<NoteModel> _doneData = [];
   List<NoteModel> get doneData => _doneData;
 
-  TodoViewmodel(provider, userManager, authManager) {
+  TodoViewModel(provider, userManager, authManager) {
     _provider = provider;
     _userManager = userManager;
     _authManager = authManager;

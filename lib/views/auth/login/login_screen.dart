@@ -5,7 +5,7 @@ import 'package:todo_app/common/views/alert.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
-import 'package:todo_app/views/auth/login/login_viewmodel.dart';
+import 'package:todo_app/views/auth/login/login_view_model.dart';
 import 'package:todo_app/views/auth/register/register_screen.dart';
 import 'package:todo_app/views/todo/todo_screen.dart';
 import 'package:validators/validators.dart';
@@ -36,9 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    Provider.of<LoginViewmodel>(context, listen: false).resetAttributes();
+    Provider.of<LoginViewModel>(context, listen: false).resetAttributes();
 
-    Provider.of<LoginViewmodel>(context, listen: false).checkLastLogin();
+    Provider.of<LoginViewModel>(context, listen: false).checkLastLogin();
   }
 
   void _resetErrorText() {
@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if (_username.text.isNotEmpty &&
                                           _password.text.isNotEmpty &&
                                           isEmail(_username.text)) {
-                                        Provider.of<LoginViewmodel>(context,
+                                        Provider.of<LoginViewModel>(context,
                                                 listen: false)
                                             .login(
                                                 _username.text, _password.text);
@@ -235,13 +235,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Consumer
 
-          Consumer<LoginViewmodel>(
+          Consumer<LoginViewModel>(
             builder: (context, vm, child) {
               if (vm.isLoading) {
                 return const Loading();
               } else if (vm.token.isNotEmpty) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Provider.of<LoginViewmodel>(context, listen: false)
+                  Provider.of<LoginViewModel>(context, listen: false)
                       .resetAttributes();
                   Navigator.pushAndRemoveUntil(
                     context,

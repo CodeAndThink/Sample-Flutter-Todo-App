@@ -4,7 +4,7 @@ import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
-class LoginViewmodel extends ChangeNotifier {
+class LoginViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -18,7 +18,7 @@ class LoginViewmodel extends ChangeNotifier {
   late UserManager _userManager;
   late AuthManager _authManager;
 
-  LoginViewmodel(provider, userManager, authManager) {
+  LoginViewModel(provider, userManager, authManager) {
     _provider = provider;
     _userManager = userManager;
     _authManager = authManager;

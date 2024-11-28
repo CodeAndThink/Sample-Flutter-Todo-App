@@ -11,7 +11,7 @@ import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilis/converse_time.dart';
-import 'package:todo_app/views/add_new_task/add_new_task_viewmodel.dart';
+import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 
 class AddNewTaskScreen extends StatefulWidget {
   const AddNewTaskScreen({super.key});
@@ -29,20 +29,60 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   String? _errorTaskTitleText;
   String? _errorDateText;
   NoteModel? data;
+  late AddNewTaskViewModel _vm;
+  late VoidCallback _listener;
 
   @override
   void initState() {
     super.initState();
+
+    _vm = Provider.of<AddNewTaskViewModel>(context, listen: false);
+
+    _listener = () {
+      _stateHandling();
+    };
+
+    _vm.addListener(_listener);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    data = Provider.of<AddNewTaskViewmodel>(context, listen: false).data;
+    data = Provider.of<AddNewTaskViewModel>(context, listen: false).data;
 
     if (data != null) {
       _setInitialData(data!, context);
+    }
+  }
+
+  void _stateHandling() {
+    if (_vm.isLoading) {
+      const Loading();
+    } else if (_vm.error.isNotEmpty) {
+      _vm.resetAlert();
+
+      _showAlert(
+          context,
+          AppLocalizations.of(context)!.error,
+          data != null
+              ? AppLocalizations.of(context)!.updateNoteError
+              : AppLocalizations.of(context)!.createNewNoteError, () {
+        Navigator.pop(context);
+      }, AppLocalizations.of(context)!.ok, null, null);
+    } else if (_vm.isSuccess) {
+      _vm.resetAlert();
+
+      _showAlert(
+          context,
+          AppLocalizations.of(context)!.success,
+          data != null
+              ? AppLocalizations.of(context)!.updateNoteSuccess
+              : AppLocalizations.of(context)!.createNewNoteSuccess, () {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }, AppLocalizations.of(context)!.ok, null, null);
+    } else {
+      Expanded(child: Container());
     }
   }
 
@@ -123,6 +163,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   @override
   void dispose() {
     super.dispose();
+    _vm.removeListener(_listener);
   }
 
   @override
@@ -134,205 +175,204 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         body: SafeArea(
       top: false,
       bottom: false,
-      child: Stack(
+      child: Column(
         children: [
           _customAppBar(context),
-          Positioned(
-            top: screenHeight * 0.15 < 96 ? 96 : screenHeight * 0.15,
-            left: 0,
-            right: 0,
-            bottom: 80,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.taskTitleLabel,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-
-                        //MARK: Task Title
-
-                        CustomTextBox(
-                          controller: _taskTitle,
-                          hintText: AppLocalizations.of(context)!.taskHint,
-                          lineNumber: 1,
-                          textError: _errorTaskTitleText,
-                          onTap: _resetErrorText,
-                        )
-
-                        //========================================================
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //MARK: Category
-
-                    Row(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.categoryLabel,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(
-                          width: 24,
-                        ),
-                        CircleButton(
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 80),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  
+                  //MARK: Task title
+          
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.taskTitleLabel,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+          
+                      //MARK: Task Title
+          
+                      CustomTextBox(
+                        controller: _taskTitle,
+                        hintText: AppLocalizations.of(context)!.taskHint,
+                        lineNumber: 1,
+                        textError: _errorTaskTitleText,
+                        onTap: _resetErrorText,
+                      )
+          
+                      //========================================================
+                    ],
+                  ),
+                  
+                  //========================================================
+                  
+                  const SizedBox(
+                    height: 24,
+                  ),
+          
+                  //MARK: Category
+          
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.categoryLabel,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      CircleButton(
+                        onTap: () {
+                          setState(() {
+                            _categorySelected = 0;
+                          });
+                        },
+                        backgroundColor: Configs.noteCategoryBackgroundColor,
+                        iconPath: "assets/icons/note.svg",
+                        isSetAlpha: _categorySelected != 0,
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      CircleButton(
                           onTap: () {
                             setState(() {
-                              _categorySelected = 0;
+                              _categorySelected = 1;
                             });
                           },
-                          backgroundColor: Configs.noteCategoryBackgroundColor,
-                          iconPath: "assets/icons/note.svg",
-                          isSetAlpha: _categorySelected != 0,
+                          backgroundColor:
+                              Configs.calendarCategoryBackgroundColor,
+                          iconPath: "assets/icons/calendar.svg",
+                          isSetAlpha: _categorySelected != 1),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      CircleButton(
+                          onTap: () {
+                            setState(() {
+                              _categorySelected = 2;
+                            });
+                          },
+                          backgroundColor:
+                              Configs.celeCategoryBackgroundColor,
+                          iconPath: "assets/icons/cele.svg",
+                          isSetAlpha: _categorySelected != 2)
+                    ],
+                  ),
+          
+                  //========================================================
+          
+                  const SizedBox(
+                    height: 24,
+                  ),
+          
+                  //MARK: Date & Time
+          
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.dateLabel,
+                              style:
+                                  Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            DateTimeTextBox(
+                              controller: _date,
+                              hintText:
+                                  AppLocalizations.of(context)!.dateHint,
+                              iconPath: "assets/icons/selectDate.svg",
+                              action: _selectDate,
+                              errorText: _errorDateText,
+                            )
+                          ],
                         ),
-                        const SizedBox(
-                          width: 16,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.timeLabel,
+                              style:
+                                  Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            DateTimeTextBox(
+                              controller: _time,
+                              hintText:
+                                  AppLocalizations.of(context)!.timeHint,
+                              iconPath: "assets/icons/selectTime.svg",
+                              action: _selectTime,
+                              errorText: null,
+                            )
+                          ],
                         ),
-                        CircleButton(
-                            onTap: () {
-                              setState(() {
-                                _categorySelected = 1;
-                              });
-                            },
-                            backgroundColor:
-                                Configs.calendarCategoryBackgroundColor,
-                            iconPath: "assets/icons/calendar.svg",
-                            isSetAlpha: _categorySelected != 1),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        CircleButton(
-                            onTap: () {
-                              setState(() {
-                                _categorySelected = 2;
-                              });
-                            },
-                            backgroundColor:
-                                Configs.celeCategoryBackgroundColor,
-                            iconPath: "assets/icons/cele.svg",
-                            isSetAlpha: _categorySelected != 2)
-                      ],
-                    ),
-
-                    //========================================================
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //MARK: Date & Time
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.dateLabel,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              DateTimeTextBox(
-                                controller: _date,
-                                hintText:
-                                    AppLocalizations.of(context)!.dateHint,
-                                iconPath: "assets/icons/selectDate.svg",
-                                action: _selectDate,
-                                errorText: _errorDateText,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.timeLabel,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              DateTimeTextBox(
-                                controller: _time,
-                                hintText:
-                                    AppLocalizations.of(context)!.timeHint,
-                                iconPath: "assets/icons/selectTime.svg",
-                                action: _selectTime,
-                                errorText: null,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    //========================================================
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //MARK: Note's Content
-
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.notesLabel,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextBox(
-                          controller: _content,
-                          hintText: AppLocalizations.of(context)!.notesHint,
-                          lineNumber: 6,
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-
-                    //========================================================
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+          
+                  //========================================================
+          
+                  const SizedBox(
+                    height: 24,
+                  ),
+          
+                  //MARK: Note's Content
+          
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.notesLabel,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      CustomTextBox(
+                        controller: _content,
+                        hintText: AppLocalizations.of(context)!.notesHint,
+                        lineNumber: 6,
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+          
+                  //========================================================
+                ],
               ),
             ),
           ),
 
           //MARK: Save button
-
-          Positioned(
-              bottom: 24,
+          const Spacer(),
+          Container(
+              margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
               height: 56,
-              left: 16,
-              right: 16,
+              width: screenSize.width - 32,
               child: MainBottomButton(
                 ontap: () {
                   if (_date.text.isNotEmpty && _taskTitle.text.isNotEmpty) {
-                    Provider.of<AddNewTaskViewmodel>(context, listen: false)
+                    Provider.of<AddNewTaskViewModel>(context, listen: false)
                         .prepareNewNote(
                             _taskTitle.text,
                             _categorySelected,
@@ -351,47 +391,47 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
           //MARK: Consumer
 
-          Center(
-            child: Consumer<AddNewTaskViewmodel>(
-              builder: (context, vm, child) {
-                if (vm.isLoading) {
-                  return const Loading();
-                } else if (vm.error.isNotEmpty) {
-                  vm.resetAlert();
-                  WidgetsBinding.instance.addPostFrameCallback(
-                    (_) {
-                      _showAlert(
-                          context,
-                          AppLocalizations.of(context)!.error,
-                          data != null
-                              ? AppLocalizations.of(context)!.updateNoteError
-                              : AppLocalizations.of(context)!
-                                  .createNewNoteError, () {
-                        Navigator.pop(context);
-                      }, AppLocalizations.of(context)!.ok, null, null);
-                    },
-                  );
-                } else if (vm.isSuccess) {
-                  vm.resetAlert();
-                  WidgetsBinding.instance.addPostFrameCallback(
-                    (_) {
-                      _showAlert(
-                          context,
-                          AppLocalizations.of(context)!.success,
-                          data != null
-                              ? AppLocalizations.of(context)!.updateNoteSuccess
-                              : AppLocalizations.of(context)!
-                                  .createNewNoteSuccess, () {
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
-                      }, AppLocalizations.of(context)!.ok, null, null);
-                    },
-                  );
-                }
-                return Container();
-              },
-            ),
-          )
+          // Center(
+          //   child: Consumer<AddNewTaskViewModel>(
+          //     builder: (context, vm, child) {
+          //       if (vm.isLoading) {
+          //         return const Loading();
+          //       } else if (vm.error.isNotEmpty) {
+          //         vm.resetAlert();
+          //         WidgetsBinding.instance.addPostFrameCallback(
+          //           (_) {
+          //             _showAlert(
+          //                 context,
+          //                 AppLocalizations.of(context)!.error,
+          //                 data != null
+          //                     ? AppLocalizations.of(context)!.updateNoteError
+          //                     : AppLocalizations.of(context)!
+          //                         .createNewNoteError, () {
+          //               Navigator.pop(context);
+          //             }, AppLocalizations.of(context)!.ok, null, null);
+          //           },
+          //         );
+          //       } else if (vm.isSuccess) {
+          //         vm.resetAlert();
+          //         WidgetsBinding.instance.addPostFrameCallback(
+          //           (_) {
+          //             _showAlert(
+          //                 context,
+          //                 AppLocalizations.of(context)!.success,
+          //                 data != null
+          //                     ? AppLocalizations.of(context)!.updateNoteSuccess
+          //                     : AppLocalizations.of(context)!
+          //                         .createNewNoteSuccess, () {
+          //               Navigator.of(context)
+          //                   .popUntil((route) => route.isFirst);
+          //             }, AppLocalizations.of(context)!.ok, null, null);
+          //           },
+          //         );
+          //       }
+          //       return Container();
+          //     },
+          //   ),
+          // )
 
           //========================================================
         ],

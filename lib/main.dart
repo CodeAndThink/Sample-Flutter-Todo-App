@@ -6,12 +6,12 @@ import 'package:todo_app/manager/setting_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/add_new_task/add_new_task_viewmodel.dart';
+import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_app/views/auth/login/login_viewmodel.dart';
-import 'package:todo_app/views/auth/register/register_viewmodel.dart';
-import 'package:todo_app/views/todo/todo_viewmodel.dart';
+import 'package:todo_app/views/auth/login/login_view_model.dart';
+import 'package:todo_app/views/auth/register/register_view_model.dart';
+import 'package:todo_app/views/todo/todo_view_model.dart';
 import 'configs/configs.dart';
 
 void main() async {
@@ -27,15 +27,15 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
-          create: (context) => TodoViewmodel(
+          create: (context) => TodoViewModel(
               ApiProvider.shared, UserManager.shared, AuthManager.shared)),
       ChangeNotifierProvider(
-          create: (context) => LoginViewmodel(
+          create: (context) => LoginViewModel(
               ApiProvider.shared, UserManager.shared, AuthManager.shared)),
       ChangeNotifierProvider(
-          create: (context) => RegisterViewmodel(ApiProvider.shared)),
+          create: (context) => RegisterViewModel(ApiProvider.shared)),
       ChangeNotifierProvider(
-          create: (context) => AddNewTaskViewmodel(ApiProvider.shared, null)),
+          create: (context) => AddNewTaskViewModel(ApiProvider.shared, null)),
     ],
     child: MainApp(
       lastLocale: lastLocale,

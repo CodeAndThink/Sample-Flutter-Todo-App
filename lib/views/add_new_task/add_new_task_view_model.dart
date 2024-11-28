@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
-class AddNewTaskViewmodel extends ChangeNotifier {
+class AddNewTaskViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -17,7 +17,7 @@ class AddNewTaskViewmodel extends ChangeNotifier {
 
   late ApiProvider _provider;
 
-  AddNewTaskViewmodel(ApiProvider provider, NoteModel? data) {
+  AddNewTaskViewModel(ApiProvider provider, NoteModel? data) {
     _provider = provider;
     data = data;
   }
