@@ -251,5 +251,9 @@
   "endScrollNotification": "Đây là cuối danh sách!",
   "@endScrollNotification": {
     "description": "Thông báo này xuất hiện khi người dùng kéo đến điểm cuối của danh sách"
+  },
+  "updateButtonTitle": "Cập nhật",
+  "@updateButtonTitle": {
+    "description": "Tiêu đề của nút cập nhật"
   }
 }

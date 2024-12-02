@@ -251,5 +251,9 @@
   "endScrollNotification": "This is the end of list",
   "@endScrollNotification": {
     "description": "This is notification when user scroll to the last of the to do list"
+  },
+  "updateButtonTitle": "Update",
+  "@updateButtonTitle": {
+    "description": "This is the title of update button"
   }
 }

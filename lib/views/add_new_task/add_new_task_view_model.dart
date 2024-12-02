@@ -72,28 +72,28 @@ class AddNewTaskViewModel extends ChangeNotifier {
     }
   }
 
-  void setCategory(int cate) {
-    _category = cate;
+  void setCategory(int newCategory) {
+    _category = newCategory;
     notifyListeners();
   }
 
-  void setTaskTitle(String taskTitle) {
-    _taskTitle = taskTitle;
+  void setTaskTitle(String newTaskTitle) {
+    _taskTitle = newTaskTitle;
     notifyListeners();
   }
 
-  void setContent(String content) {
-    _content = content;
+  void setContent(String newContent) {
+    _content = newContent;
     notifyListeners();
   }
 
-  void setDate(String date) {
-    _date = date;
+  void setDate(String newDate) {
+    _date = newDate;
     notifyListeners();
   }
 
-  void setTime(String time) {
-    _time = time;
+  void setTime(String newTime) {
+    _time = newTime;
     notifyListeners();
   }
 

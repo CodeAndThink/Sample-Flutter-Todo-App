@@ -25,6 +25,8 @@ class AddNewTaskScreen extends StatefulWidget {
 
 class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _taskTitle = TextEditingController();
+  final TextEditingController _content = TextEditingController();
+
   NoteModel? data;
   late AddNewTaskViewModel _vm;
   late VoidCallback _listener;
@@ -353,9 +355,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                             ),
                             Selector<AddNewTaskViewModel, String>(
                                 builder: (context, content, child) {
+                                  _content.text = content;
                                   return CustomTextBox(
-                                    controller:
-                                        TextEditingController(text: content),
+                                    controller: _content,
                                     hintText:
                                         AppLocalizations.of(context)!.notesHint,
                                     lineNumber: 6,
@@ -387,12 +389,12 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                     height: 56,
                     width: screenSize.width - 32,
                     child: MainBottomButton(
-                      ontap: () {
-                        _vm.prepareNewNote(context);
-                      },
-                      buttonLabel:
-                          AppLocalizations.of(context)!.saveButtonTitle,
-                    )),
+                        ontap: () {
+                          _vm.prepareNewNote(context);
+                        },
+                        buttonLabel: widget.noteData == null
+                            ? AppLocalizations.of(context)!.saveButtonTitle
+                            : AppLocalizations.of(context)!.updateButtonTitle)),
               ],
             ),
           ));
