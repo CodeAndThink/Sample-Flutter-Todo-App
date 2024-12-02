@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddNewTaskViewModel extends ChangeNotifier {
   bool _isLoading = false;
@@ -15,38 +16,85 @@ class AddNewTaskViewModel extends ChangeNotifier {
   NoteModel? _data;
   NoteModel? get data => _data;
 
+  String _taskTitle = "";
+  String get taskTitle => _taskTitle;
+
+  int _category = 0;
+  int get category => _category;
+
+  String _date = "";
+  String get date => _date;
+
+  String _time = "";
+  String get time => _time;
+
+  String _content = "";
+  String get content => _content;
+
+  String? _errorTaskTitleText;
+  String? get errorTaskTitleText => _errorTaskTitleText;
+
+  String? _errorDateText;
+  String? get errorDateText => _errorDateText;
+
   late ApiProvider _provider;
 
-  AddNewTaskViewModel(ApiProvider provider, NoteModel? data) {
+  AddNewTaskViewModel(ApiProvider provider, NoteModel? noteData) {
+    _data = noteData;
     _provider = provider;
-    data = data;
+
+    _setInitialData();
   }
 
   //MARK: Public Function
 
-  void prepareNewNote(String newTitle, int newCategory, String newContent,
-      String newDate, String newTime, bool isCreate) {
-    final status = data != null ? data!.status : false;
-    final time = newTime.isNotEmpty ? newTime : null;
-    final content = newContent.isNotEmpty ? newContent : null;
-    final deviceId = data?.deviceId;
-    final id = data?.id;
+  void prepareNewNote(BuildContext context) {
+    if (_taskTitle.isNotEmpty && _date.isNotEmpty) {
+      final status = _data != null ? _data!.status : false;
+      final time = _time.isNotEmpty ? _time : null;
+      final content = _content.isNotEmpty ? _content : null;
+      final deviceId = _data?.deviceId;
+      final id = _data?.id;
 
-    final newNote = NoteModel(
-        id: id,
-        deviceId: deviceId,
-        taskTitle: newTitle,
-        category: newCategory,
-        status: status,
-        content: content,
-        date: newDate,
-        time: time);
+      final newNote = NoteModel(
+          id: id,
+          deviceId: deviceId,
+          taskTitle: _taskTitle,
+          category: _category,
+          status: status,
+          content: content,
+          date: _date,
+          time: time);
 
-    isCreate ? _createNote(newNote) : _updateData(newNote);
+      _data == null ? _createNote(newNote) : _updateData(newNote);
+    } else {
+      _validateInput(context);
+    }
   }
 
-  void setData(NoteModel? inputData) {
-    _data = inputData;
+  void setCategory(int cate) {
+    _category = cate;
+    notifyListeners();
+  }
+
+  void setTaskTitle(String taskTitle) {
+    _taskTitle = taskTitle;
+    notifyListeners();
+  }
+
+  void setContent(String content) {
+    _content = content;
+    notifyListeners();
+  }
+
+  void setDate(String date) {
+    _date = date;
+    notifyListeners();
+  }
+
+  void setTime(String time) {
+    _time = time;
+    notifyListeners();
   }
 
   void resetAlert() {
@@ -57,7 +105,38 @@ class AddNewTaskViewModel extends ChangeNotifier {
     });
   }
 
+  void resetErrorText() {
+    _errorDateText = null;
+    _errorTaskTitleText = null;
+  }
+
   //MARK: Private Functions
+
+  void _setInitialData() {
+    if (_data != null) {
+
+      _taskTitle = _data!.taskTitle;
+      _category = _data!.category;
+      _date = _data!.date;
+      _time = _data!.time ?? "";
+      _content = _data!.content ?? "";
+    }
+  }
+
+  void _validateInput(BuildContext context) {
+    if (_taskTitle.isEmpty) {
+      _errorTaskTitleText = AppLocalizations.of(context)!.taskTitleEmptyWarning;
+    } else {
+      _errorTaskTitleText = null;
+    }
+
+    if (_date.isEmpty) {
+      _errorDateText = AppLocalizations.of(context)!.dateEmptyWarning;
+    } else {
+      _errorDateText = null;
+    }
+    notifyListeners();
+  }
 
   void _updateData(NoteModel oldNote) async {
     _startLoading();

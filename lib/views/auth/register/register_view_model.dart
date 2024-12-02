@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:validators/validators.dart';
 
 class RegisterViewModel extends ChangeNotifier {
   bool _isLoading = false;
@@ -11,6 +13,24 @@ class RegisterViewModel extends ChangeNotifier {
   String _token = "";
   String get token => _token;
 
+  String _username = "";
+  String get username => _username;
+
+  String _password = "";
+  String get password => _password;
+
+  String _repassword = "";
+  String get repassword => _repassword;
+
+  String? _errorUsernameText;
+  String? get errorUsernameText => _errorUsernameText;
+
+  String? _errorPasswordText;
+  String? get errorPasswordText => _errorPasswordText;
+
+  String? _errorRepasswordText;
+  String? get errorRepasswordText => _errorRepasswordText;
+
   late ApiProvider _provider;
 
   RegisterViewModel(provider) {
@@ -19,15 +39,78 @@ class RegisterViewModel extends ChangeNotifier {
 
   //MARK: Public Functions
 
-  void resetAttributes() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _isLoading = false;
-      _error = "";
-      _token = "";
-      notifyListeners();
-    });
+  void setUsername(String username) {
+    _username = username;
+
+    notifyListeners();
   }
 
+  void setPassword(String password) {
+    _password = password;
+
+    notifyListeners();
+  }
+
+  void setRePassword(String repassword) {
+    _repassword = repassword;
+
+    notifyListeners();
+  }
+
+  void resetErrorText() {
+    _errorUsernameText = null;
+    _errorPasswordText = null;
+    _errorRepasswordText = null;
+  }
+
+  void validateInput(BuildContext context) {
+    if (_username.isNotEmpty &&
+        _password.isNotEmpty &&
+        _repassword == _password &&
+        isEmail(_username)) {
+      register(_username, _repassword);
+    } else {
+      if (_username.isEmpty) {
+        _errorUsernameText = AppLocalizations.of(context)!.usernameEmptyWarning;
+      }
+      if (_password.isEmpty) {
+        _errorPasswordText = AppLocalizations.of(context)!.passwordEmptyWarning;
+      }
+      if (_repassword.isEmpty) {
+        _errorRepasswordText =
+            AppLocalizations.of(context)!.passwordEmptyWarning;
+      }
+      if (isEmail(_username)) {
+        _errorUsernameText = null;
+      } else {
+        _errorUsernameText =
+            AppLocalizations.of(context)!.usernameInvalidWarning;
+      }
+
+      if (_password.length >= 6) {
+        _errorPasswordText = null;
+      } else {
+        _errorPasswordText =
+            AppLocalizations.of(context)!.passwordInvalidWarning;
+      }
+
+      if (_repassword == _password && _repassword.isNotEmpty) {
+        _errorRepasswordText = null;
+      } else {
+        _errorRepasswordText =
+            AppLocalizations.of(context)!.repasswordNotSameWarning;
+      }
+
+      notifyListeners();
+    }
+  }
+
+  void resetAttributes() {
+    _isLoading = false;
+    _error = "";
+    notifyListeners();
+  }
+  
   //MARK: Private Functions
 
   void _startLoading() {

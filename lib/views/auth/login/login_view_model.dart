@@ -3,6 +3,8 @@ import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:validators/validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginViewModel extends ChangeNotifier {
   bool _isLoading = false;
@@ -13,6 +15,18 @@ class LoginViewModel extends ChangeNotifier {
 
   String _token = "";
   String get token => _token;
+
+  String _username = "";
+  String get username => _username;
+
+  String _password = "";
+  String get password => _password;
+
+  String? _errorUsernameText;
+  String? get errorUsernameText => _errorUsernameText;
+
+  String? _errorPasswordText;
+  String? get errorPasswordText => _errorPasswordText;
 
   late ApiProvider _provider;
   late UserManager _userManager;
@@ -25,14 +39,6 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   //MARK: Public Functions
-  void checkLastLogin() async {
-    final lastUserLogin = await _userManager.getUserData();
-    if (lastUserLogin != null) {
-      final username = lastUserLogin.username;
-      final password = lastUserLogin.password;
-      login(username, password);
-    }
-  }
 
   void login(String username, String password) async {
     _startLoading();
@@ -48,12 +54,53 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void resetAttributes() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
       _isLoading = false;
       _error = "";
       _token = "";
       notifyListeners();
-    });
+  }
+
+  void setUsername(String username) {
+    _username = username;
+    notifyListeners();
+  }
+
+  void setPassword(String password) {
+    _password = password;
+    notifyListeners();
+  }
+
+  void resetErrorText() {
+    _errorUsernameText = null;
+    _errorPasswordText = null;
+  }
+
+  void validateInput(BuildContext context) {
+    if (_username.isNotEmpty && _password.isNotEmpty && isEmail(_username)) {
+      login(_username, _password);
+    } else {
+      if (_username.isEmpty) {
+        _errorUsernameText = AppLocalizations.of(context)!.usernameEmptyWarning;
+      }
+      if (_password.isEmpty) {
+        _errorPasswordText = AppLocalizations.of(context)!.passwordEmptyWarning;
+      }
+      if (isEmail(_username)) {
+        _errorUsernameText = null;
+      } else {
+        _errorUsernameText =
+            AppLocalizations.of(context)!.usernameInvalidWarning;
+      }
+
+      if (_password.length >= 6) {
+        _errorPasswordText = null;
+      } else {
+        _errorPasswordText =
+            AppLocalizations.of(context)!.passwordInvalidWarning;
+      }
+
+      notifyListeners();
+    }
   }
 
   //MARK: Private Functions

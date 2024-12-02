@@ -9,6 +9,7 @@ class CustomTextBox extends StatelessWidget {
     this.isSecure,
     this.textError,
     required this.onTap,
+    required this.textChangeAction, required this.cleanAction,
   });
   final TextEditingController controller;
   final String hintText;
@@ -16,6 +17,8 @@ class CustomTextBox extends StatelessWidget {
   final bool? isSecure;
   final String? textError;
   final VoidCallback onTap;
+  final Function(String) textChangeAction;
+  final Function() cleanAction;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +49,11 @@ class CustomTextBox extends StatelessWidget {
                 suffixIcon: value.text.isNotEmpty
                     ? IconButton(
                         icon: const Icon(Icons.clear),
-                        onPressed: () => controller.clear(),
+                        onPressed: () => cleanAction(),
                       )
                     : null,
                 errorText: textError),
-                onChanged: (_) {
-                  
-                },
+            onChanged: textChangeAction,
           );
         });
   }

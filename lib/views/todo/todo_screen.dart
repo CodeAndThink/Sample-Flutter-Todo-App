@@ -8,7 +8,6 @@ import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilis/capitalize.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_screen.dart';
-import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/todo/item/note_card.dart';
 import 'package:todo_app/views/todo/todo_view_model.dart';
@@ -322,17 +321,17 @@ class _TodoScreenState extends State<TodoScreen> {
                 onTap: () {
                   final todoViewmodel =
                       Provider.of<TodoViewModel>(context, listen: false);
-                  Provider.of<AddNewTaskViewModel>(context, listen: false)
-                      .setData(inputData[index]);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const AddNewTaskScreen(),
+                      builder: (context) => AddNewTaskScreen(
+                        noteData: inputData[index],
+                      ),
                     ),
                   ).then((_) {
-                    Provider.of<AddNewTaskViewModel>(context, listen: false)
-                        .setData(null);
-                    todoViewmodel.fetchNote();
+                    if (context.mounted) {
+                      todoViewmodel.fetchNote();
+                    }
                   });
                 },
                 checkBoxAction: (value) {

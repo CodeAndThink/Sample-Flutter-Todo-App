@@ -7,11 +7,8 @@ import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_app/views/auth/login/login_view_model.dart';
-import 'package:todo_app/views/auth/register/register_view_model.dart';
 import 'package:todo_app/views/todo/todo_screen.dart';
 import 'package:todo_app/views/todo/todo_view_model.dart';
 import 'configs/configs.dart';
@@ -33,13 +30,6 @@ void main() async {
       ChangeNotifierProvider(
           create: (context) => TodoViewModel(
               ApiProvider.shared, UserManager.shared, AuthManager.shared)),
-      ChangeNotifierProvider(
-          create: (context) => LoginViewModel(
-              ApiProvider.shared, UserManager.shared, AuthManager.shared)),
-      ChangeNotifierProvider(
-          create: (context) => RegisterViewModel(ApiProvider.shared)),
-      ChangeNotifierProvider(
-          create: (context) => AddNewTaskViewModel(ApiProvider.shared, null)),
     ],
     child: MainApp(
       lastLocale: lastLocale,
@@ -79,6 +69,8 @@ class MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      showPerformanceOverlay: true,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,

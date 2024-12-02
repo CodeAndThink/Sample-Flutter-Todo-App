@@ -115,12 +115,12 @@ class TodoViewModel extends ChangeNotifier {
     });
   }
 
-  void _stopLoading() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _isLoading = false;
-      notifyListeners();
-    });
-  }
+  // void _stopLoading() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _isLoading = false;
+  //     notifyListeners();
+  //   });
+  // }
 
   void _setError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {

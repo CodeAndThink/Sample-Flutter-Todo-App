@@ -21,6 +21,7 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   connectivity_plus: ^6.1.0
   shared_preferences: ^2.3.3
+  dartz: ^0.10.1
 
 flutter_launcher_icons:
   android: true

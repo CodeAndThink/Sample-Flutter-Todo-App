@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,11 +11,13 @@ import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/models/note_model.dart';
+import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/utilis/converse_time.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 
 class AddNewTaskScreen extends StatefulWidget {
-  const AddNewTaskScreen({super.key});
+  const AddNewTaskScreen({super.key, this.noteData});
+  final NoteModel? noteData;
 
   @override
   State<AddNewTaskScreen> createState() => _AddNewTaskScreenState();
@@ -22,12 +25,6 @@ class AddNewTaskScreen extends StatefulWidget {
 
 class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _taskTitle = TextEditingController();
-  final TextEditingController _date = TextEditingController();
-  final TextEditingController _time = TextEditingController();
-  final TextEditingController _content = TextEditingController();
-  int _categorySelected = 0;
-  String? _errorTaskTitleText;
-  String? _errorDateText;
   NoteModel? data;
   late AddNewTaskViewModel _vm;
   late VoidCallback _listener;
@@ -36,24 +33,18 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   void initState() {
     super.initState();
 
-    _vm = Provider.of<AddNewTaskViewModel>(context, listen: false);
-
-    _listener = () {
-      _stateHandling();
-    };
-
-    _vm.addListener(_listener);
+    _vm = AddNewTaskViewModel(ApiProvider.shared, widget.noteData);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    data = Provider.of<AddNewTaskViewModel>(context, listen: false).data;
+    _listener = () {
+      _stateHandling();
+    };
 
-    if (data != null) {
-      _setInitialData(data!, context);
-    }
+    _vm.addListener(_listener);
   }
 
   void _stateHandling() {
@@ -76,7 +67,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       _showAlert(
           context,
           AppLocalizations.of(context)!.success,
-          data != null
+          widget.noteData != null
               ? AppLocalizations.of(context)!.updateNoteSuccess
               : AppLocalizations.of(context)!.createNewNoteSuccess, () {
         Navigator.of(context).popUntil((route) => route.isFirst);
@@ -98,10 +89,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       lastDate: lastDate,
     );
 
-    if (picked != null && picked != initialDate) {
-      setState(() {
-        _date.text = "${picked.toLocal()}".split(' ')[0];
-      });
+    if (context.mounted && picked != null && picked != initialDate) {
+      _vm.resetErrorText();
+      _vm.setDate("${picked.toLocal()}".split(' ')[0]);
     }
   }
 
@@ -113,60 +103,14 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       initialTime: initialTime,
     );
 
-    if (picked != null) {
-      setState(() {
-        _time.text = ConverseTime().timeFormat(picked, context);
-      });
-    }
-  }
-
-  void _setInitialData(NoteModel inputData, BuildContext context) {
-    setState(() {
-      _taskTitle.text = inputData.taskTitle;
-      _date.text = inputData.date;
-      _time.text = inputData.time != null
-          ? ConverseTime().timeFormat(inputData.time!, context)
-          : "";
-      _content.text = inputData.content ?? "";
-      _categorySelected = inputData.category;
-    });
-  }
-
-  void _resetErrorText() {
-    _errorDateText = null;
-    _errorTaskTitleText = null;
-  }
-
-  void _validateInput() {
-    if (_taskTitle.text.isEmpty) {
-      setState(() {
-        _errorTaskTitleText =
-            AppLocalizations.of(context)!.taskTitleEmptyWarning;
-      });
-    } else {
-      setState(() {
-        _errorTaskTitleText = null;
-      });
-    }
-
-    if (_date.text.isEmpty) {
-      setState(() {
-        _errorDateText = AppLocalizations.of(context)!.dateEmptyWarning;
-      });
-    } else {
-      setState(() {
-        _errorDateText = null;
-      });
+    if (context.mounted && picked != null) {
+      _vm.setTime(ConverseTime().timeFormat(picked, context));
     }
   }
 
   @override
   void dispose() {
     super.dispose();
-    _taskTitle.dispose();
-    _date.dispose();
-    _time.dispose();
-    _content.dispose();
     _vm.removeListener(_listener);
   }
 
@@ -174,272 +118,285 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-        body: SafeArea(
-      top: false,
-      bottom: false,
-      child: Column(
-        children: [
-          _customAppBar(context),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 80),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  
-                  //MARK: Task title
-          
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.taskTitleLabel,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-          
-                      //MARK: Task Title
-          
-                      CustomTextBox(
-                        controller: _taskTitle,
-                        hintText: AppLocalizations.of(context)!.taskHint,
-                        lineNumber: 1,
-                        textError: _errorTaskTitleText,
-                        onTap: _resetErrorText,
-                      )
-          
-                      //========================================================
-                    ],
-                  ),
-                  
-                  //========================================================
-                  
-                  const SizedBox(
-                    height: 24,
-                  ),
-          
-                  //MARK: Category
-          
-                  Row(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.categoryLabel,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(
-                        width: 24,
-                      ),
-                      CircleButton(
-                        onTap: () {
-                          setState(() {
-                            _categorySelected = 0;
-                          });
-                        },
-                        backgroundColor: Configs.noteCategoryBackgroundColor,
-                        iconPath: "assets/icons/note.svg",
-                        isSetAlpha: _categorySelected != 0,
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      CircleButton(
-                          onTap: () {
-                            setState(() {
-                              _categorySelected = 1;
-                            });
-                          },
-                          backgroundColor:
-                              Configs.calendarCategoryBackgroundColor,
-                          iconPath: "assets/icons/calendar.svg",
-                          isSetAlpha: _categorySelected != 1),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      CircleButton(
-                          onTap: () {
-                            setState(() {
-                              _categorySelected = 2;
-                            });
-                          },
-                          backgroundColor:
-                              Configs.celeCategoryBackgroundColor,
-                          iconPath: "assets/icons/cele.svg",
-                          isSetAlpha: _categorySelected != 2)
-                    ],
-                  ),
-          
-                  //========================================================
-          
-                  const SizedBox(
-                    height: 24,
-                  ),
-          
-                  //MARK: Date & Time
-          
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
+    return ChangeNotifierProvider(
+        create: (context) => _vm,
+        builder: (context, child) {
+          return Scaffold(
+              body: SafeArea(
+            top: false,
+            bottom: false,
+            child: Column(
+              children: [
+                _customAppBar(context),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 80),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 24,
+                        ),
+
+                        //MARK: Task title
+
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.dateLabel,
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall,
+                              AppLocalizations.of(context)!.taskTitleLabel,
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(
                               height: 8,
                             ),
-                            DateTimeTextBox(
-                              controller: _date,
-                              hintText:
-                                  AppLocalizations.of(context)!.dateHint,
-                              iconPath: "assets/icons/selectDate.svg",
-                              action: _selectDate,
-                              errorText: _errorDateText,
-                            )
+
+                            //MARK: Task Title
+                            Selector<AddNewTaskViewModel,
+                                dartz.Tuple2<String, String?>>(
+                              selector: (context, viewmodel) => dartz.Tuple2(
+                                  viewmodel.taskTitle,
+                                  viewmodel.errorTaskTitleText),
+                              builder: (context, data, child) {
+                                _taskTitle.text = data.value1;
+                                return CustomTextBox(
+                                  controller: _taskTitle,
+                                  hintText:
+                                      AppLocalizations.of(context)!.taskHint,
+                                  lineNumber: 1,
+                                  textError: data.value2,
+                                  onTap: () {
+                                    _vm.resetErrorText();
+                                  },
+                                  textChangeAction: (value) {
+                                    _vm.setTaskTitle(value);
+                                  },
+                                  cleanAction: () {
+                                    _vm.setTaskTitle("");
+                                  },
+                                );
+                              },
+                            ),
+
+                            //========================================================
                           ],
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
+
+                        //========================================================
+
+                        const SizedBox(
+                          height: 24,
+                        ),
+
+                        //MARK: Category
+
+                        Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.categoryLabel,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(
+                              width: 24,
+                            ),
+                            Selector<AddNewTaskViewModel, bool>(
+                              builder: (context, isSetAlpha, child) {
+                                return CircleButton(
+                                  onTap: () {
+                                    _vm.setCategory(0);
+                                  },
+                                  backgroundColor:
+                                      Configs.noteCategoryBackgroundColor,
+                                  iconPath: "assets/icons/note.svg",
+                                  isSetAlpha: isSetAlpha,
+                                );
+                              },
+                              selector: (context, viewmodel) =>
+                                  viewmodel.category != 0,
+                            ),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Selector<AddNewTaskViewModel, bool>(
+                              builder: (context, isSetAlpha, child) {
+                                return CircleButton(
+                                  onTap: () {
+                                    _vm.setCategory(1);
+                                  },
+                                  backgroundColor:
+                                      Configs.calendarCategoryBackgroundColor,
+                                  iconPath: "assets/icons/calendar.svg",
+                                  isSetAlpha: isSetAlpha,
+                                );
+                              },
+                              selector: (context, viewmodel) =>
+                                  viewmodel.category != 1,
+                            ),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Selector<AddNewTaskViewModel, bool>(
+                              builder: (context, isSetAlpha, child) {
+                                return CircleButton(
+                                  onTap: () {
+                                    _vm.setCategory(2);
+                                  },
+                                  backgroundColor:
+                                      Configs.celeCategoryBackgroundColor,
+                                  iconPath: "assets/icons/cele.svg",
+                                  isSetAlpha: isSetAlpha,
+                                );
+                              },
+                              selector: (context, viewmodel) =>
+                                  viewmodel.category != 2,
+                            ),
+                          ],
+                        ),
+
+                        //========================================================
+
+                        const SizedBox(
+                          height: 24,
+                        ),
+
+                        //MARK: Date & Time
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.dateLabel,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Selector<AddNewTaskViewModel,
+                                          dartz.Tuple2<String, String?>>(
+                                      builder: (context, data, child) {
+                                        return DateTimeTextBox(
+                                          controller: TextEditingController(
+                                              text: data.value1),
+                                          hintText:
+                                              AppLocalizations.of(context)!
+                                                  .dateHint,
+                                          iconPath:
+                                              "assets/icons/selectDate.svg",
+                                          action: _selectDate,
+                                          errorText: data.value2,
+                                        );
+                                      },
+                                      selector: (context, viewmodel) =>
+                                          dartz.Tuple2(viewmodel.date,
+                                              viewmodel.errorDateText))
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.timeLabel,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Selector<AddNewTaskViewModel, String>(
+                                      builder: (context, selectTime, child) {
+                                        return DateTimeTextBox(
+                                          controller: TextEditingController(
+                                              text: selectTime),
+                                          hintText:
+                                              AppLocalizations.of(context)!
+                                                  .timeHint,
+                                          iconPath:
+                                              "assets/icons/selectTime.svg",
+                                          action: _selectTime,
+                                          errorText: null,
+                                        );
+                                      },
+                                      selector: (context, viewmodel) =>
+                                          viewmodel.time)
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        //========================================================
+
+                        const SizedBox(
+                          height: 24,
+                        ),
+
+                        //MARK: Note's Content
+
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.timeLabel,
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall,
+                              AppLocalizations.of(context)!.notesLabel,
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(
                               height: 8,
                             ),
-                            DateTimeTextBox(
-                              controller: _time,
-                              hintText:
-                                  AppLocalizations.of(context)!.timeHint,
-                              iconPath: "assets/icons/selectTime.svg",
-                              action: _selectTime,
-                              errorText: null,
-                            )
+                            Selector<AddNewTaskViewModel, String>(
+                                builder: (context, content, child) {
+                                  return CustomTextBox(
+                                    controller:
+                                        TextEditingController(text: content),
+                                    hintText:
+                                        AppLocalizations.of(context)!.notesHint,
+                                    lineNumber: 6,
+                                    onTap: () {},
+                                    textChangeAction: (value) {
+                                      _vm.setContent(value);
+                                    },
+                                    cleanAction: () {
+                                      _vm.setContent("");
+                                    },
+                                  );
+                                },
+                                selector: (context, viewmodel) =>
+                                    viewmodel.content),
                           ],
                         ),
-                      ),
-                    ],
+
+                        //========================================================
+                      ],
+                    ),
                   ),
-          
-                  //========================================================
-          
-                  const SizedBox(
-                    height: 24,
-                  ),
-          
-                  //MARK: Note's Content
-          
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.notesLabel,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      CustomTextBox(
-                        controller: _content,
-                        hintText: AppLocalizations.of(context)!.notesHint,
-                        lineNumber: 6,
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-          
-                  //========================================================
-                ],
-              ),
+                ),
+
+                //MARK: Save button
+                const Spacer(),
+                Container(
+                    margin:
+                        const EdgeInsets.only(bottom: 24, left: 16, right: 16),
+                    height: 56,
+                    width: screenSize.width - 32,
+                    child: MainBottomButton(
+                      ontap: () {
+                        _vm.prepareNewNote(context);
+                      },
+                      buttonLabel:
+                          AppLocalizations.of(context)!.saveButtonTitle,
+                    )),
+              ],
             ),
-          ),
-
-          //MARK: Save button
-          const Spacer(),
-          Container(
-              margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
-              height: 56,
-              width: screenSize.width - 32,
-              child: MainBottomButton(
-                ontap: () {
-                  if (_date.text.isNotEmpty && _taskTitle.text.isNotEmpty) {
-                    Provider.of<AddNewTaskViewModel>(context, listen: false)
-                        .prepareNewNote(
-                            _taskTitle.text,
-                            _categorySelected,
-                            _content.text,
-                            _date.text,
-                            _time.text,
-                            data != null ? false : true);
-                  } else {
-                    _validateInput();
-                  }
-                },
-                buttonLabel: AppLocalizations.of(context)!.saveButtonTitle,
-              )),
-
-          //========================================================
-
-          //MARK: Consumer
-
-          // Center(
-          //   child: Consumer<AddNewTaskViewModel>(
-          //     builder: (context, vm, child) {
-          //       if (vm.isLoading) {
-          //         return const Loading();
-          //       } else if (vm.error.isNotEmpty) {
-          //         vm.resetAlert();
-          //         WidgetsBinding.instance.addPostFrameCallback(
-          //           (_) {
-          //             _showAlert(
-          //                 context,
-          //                 AppLocalizations.of(context)!.error,
-          //                 data != null
-          //                     ? AppLocalizations.of(context)!.updateNoteError
-          //                     : AppLocalizations.of(context)!
-          //                         .createNewNoteError, () {
-          //               Navigator.pop(context);
-          //             }, AppLocalizations.of(context)!.ok, null, null);
-          //           },
-          //         );
-          //       } else if (vm.isSuccess) {
-          //         vm.resetAlert();
-          //         WidgetsBinding.instance.addPostFrameCallback(
-          //           (_) {
-          //             _showAlert(
-          //                 context,
-          //                 AppLocalizations.of(context)!.success,
-          //                 data != null
-          //                     ? AppLocalizations.of(context)!.updateNoteSuccess
-          //                     : AppLocalizations.of(context)!
-          //                         .createNewNoteSuccess, () {
-          //               Navigator.of(context)
-          //                   .popUntil((route) => route.isFirst);
-          //             }, AppLocalizations.of(context)!.ok, null, null);
-          //           },
-          //         );
-          //       }
-          //       return Container();
-          //     },
-          //   ),
-          // )
-
-          //========================================================
-        ],
-      ),
-    ));
+          ));
+        });
   }
 
   void _showAlert(
