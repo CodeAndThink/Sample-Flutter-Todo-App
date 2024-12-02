@@ -27,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _username = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
+  late VoidCallback _listener;
+
   @override
   void initState() {
     super.initState();
@@ -34,13 +36,39 @@ class _LoginScreenState extends State<LoginScreen> {
     _vm = LoginViewModel(
         ApiProvider.shared, UserManager.shared, AuthManager.shared);
 
+    _listener = _stateHandling;
+
+    _vm.addListener(_listener);
+
     _vm.setUsername("trg1432001@gmail.com");
     _vm.setPassword("trg1432001");
+  }
+
+  void _stateHandling() {
+    if (_vm.isLoading) {
+      const Loading();
+    } else if (_vm.token.isNotEmpty) {
+      _vm.resetAttributes();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                TodoScreen(toggleLocale: widget.toggleLocale)),
+        (route) => false,
+      );
+    } else if (_vm.error.isNotEmpty) {
+      _showAlert(context, AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.loginFailure, () {
+        Navigator.pop(context);
+      });
+      _vm.resetAttributes();
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
+    _vm.removeListener(_listener);
     _username.dispose();
     _password.dispose();
   }
@@ -60,7 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Wrap(children: [
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(16)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16)),
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     child: Padding(
@@ -86,13 +115,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Text(
                                   AppLocalizations.of(context)!.usernameLabel,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall,
                                 ),
                                 const SizedBox(
                                   height: 8,
                                 ),
-
+          
                                 //MARK: Username
                                 Selector<LoginViewModel,
                                     dartz.Tuple2<String, String?>>(
@@ -117,23 +147,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                     );
                                   },
                                 ),
-
+          
                                 //========================================================
-
+          
                                 const SizedBox(
                                   height: 8,
                                 ),
                                 Text(
                                   AppLocalizations.of(context)!.passwordLabel,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall,
                                 ),
                                 const SizedBox(
                                   height: 8,
                                 ),
-
+          
                                 //MARK: Password
-
+          
                                 Selector<LoginViewModel,
                                     dartz.Tuple2<String, String?>>(
                                   selector: (context, viewmodel) =>
@@ -158,16 +189,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                     );
                                   },
                                 ),
-
+          
                                 //========================================================
-
+          
                                 const SizedBox(
                                   height: 16,
                                 ),
                               ],
                             ),
                             //MARK: Login Button
-
+          
                             Row(
                               children: [
                                 Expanded(
@@ -184,20 +215,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
-
+          
                             //========================================================
-
+          
                             const SizedBox(
                               height: 16,
                             ),
-
+          
                             Text(
                               AppLocalizations.of(context)!.becomeNewMember,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
-
+          
                             //MARK: Register Button
-
+          
                             TextButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -214,49 +245,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .bodySmall
                                       ?.copyWith(color: Colors.blueAccent),
                                 ))
-
+          
                             //========================================================
                           ]),
                     ),
                   ),
                 ])),
               ),
-
-//MARK: Consumer
-
-              Consumer<LoginViewModel>(
-                builder: (context, vm, child) {
-                  if (vm.isLoading) {
-                    return const Loading();
-                  } else if (vm.token.isNotEmpty) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      _vm.resetAttributes();
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                TodoScreen(toggleLocale: widget.toggleLocale)),
-                        (route) => false,
-                      );
-                    });
-                    return Container();
-                  } else if (vm.error.isNotEmpty) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      _showAlert(context, AppLocalizations.of(context)!.error,
-                          AppLocalizations.of(context)!.loginFailure, () {
-                        Navigator.pop(context);
-                      });
-                      _vm.resetAttributes();
-                    });
-
-                    return Container();
-                  } else {
-                    return Container();
-                  }
-                },
-              )
-
-//========================================================
             ],
           ),
         );

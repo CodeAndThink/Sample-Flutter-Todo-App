@@ -31,9 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     _vm = RegisterViewModel(ApiProvider.shared);
 
-    _listener = () {
-      _stateHandling();
-    };
+    _listener = _stateHandling;
 
     _vm.addListener(_listener);
   }
@@ -42,20 +40,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_vm.isLoading) {
       const Loading();
     } else if (_vm.token.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showAlert(context, AppLocalizations.of(context)!.success,
-            AppLocalizations.of(context)!.registerSuccess, () {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        });
+      _showAlert(context, AppLocalizations.of(context)!.success,
+          AppLocalizations.of(context)!.registerSuccess, () {
+        Navigator.of(context).popUntil((route) => route.isFirst);
       });
     } else if (_vm.error.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showAlert(context, AppLocalizations.of(context)!.error,
-            AppLocalizations.of(context)!.registerFailure, () {
-          Navigator.pop(context);
-        });
-        _vm.resetAttributes();
+      _showAlert(context, AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.registerFailure, () {
+        Navigator.pop(context);
       });
+      _vm.resetAttributes();
     }
   }
 
@@ -89,7 +83,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Wrap(children: [
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(16)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16)),
                       color: Theme.of(context).colorScheme.surface),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -102,8 +97,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 .textTheme
                                 .headlineLarge
                                 ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary),
                           ),
                           const SizedBox(
                             height: 8,
@@ -119,13 +115,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               const SizedBox(
                                 height: 8,
                               ),
-
+          
                               //MARK: Username Textbox
                               Selector<RegisterViewModel,
                                   dartz.Tuple2<String, String?>>(
-                                selector: (context, viewmodel) => dartz.Tuple2(
-                                    viewmodel.username,
-                                    viewmodel.errorUsernameText),
+                                selector: (context, viewmodel) =>
+                                    dartz.Tuple2(viewmodel.username,
+                                        viewmodel.errorUsernameText),
                                 builder: (context, data, child) {
                                   _username.text = data.value1;
                                   return CustomTextBox(
@@ -144,9 +140,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   );
                                 },
                               ),
-
+          
                               //========================================================
-
+          
                               const SizedBox(
                                 height: 8,
                               ),
@@ -158,14 +154,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               const SizedBox(
                                 height: 8,
                               ),
-
+          
                               //MARK: Password Textbox
-
+          
                               Selector<RegisterViewModel,
                                   dartz.Tuple2<String, String?>>(
-                                selector: (context, viewmodel) => dartz.Tuple2(
-                                    viewmodel.password,
-                                    viewmodel.errorPasswordText),
+                                selector: (context, viewmodel) =>
+                                    dartz.Tuple2(viewmodel.password,
+                                        viewmodel.errorPasswordText),
                                 builder: (context, data, child) {
                                   _password.text = data.value1;
                                   return CustomTextBox(
@@ -185,9 +181,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   );
                                 },
                               ),
-
+          
                               //========================================================
-
+          
                               const SizedBox(
                                 height: 8,
                               ),
@@ -199,14 +195,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               const SizedBox(
                                 height: 8,
                               ),
-
+          
                               //MARK: Confirm Password Textbox
-
+          
                               Selector<RegisterViewModel,
                                   dartz.Tuple2<String, String?>>(
-                                selector: (context, viewmodel) => dartz.Tuple2(
-                                    viewmodel.repassword,
-                                    viewmodel.errorRepasswordText),
+                                selector: (context, viewmodel) =>
+                                    dartz.Tuple2(viewmodel.repassword,
+                                        viewmodel.errorRepasswordText),
                                 builder: (context, data, child) {
                                   _repassword.text = data.value1;
                                   return CustomTextBox(
@@ -226,16 +222,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   );
                                 },
                               ),
-
+          
                               //========================================================
-
+          
                               const SizedBox(
                                 height: 16,
                               ),
                             ],
                           ),
                           //MARK: Register Button
-
+          
                           Row(children: [
                             Expanded(
                               child: SizedBox(
@@ -251,9 +247,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                           ]),
-
+          
                           //========================================================
-
+          
                           const SizedBox(
                             height: 16,
                           ),
@@ -261,21 +257,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             AppLocalizations.of(context)!.alreadyHaveAccount,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
-
+          
                           //MARK: Move To Login Screen Button
-
+          
                           TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
                               child: Text(
-                                AppLocalizations.of(context)!.loginButtonTitle,
+                                AppLocalizations.of(context)!
+                                    .loginButtonTitle,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineSmall
                                     ?.copyWith(color: Colors.blueAccent),
                               ))
-
+          
                           //========================================================
                         ]),
                   ),

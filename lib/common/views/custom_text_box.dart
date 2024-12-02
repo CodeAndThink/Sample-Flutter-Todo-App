@@ -9,7 +9,8 @@ class CustomTextBox extends StatelessWidget {
     this.isSecure,
     this.textError,
     required this.onTap,
-    required this.textChangeAction, required this.cleanAction,
+    required this.textChangeAction,
+    required this.cleanAction,
   });
   final TextEditingController controller;
   final String hintText;
@@ -27,10 +28,14 @@ class CustomTextBox extends StatelessWidget {
         builder: (context, value, child) {
           return TextField(
             onTap: onTap,
+            textInputAction: TextInputAction.done,
             controller: controller,
             keyboardType: TextInputType.multiline,
             maxLines: lineNumber,
             obscureText: isSecure == null ? false : isSecure!,
+            onEditingComplete: () {
+              FocusScope.of(context).unfocus();
+            },
             decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: Theme.of(context)

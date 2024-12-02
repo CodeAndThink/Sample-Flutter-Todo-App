@@ -54,10 +54,10 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void resetAttributes() {
-      _isLoading = false;
-      _error = "";
-      _token = "";
-      notifyListeners();
+    _isLoading = false;
+    _error = "";
+    _token = "";
+    notifyListeners();
   }
 
   void setUsername(String username) {
@@ -106,26 +106,20 @@ class LoginViewModel extends ChangeNotifier {
   //MARK: Private Functions
 
   void _startLoading() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _isLoading = true;
-      _error = "";
-      _token = "";
-      notifyListeners();
-    });
+    _isLoading = true;
+    _error = "";
+    _token = "";
+    notifyListeners();
   }
 
   void _stopLoading() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _isLoading = false;
-      notifyListeners();
-    });
+    _isLoading = false;
+    notifyListeners();
   }
 
   void _setError(String errorMessage) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _error = errorMessage;
-      _isLoading = false;
-      notifyListeners();
-    });
+    _error = errorMessage;
+    _isLoading = false;
+    notifyListeners();
   }
 }

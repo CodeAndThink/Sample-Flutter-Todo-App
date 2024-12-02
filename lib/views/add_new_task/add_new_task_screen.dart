@@ -124,153 +124,33 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         create: (context) => _vm,
         builder: (context, child) {
           return Scaffold(
+              resizeToAvoidBottomInset: true,
               body: SafeArea(
-            top: false,
-            bottom: false,
-            child: Column(
-              children: [
-                _customAppBar(context),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 80),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 24,
-                        ),
-
-                        //MARK: Task title
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.taskTitleLabel,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-
-                            //MARK: Task Title
-                            Selector<AddNewTaskViewModel,
-                                dartz.Tuple2<String, String?>>(
-                              selector: (context, viewmodel) => dartz.Tuple2(
-                                  viewmodel.taskTitle,
-                                  viewmodel.errorTaskTitleText),
-                              builder: (context, data, child) {
-                                _taskTitle.text = data.value1;
-                                return CustomTextBox(
-                                  controller: _taskTitle,
-                                  hintText:
-                                      AppLocalizations.of(context)!.taskHint,
-                                  lineNumber: 1,
-                                  textError: data.value2,
-                                  onTap: () {
-                                    _vm.resetErrorText();
-                                  },
-                                  textChangeAction: (value) {
-                                    _vm.setTaskTitle(value);
-                                  },
-                                  cleanAction: () {
-                                    _vm.setTaskTitle("");
-                                  },
-                                );
-                              },
-                            ),
-
-                            //========================================================
-                          ],
-                        ),
-
-                        //========================================================
-
-                        const SizedBox(
-                          height: 24,
-                        ),
-
-                        //MARK: Category
-
-                        Row(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.categoryLabel,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            const SizedBox(
-                              width: 24,
-                            ),
-                            Selector<AddNewTaskViewModel, bool>(
-                              builder: (context, isSetAlpha, child) {
-                                return CircleButton(
-                                  onTap: () {
-                                    _vm.setCategory(0);
-                                  },
-                                  backgroundColor:
-                                      Configs.noteCategoryBackgroundColor,
-                                  iconPath: "assets/icons/note.svg",
-                                  isSetAlpha: isSetAlpha,
-                                );
-                              },
-                              selector: (context, viewmodel) =>
-                                  viewmodel.category != 0,
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Selector<AddNewTaskViewModel, bool>(
-                              builder: (context, isSetAlpha, child) {
-                                return CircleButton(
-                                  onTap: () {
-                                    _vm.setCategory(1);
-                                  },
-                                  backgroundColor:
-                                      Configs.calendarCategoryBackgroundColor,
-                                  iconPath: "assets/icons/calendar.svg",
-                                  isSetAlpha: isSetAlpha,
-                                );
-                              },
-                              selector: (context, viewmodel) =>
-                                  viewmodel.category != 1,
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Selector<AddNewTaskViewModel, bool>(
-                              builder: (context, isSetAlpha, child) {
-                                return CircleButton(
-                                  onTap: () {
-                                    _vm.setCategory(2);
-                                  },
-                                  backgroundColor:
-                                      Configs.celeCategoryBackgroundColor,
-                                  iconPath: "assets/icons/cele.svg",
-                                  isSetAlpha: isSetAlpha,
-                                );
-                              },
-                              selector: (context, viewmodel) =>
-                                  viewmodel.category != 2,
-                            ),
-                          ],
-                        ),
-
-                        //========================================================
-
-                        const SizedBox(
-                          height: 24,
-                        ),
-
-                        //MARK: Date & Time
-
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
+                top: false,
+                bottom: false,
+                child: Column(
+                  children: [
+                    _customAppBar(context),
+              
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 80),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 24,
+                              ),
+              
+                              //MARK: Task title
+              
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.dateLabel,
+                                    AppLocalizations.of(context)!
+                                        .taskTitleLabel,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall,
@@ -278,34 +158,215 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                   const SizedBox(
                                     height: 8,
                                   ),
+              
+                                  //MARK: Task Title
                                   Selector<AddNewTaskViewModel,
-                                          dartz.Tuple2<String, String?>>(
-                                      builder: (context, data, child) {
-                                        return DateTimeTextBox(
-                                          controller: TextEditingController(
-                                              text: data.value1),
-                                          hintText:
-                                              AppLocalizations.of(context)!
-                                                  .dateHint,
-                                          iconPath:
-                                              "assets/icons/selectDate.svg",
-                                          action: _selectDate,
-                                          errorText: data.value2,
-                                        );
-                                      },
-                                      selector: (context, viewmodel) =>
-                                          dartz.Tuple2(viewmodel.date,
-                                              viewmodel.errorDateText))
+                                      dartz.Tuple2<String, String?>>(
+                                    selector: (context, viewmodel) =>
+                                        dartz.Tuple2(viewmodel.taskTitle,
+                                            viewmodel.errorTaskTitleText),
+                                    builder: (context, data, child) {
+                                      _taskTitle.text = data.value1;
+                                      return CustomTextBox(
+                                        controller: _taskTitle,
+                                        hintText:
+                                            AppLocalizations.of(context)!
+                                                .taskHint,
+                                        lineNumber: 1,
+                                        textError: data.value2,
+                                        onTap: () {
+                                          _vm.resetErrorText();
+                                        },
+                                        textChangeAction: (value) {
+                                          _vm.setTaskTitle(value);
+                                        },
+                                        cleanAction: () {
+                                          _vm.setTaskTitle("");
+                                        },
+                                      );
+                                    },
+                                  ),
+              
+                                  //========================================================
                                 ],
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
+              
+                              //========================================================
+              
+                              const SizedBox(
+                                height: 24,
+                              ),
+              
+                              //MARK: Category
+              
+                              Row(
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .categoryLabel,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  const SizedBox(
+                                    width: 24,
+                                  ),
+                                  Selector<AddNewTaskViewModel, bool>(
+                                    builder: (context, isSetAlpha, child) {
+                                      return CircleButton(
+                                        onTap: () {
+                                          _vm.setCategory(0);
+                                        },
+                                        backgroundColor: Configs
+                                            .noteCategoryBackgroundColor,
+                                        iconPath: "assets/icons/note.svg",
+                                        isSetAlpha: isSetAlpha,
+                                      );
+                                    },
+                                    selector: (context, viewmodel) =>
+                                        viewmodel.category != 0,
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Selector<AddNewTaskViewModel, bool>(
+                                    builder: (context, isSetAlpha, child) {
+                                      return CircleButton(
+                                        onTap: () {
+                                          _vm.setCategory(1);
+                                        },
+                                        backgroundColor: Configs
+                                            .calendarCategoryBackgroundColor,
+                                        iconPath: "assets/icons/calendar.svg",
+                                        isSetAlpha: isSetAlpha,
+                                      );
+                                    },
+                                    selector: (context, viewmodel) =>
+                                        viewmodel.category != 1,
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Selector<AddNewTaskViewModel, bool>(
+                                    builder: (context, isSetAlpha, child) {
+                                      return CircleButton(
+                                        onTap: () {
+                                          _vm.setCategory(2);
+                                        },
+                                        backgroundColor: Configs
+                                            .celeCategoryBackgroundColor,
+                                        iconPath: "assets/icons/cele.svg",
+                                        isSetAlpha: isSetAlpha,
+                                      );
+                                    },
+                                    selector: (context, viewmodel) =>
+                                        viewmodel.category != 2,
+                                  ),
+                                ],
+                              ),
+              
+                              //========================================================
+              
+                              const SizedBox(
+                                height: 24,
+                              ),
+              
+                              //MARK: Date & Time
+              
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .dateLabel,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall,
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Selector<
+                                                AddNewTaskViewModel,
+                                                dartz
+                                                .Tuple2<String, String?>>(
+                                            builder: (context, data, child) {
+                                              return DateTimeTextBox(
+                                                controller:
+                                                    TextEditingController(
+                                                        text: data.value1),
+                                                hintText: AppLocalizations.of(
+                                                        context)!
+                                                    .dateHint,
+                                                iconPath:
+                                                    "assets/icons/selectDate.svg",
+                                                action: _selectDate,
+                                                errorText: data.value2,
+                                              );
+                                            },
+                                            selector: (context, viewmodel) =>
+                                                dartz.Tuple2(viewmodel.date,
+                                                    viewmodel.errorDateText))
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .timeLabel,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall,
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Selector<AddNewTaskViewModel, String>(
+                                            builder:
+                                                (context, selectTime, child) {
+                                              return DateTimeTextBox(
+                                                controller:
+                                                    TextEditingController(
+                                                        text: selectTime),
+                                                hintText: AppLocalizations.of(
+                                                        context)!
+                                                    .timeHint,
+                                                iconPath:
+                                                    "assets/icons/selectTime.svg",
+                                                action: _selectTime,
+                                                errorText: null,
+                                              );
+                                            },
+                                            selector: (context, viewmodel) =>
+                                                viewmodel.time)
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+              
+                              //========================================================
+              
+                              const SizedBox(
+                                height: 24,
+                              ),
+              
+                              //MARK: Note's Content
+              
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.timeLabel,
+                                    AppLocalizations.of(context)!.notesLabel,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall,
@@ -314,90 +375,53 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                     height: 8,
                                   ),
                                   Selector<AddNewTaskViewModel, String>(
-                                      builder: (context, selectTime, child) {
-                                        return DateTimeTextBox(
-                                          controller: TextEditingController(
-                                              text: selectTime),
+                                      builder: (context, content, child) {
+                                        _content.text = content;
+                                        return CustomTextBox(
+                                          controller: _content,
                                           hintText:
                                               AppLocalizations.of(context)!
-                                                  .timeHint,
-                                          iconPath:
-                                              "assets/icons/selectTime.svg",
-                                          action: _selectTime,
-                                          errorText: null,
+                                                  .notesHint,
+                                          lineNumber: 6,
+                                          onTap: () {},
+                                          textChangeAction: (value) {
+                                            _vm.setContent(value);
+                                          },
+                                          cleanAction: () {
+                                            _vm.setContent("");
+                                          },
                                         );
                                       },
                                       selector: (context, viewmodel) =>
-                                          viewmodel.time)
+                                          viewmodel.content),
                                 ],
                               ),
-                            ),
-                          ],
+              
+                              //========================================================
+                            ],
+                          ),
                         ),
-
-                        //========================================================
-
-                        const SizedBox(
-                          height: 24,
-                        ),
-
-                        //MARK: Note's Content
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.notesLabel,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Selector<AddNewTaskViewModel, String>(
-                                builder: (context, content, child) {
-                                  _content.text = content;
-                                  return CustomTextBox(
-                                    controller: _content,
-                                    hintText:
-                                        AppLocalizations.of(context)!.notesHint,
-                                    lineNumber: 6,
-                                    onTap: () {},
-                                    textChangeAction: (value) {
-                                      _vm.setContent(value);
-                                    },
-                                    cleanAction: () {
-                                      _vm.setContent("");
-                                    },
-                                  );
-                                },
-                                selector: (context, viewmodel) =>
-                                    viewmodel.content),
-                          ],
-                        ),
-
-                        //========================================================
-                      ],
+                      ),
                     ),
-                  ),
+              
+                    //MARK: Save button
+                    Container(
+                        margin: const EdgeInsets.only(
+                            bottom: 24, left: 16, right: 16),
+                        height: 56,
+                        width: screenSize.width - 32,
+                        child: MainBottomButton(
+                            ontap: () {
+                              _vm.prepareNewNote(context);
+                            },
+                            buttonLabel: widget.noteData == null
+                                ? AppLocalizations.of(context)!
+                                    .saveButtonTitle
+                                : AppLocalizations.of(context)!
+                                    .updateButtonTitle)),
+                  ],
                 ),
-
-                //MARK: Save button
-                const Spacer(),
-                Container(
-                    margin:
-                        const EdgeInsets.only(bottom: 24, left: 16, right: 16),
-                    height: 56,
-                    width: screenSize.width - 32,
-                    child: MainBottomButton(
-                        ontap: () {
-                          _vm.prepareNewNote(context);
-                        },
-                        buttonLabel: widget.noteData == null
-                            ? AppLocalizations.of(context)!.saveButtonTitle
-                            : AppLocalizations.of(context)!.updateButtonTitle)),
-              ],
-            ),
-          ));
+              ));
         });
   }
 
