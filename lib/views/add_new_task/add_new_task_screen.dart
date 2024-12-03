@@ -42,6 +42,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    _vm.setInitialData(context);
+
     _listener = () {
       _stateHandling();
     };
@@ -51,8 +53,6 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
   void _stateHandling() {
     if (_vm.error.isNotEmpty) {
-      _vm.resetAlert();
-
       _showAlert(
           context,
           AppLocalizations.of(context)!.error,
@@ -62,8 +62,6 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         Navigator.pop(context);
       }, AppLocalizations.of(context)!.ok, null, null);
     } else if (_vm.isSuccess) {
-      _vm.resetAlert();
-
       _showAlert(
           context,
           AppLocalizations.of(context)!.success,
@@ -104,7 +102,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     );
 
     if (context.mounted && picked != null) {
-      _vm.setTime(ConverseTime().timeFormat(picked, context));
+      _vm.setTime(ConverseTime.timeFormat(picked, context));
     }
   }
 
@@ -435,7 +433,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                     ),
 
                     //MARK: Loading
-                    
+
                     Selector<AddNewTaskViewModel, bool>(
                         builder: (context, isLoading, child) {
                           if (isLoading) {

@@ -7,6 +7,9 @@ import 'package:validators/validators.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginViewModel extends ChangeNotifier {
+
+  //MARK: Properties
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -32,6 +35,8 @@ class LoginViewModel extends ChangeNotifier {
   late UserManager _userManager;
   late AuthManager _authManager;
 
+  //MARK: Construction
+
   LoginViewModel(provider, userManager, authManager) {
     _provider = provider;
     _userManager = userManager;
@@ -40,6 +45,7 @@ class LoginViewModel extends ChangeNotifier {
 
   //MARK: Public Functions
 
+  //Function of login feature
   void login(String username, String password) async {
     _startLoading();
     final response = await _provider.signIn(username, password);
@@ -53,28 +59,25 @@ class LoginViewModel extends ChangeNotifier {
     _setError(response.error ?? "");
   }
 
-  void resetAttributes() {
-    _isLoading = false;
-    _error = "";
-    _token = "";
-    notifyListeners();
-  }
-
+  //Function setting username
   void setUsername(String username) {
     _username = username;
     notifyListeners();
   }
 
+  //Function setting password
   void setPassword(String password) {
     _password = password;
     notifyListeners();
   }
 
+  //Function reset the error text of input text box
   void resetErrorText() {
     _errorUsernameText = null;
     _errorPasswordText = null;
   }
 
+  //Function for validating username and password
   void validateInput(BuildContext context) {
     if (_username.isNotEmpty && _password.isNotEmpty && isEmail(_username)) {
       login(_username, _password);
@@ -105,6 +108,7 @@ class LoginViewModel extends ChangeNotifier {
 
   //MARK: Private Functions
 
+  //Function of loading animation
   void _startLoading() {
     _isLoading = true;
     _error = "";
@@ -112,11 +116,13 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Function for stopping loading animation
   void _stopLoading() {
     _isLoading = false;
     notifyListeners();
   }
 
+  //Function set the error value if available 
   void _setError(String errorMessage) {
     _error = errorMessage;
     _isLoading = false;

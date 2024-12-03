@@ -5,6 +5,9 @@ import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
 class TodoViewModel extends ChangeNotifier {
+
+  //MARK: Properties
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -23,6 +26,8 @@ class TodoViewModel extends ChangeNotifier {
   final List<NoteModel> _doneData = [];
   List<NoteModel> get doneData => _doneData;
 
+  //MARK: Construction
+
   TodoViewModel(provider, userManager, authManager) {
     _provider = provider;
     _userManager = userManager;
@@ -31,12 +36,14 @@ class TodoViewModel extends ChangeNotifier {
 
   //MARK: Public Functions
 
+  //Function for signout
   void signout() {
     _provider.signOut();
     _userManager.removeUserData();
     _authManager.removeUserToken();
   }
 
+  //Function for updating feature
   void updateNote(NoteModel oldNote) async {
     final newNote = oldNote;
     newNote.status = !newNote.status;
@@ -53,6 +60,7 @@ class TodoViewModel extends ChangeNotifier {
     }
   }
 
+  //Function for fetching note from database
   void fetchNote() async {
     if (_data.isEmpty) {
       _startLoading();
@@ -71,6 +79,7 @@ class TodoViewModel extends ChangeNotifier {
     }
   }
 
+  //Funtion for delete current note
   void deleteNote(NoteModel note) async {
     _dataDeleteUpdate(note);
 
@@ -85,6 +94,7 @@ class TodoViewModel extends ChangeNotifier {
 
   //MARK: Private Functions
 
+  //Function disable loading animation
   void _silentLoading() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _isLoading = false;
@@ -93,6 +103,7 @@ class TodoViewModel extends ChangeNotifier {
     });
   }
 
+  //Function reset and add new data
   void _dataFilter() {
     _todoData.clear();
     _doneData.clear();
@@ -107,6 +118,7 @@ class TodoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Function of loading animation
   void _startLoading() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _isLoading = true;
@@ -115,13 +127,7 @@ class TodoViewModel extends ChangeNotifier {
     });
   }
 
-  // void _stopLoading() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     _isLoading = false;
-  //     notifyListeners();
-  //   });
-  // }
-
+  //Function set the error value if available 
   void _setError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _error = errorMessage;
@@ -130,6 +136,7 @@ class TodoViewModel extends ChangeNotifier {
     });
   }
 
+  //Function replace data between 2 data source
   void _listUpdate(NoteModel newNote) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (newNote.status) {
@@ -144,6 +151,7 @@ class TodoViewModel extends ChangeNotifier {
     });
   }
 
+  //Function removes data in local
   void _dataDeleteUpdate(NoteModel deleteNote) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _todoData.removeWhere((note) => note.id == deleteNote.id);

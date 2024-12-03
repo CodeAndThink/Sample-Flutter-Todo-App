@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ConverseTime {
-  TimeOfDay parseTimeOfDay(String time) {
+  static TimeOfDay parseTimeOfDay(String time) {
     final parts = time.split(':');
     final hour = int.parse(parts[0]);
     final minute = int.parse(parts[1]);
     return TimeOfDay(hour: hour, minute: minute);
   }
 
-  String timeFormat(dynamic inputTime, BuildContext context) {
+  static String timeFormat(dynamic inputTime, BuildContext context) {
     final TimeOfDay time;
     if (inputTime is String) {
       time = parseTimeOfDay(inputTime);

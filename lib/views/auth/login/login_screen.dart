@@ -47,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _stateHandling() {
     if (_vm.token.isNotEmpty) {
-      _vm.resetAttributes();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -60,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
           AppLocalizations.of(context)!.loginFailure, () {
         Navigator.pop(context);
       });
-      _vm.resetAttributes();
     }
   }
 

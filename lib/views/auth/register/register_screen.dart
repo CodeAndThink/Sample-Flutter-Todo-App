@@ -47,7 +47,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           AppLocalizations.of(context)!.registerFailure, () {
         Navigator.pop(context);
       });
-      _vm.resetAttributes();
     }
   }
 
