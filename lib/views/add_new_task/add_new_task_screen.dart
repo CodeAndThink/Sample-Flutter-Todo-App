@@ -433,6 +433,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                         .updateButtonTitle)),
                       ],
                     ),
+
+                    //MARK: Loading
+                    
                     Selector<AddNewTaskViewModel, bool>(
                         builder: (context, isLoading, child) {
                           if (isLoading) {
@@ -441,6 +444,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                           return Container();
                         },
                         selector: (context, viewmodel) => viewmodel.isLoading)
+
+                    //========================================================
                   ],
                 ),
               ));

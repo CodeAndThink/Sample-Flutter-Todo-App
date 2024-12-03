@@ -274,6 +274,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ]),
             ),
+
+            //MARK: Loading
+
             Selector<RegisterViewModel, bool>(
                 builder: (context, isLoading, child) {
                   if (isLoading) {
@@ -282,6 +285,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return Container();
                 },
                 selector: (context, viewmodel) => viewmodel.isLoading)
+
+            //========================================================
           ]),
         );
       },
