@@ -39,6 +39,7 @@ class _TodoScreenState extends State<TodoScreen> {
     Provider.of<TodoViewModel>(context, listen: false).fetchNote();
   }
 
+  //Function format the date time on header of screen
   String formatDate(DateTime date) {
     final locale = Localizations.localeOf(context).toString();
     String formattedDate = "";
