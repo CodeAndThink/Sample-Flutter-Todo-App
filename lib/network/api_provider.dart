@@ -33,7 +33,7 @@ class ApiProvider {
     await Supabase.instance.client.auth.signOut();
   }
 
-  //MARK: Note interact
+  //MARK: User's note interaction
 
   Future<Result<List<NoteModel>>> fetchNotes() async {
     try {

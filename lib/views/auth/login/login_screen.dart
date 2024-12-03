@@ -45,9 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _stateHandling() {
-    if (_vm.isLoading) {
-      const Loading();
-    } else if (_vm.token.isNotEmpty) {
+    if (_vm.token.isNotEmpty) {
       _vm.resetAttributes();
       Navigator.pushAndRemoveUntil(
         context,
@@ -88,8 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Wrap(children: [
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(16)),
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     child: Padding(
@@ -115,14 +112,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Text(
                                   AppLocalizations.of(context)!.usernameLabel,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
                                 ),
                                 const SizedBox(
                                   height: 8,
                                 ),
-          
+
                                 //MARK: Username
                                 Selector<LoginViewModel,
                                     dartz.Tuple2<String, String?>>(
@@ -147,24 +143,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                     );
                                   },
                                 ),
-          
+
                                 //========================================================
-          
+
                                 const SizedBox(
                                   height: 8,
                                 ),
                                 Text(
                                   AppLocalizations.of(context)!.passwordLabel,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
                                 ),
                                 const SizedBox(
                                   height: 8,
                                 ),
-          
+
                                 //MARK: Password
-          
+
                                 Selector<LoginViewModel,
                                     dartz.Tuple2<String, String?>>(
                                   selector: (context, viewmodel) =>
@@ -189,16 +184,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                     );
                                   },
                                 ),
-          
+
                                 //========================================================
-          
+
                                 const SizedBox(
                                   height: 16,
                                 ),
                               ],
                             ),
                             //MARK: Login Button
-          
+
                             Row(
                               children: [
                                 Expanded(
@@ -215,20 +210,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
-          
+
                             //========================================================
-          
+
                             const SizedBox(
                               height: 16,
                             ),
-          
+
                             Text(
                               AppLocalizations.of(context)!.becomeNewMember,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
-          
+
                             //MARK: Register Button
-          
+
                             TextButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -245,13 +240,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .bodySmall
                                       ?.copyWith(color: Colors.blueAccent),
                                 ))
-          
+
                             //========================================================
                           ]),
                     ),
                   ),
                 ])),
               ),
+              Selector<LoginViewModel, bool>(
+                  builder: (context, isLoading, child) {
+                    if (isLoading) {
+                      return const Loading();
+                    }
+                    return Container();
+                  },
+                  selector: (context, viewmodel) => viewmodel.isLoading)
             ],
           ),
         );
