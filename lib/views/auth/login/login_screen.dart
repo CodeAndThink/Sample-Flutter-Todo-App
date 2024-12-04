@@ -41,8 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     _vm.addListener(_listener);
 
-    _vm.setUsername("trg1432001@gmail.com");
-    _vm.setPassword("trg1432001");
+    _vm.getLastLoginUsername();
   }
 
   void _stateHandling() {

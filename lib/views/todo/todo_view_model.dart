@@ -38,7 +38,6 @@ class TodoViewModel extends ChangeNotifier {
   //Function for signout
   void signout() {
     _provider.signOut();
-    _userManager.removeUserData();
     _authManager.removeUserToken();
   }
 

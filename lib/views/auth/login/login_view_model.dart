@@ -7,7 +7,6 @@ import 'package:validators/validators.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginViewModel extends ChangeNotifier {
-
   //MARK: Properties
 
   bool _isLoading = false;
@@ -106,6 +105,14 @@ class LoginViewModel extends ChangeNotifier {
     }
   }
 
+  //Function set the initial value of username equal last username at the last login
+  void getLastLoginUsername() async {
+    final lastUserLogin = await UserManager.shared.getUserData();
+    if (lastUserLogin != null) {
+      setUsername(lastUserLogin.username);
+    }
+  }
+
   //MARK: Private Functions
 
   //Function of loading animation
@@ -122,7 +129,7 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Function set the error value if available 
+  //Function set the error value if available
   void _setError(String errorMessage) {
     _error = errorMessage;
     _isLoading = false;

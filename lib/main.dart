@@ -4,7 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/setting_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
-import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/theme/theme.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
@@ -25,7 +24,7 @@ void main() async {
 
   final lastLocale = await SettingManager.shared.getUserLocale();
 
-  final lastUserLogin = await UserManager.shared.getUserData();
+  final lastUserLoginToken = await AuthManager.shared.getUserToken();
 
   runApp(MultiProvider(
     providers: [
@@ -35,15 +34,15 @@ void main() async {
     ],
     child: MainApp(
       lastLocale: lastLocale,
-      lastUserLogin: lastUserLogin,
+      lastUserLoginToken: lastUserLoginToken,
     ),
   ));
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key, required this.lastLocale, this.lastUserLogin});
+  const MainApp({super.key, required this.lastLocale, this.lastUserLoginToken});
   final Locale lastLocale;
-  final UserModel? lastUserLogin;
+  final String? lastUserLoginToken;
 
   @override
   MainAppState createState() => MainAppState();
@@ -82,7 +81,7 @@ class MainAppState extends State<MainApp> {
       ],
       home: Scaffold(
         body: Center(
-          child: widget.lastUserLogin != null
+          child: widget.lastUserLoginToken != null
               ? Supabase.instance.client.auth.currentSession!.isExpired == false
                   ? TodoScreen(toggleLocale: _toggleLocale)
                   : LoginScreen(toggleLocale: _toggleLocale)
