@@ -114,6 +114,11 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void resetState() {
+    _isLoading = false;
+    _error = "";
+  }
   
   //MARK: Private Functions
 

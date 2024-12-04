@@ -45,6 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } else if (_vm.error.isNotEmpty) {
       _showAlert(context, AppLocalizations.of(context)!.error,
           AppLocalizations.of(context)!.registerFailure, () {
+        _vm.resetState();
         Navigator.pop(context);
       });
     }

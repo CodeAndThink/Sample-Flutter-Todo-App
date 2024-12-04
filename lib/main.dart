@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/setting_manager.dart';
-import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/theme/theme.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
@@ -30,7 +29,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(
           create: (context) => TodoViewModel(
-              ApiProvider.shared, UserManager.shared, AuthManager.shared)),
+              ApiProvider.shared, AuthManager.shared)),
     ],
     child: MainApp(
       lastLocale: lastLocale,
@@ -82,7 +81,7 @@ class MainAppState extends State<MainApp> {
       home: Scaffold(
         body: Center(
           child: widget.lastUserLoginToken != null
-              ? Supabase.instance.client.auth.currentSession!.isExpired == false
+              ? Supabase.instance.client.auth.currentSession?.isExpired == false
                   ? TodoScreen(toggleLocale: _toggleLocale)
                   : LoginScreen(toggleLocale: _toggleLocale)
               : LoginScreen(toggleLocale: _toggleLocale),

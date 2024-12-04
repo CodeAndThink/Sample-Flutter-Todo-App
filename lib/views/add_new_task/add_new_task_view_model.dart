@@ -122,7 +122,6 @@ class AddNewTaskViewModel extends ChangeNotifier {
       if (_data!.time != null) {
         _time = ConverseTime.timeFormat(_data!.time, context);
       }
-      _time = _data!.time ?? "";
       _content = _data!.content ?? "";
     }
   }

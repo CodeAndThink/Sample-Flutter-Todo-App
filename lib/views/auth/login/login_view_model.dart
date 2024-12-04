@@ -105,6 +105,11 @@ class LoginViewModel extends ChangeNotifier {
     }
   }
 
+  void resetState() {
+    _isLoading = false;
+    _error = "";
+  }
+
   //Function set the initial value of username equal last username at the last login
   void getLastLoginUsername() async {
     final lastUserLogin = await UserManager.shared.getUserData();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/manager/auth_manager.dart';
-import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
@@ -14,7 +13,6 @@ class TodoViewModel extends ChangeNotifier {
   String get error => _error;
 
   late ApiProvider _provider;
-  late UserManager _userManager;
   late AuthManager _authManager;
 
   List<NoteModel> _data = [];
@@ -27,9 +25,8 @@ class TodoViewModel extends ChangeNotifier {
 
   //MARK: Construction
 
-  TodoViewModel(provider, userManager, authManager) {
+  TodoViewModel(provider, authManager) {
     _provider = provider;
-    _userManager = userManager;
     _authManager = authManager;
   }
 

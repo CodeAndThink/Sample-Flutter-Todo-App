@@ -36,19 +36,17 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     super.initState();
 
     _vm = AddNewTaskViewModel(ApiProvider.shared, widget.noteData);
+
+    _vm.setInitialData(context);
+
+    _listener = _stateHandling;
+
+    _vm.addListener(_listener);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    _vm.setInitialData(context);
-
-    _listener = () {
-      _stateHandling();
-    };
-
-    _vm.addListener(_listener);
   }
 
   void _stateHandling() {
@@ -70,8 +68,6 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
               : AppLocalizations.of(context)!.createNewNoteSuccess, () {
         Navigator.of(context).popUntil((route) => route.isFirst);
       }, AppLocalizations.of(context)!.ok, null, null);
-    } else {
-      Expanded(child: Container());
     }
   }
 
@@ -177,7 +173,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                               _vm.resetErrorText();
                                             },
                                             textChangeAction: (value) {
-                                              _vm.setTaskTitle(value);
+                                              if (value.isNotEmpty) {
+                                                _vm.setTaskTitle(value);
+                                              }
                                             },
                                             cleanAction: () {
                                               _vm.setTaskTitle("");

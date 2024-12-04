@@ -56,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else if (_vm.error.isNotEmpty) {
       _showAlert(context, AppLocalizations.of(context)!.error,
           AppLocalizations.of(context)!.loginFailure, () {
+        _vm.resetState();
         Navigator.pop(context);
       });
     }
