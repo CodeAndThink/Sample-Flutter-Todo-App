@@ -21,6 +21,8 @@ void main() async {
     anonKey: Configs.apiSubabaseKey,
   );
 
+  // await Alarm.init();
+
   final lastLocale = await SettingManager.shared.getUserLocale();
 
   final lastUserLogin = await UserManager.shared.getUserData();

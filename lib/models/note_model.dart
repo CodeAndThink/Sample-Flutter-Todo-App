@@ -1,4 +1,3 @@
-
 class NoteModel {
   int? id;
   String? deviceId;
@@ -26,7 +25,9 @@ class NoteModel {
       taskTitle: json['task_title'] as String,
       category: json['category'] as int,
       content: json['content'] as String?,
-      status: json['status'] as bool,
+      status: json['status'] is bool
+          ? json['status'] as bool
+          : (json['status'] == 1),
       date: json['date'] as String,
       time: json['time'] as String?,
     );

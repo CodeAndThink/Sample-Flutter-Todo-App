@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ConverseTime {
+  //Function converses time in string type to TimeOfDay type
   static TimeOfDay parseTimeOfDay(String time) {
     final parts = time.split(':');
     final hour = int.parse(parts[0]);
@@ -9,6 +10,7 @@ class ConverseTime {
     return TimeOfDay(hour: hour, minute: minute);
   }
 
+  //Function converses time to suitable locale
   static String timeFormat(dynamic inputTime, BuildContext context) {
     final TimeOfDay time;
     if (inputTime is String) {

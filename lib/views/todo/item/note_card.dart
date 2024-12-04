@@ -48,6 +48,7 @@ class NoteCardState extends State<NoteCard>
     super.dispose();
   }
 
+  //Function receives type of category and return the path of icon
   String _cateIconSelected(int cateNumber) {
     switch (cateNumber) {
       case 0:
@@ -61,6 +62,7 @@ class NoteCardState extends State<NoteCard>
     }
   }
 
+  //Function receives type of category and return color for each category
   Color _cateIconBackgroundColor(int cateNumber) {
     switch (cateNumber) {
       case 0:
@@ -74,6 +76,7 @@ class NoteCardState extends State<NoteCard>
     }
   }
 
+  //Function detechs which border apply for each card
   List<double> borderRadiusCal() {
     if (widget.isTop && widget.isBottom) {
       return [10, 10, 10, 10];
@@ -112,6 +115,8 @@ class NoteCardState extends State<NoteCard>
                 child: Center(
                   child: Row(
                     children: [
+                      //MARK: Icon of category
+
                       ClipOval(
                         child: Container(
                           color: _cateIconBackgroundColor(widget.data.category),
@@ -128,6 +133,11 @@ class NoteCardState extends State<NoteCard>
                         ),
                       ),
                       const SizedBox(width: 12),
+
+                      //========================================================
+
+                      //MARK: Title and Time
+
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -158,6 +168,11 @@ class NoteCardState extends State<NoteCard>
                           ],
                         ),
                       ),
+
+                      //========================================================
+
+                      //MARK: Check box
+
                       Checkbox(
                         side: BorderSide(
                             color: Theme.of(context).colorScheme.primary),
@@ -172,6 +187,8 @@ class NoteCardState extends State<NoteCard>
                           });
                         },
                       )
+
+                      //========================================================
                     ],
                   ),
                 ),

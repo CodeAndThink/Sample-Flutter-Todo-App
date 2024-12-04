@@ -5,7 +5,6 @@ import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
 class TodoViewModel extends ChangeNotifier {
-
   //MARK: Properties
 
   bool _isLoading = false;
@@ -64,6 +63,7 @@ class TodoViewModel extends ChangeNotifier {
   void fetchNote() async {
     if (_data.isEmpty) {
       _startLoading();
+      // _data = await DatabaseHelper().getAllNotes();
     } else {
       _silentLoading();
     }
@@ -75,8 +75,9 @@ class TodoViewModel extends ChangeNotifier {
 
       _dataFilter();
 
-      _setError(response.error ?? "");
+      // await DatabaseHelper().saveListNote(_data);
     }
+    _setError(response.error ?? "");
   }
 
   //Funtion for delete current note
@@ -127,7 +128,7 @@ class TodoViewModel extends ChangeNotifier {
     });
   }
 
-  //Function set the error value if available 
+  //Function set the error value if available
   void _setError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _error = errorMessage;
