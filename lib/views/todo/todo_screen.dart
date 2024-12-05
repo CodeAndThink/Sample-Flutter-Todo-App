@@ -180,7 +180,7 @@ class _TodoScreenState extends State<TodoScreen> {
                               controller: _scrollController,
                               slivers: [
                                 _listViewSection(vm.todoData),
-                                SliverToBoxAdapter(
+                                SliverToBoxAdapter( 
                                     child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -188,11 +188,17 @@ class _TodoScreenState extends State<TodoScreen> {
                                       height: 24,
                                     ),
                                     Text(
-                                      AppLocalizations.of(context)!.completed,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                    ),
+                                        AppLocalizations.of(context)!.completed,
+                                        style: vm.todoData.isEmpty
+                                            ? Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall
+                                                ?.copyWith(
+                                                  color: Colors.white,
+                                                )
+                                            : Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall),
                                     const SizedBox(
                                       height: 24,
                                     )

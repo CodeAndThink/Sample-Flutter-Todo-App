@@ -1,7 +1,7 @@
 name: todo_app
 description: "A new Flutter project."
 publish_to: 'none'
-version: 1.0.0
+version: 1.0.0-alpha
 
 environment:
   sdk: ^3.5.1
@@ -53,3 +53,5 @@ flutter:
   - assets/gifs/loading.gif
   - assets/images/circle_shape_big.png
   - assets/images/circle_shape_small.png
+  - assets/icons/view.svg
+  - assets/icons/hide.svg

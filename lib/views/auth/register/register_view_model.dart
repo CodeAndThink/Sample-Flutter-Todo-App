@@ -4,17 +4,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:validators/validators.dart';
 
 class RegisterViewModel extends ChangeNotifier {
-
   //MARK: Properties
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  String _error = "";
-  String get error => _error;
+  final ValueNotifier<String> error = ValueNotifier("");
 
-  String _token = "";
-  String get token => _token;
+  final ValueNotifier<String> token = ValueNotifier("");
 
   String _username = "";
   String get username => _username;
@@ -90,21 +87,23 @@ class RegisterViewModel extends ChangeNotifier {
         _errorRepasswordText =
             AppLocalizations.of(context)!.passwordEmptyWarning;
       }
-      if (isEmail(_username)) {
+      if (_username.isNotEmpty && isEmail(_username)) {
         _errorUsernameText = null;
-      } else {
+      } else if (_username.isNotEmpty && !isEmail(_username)) {
         _errorUsernameText =
             AppLocalizations.of(context)!.usernameInvalidWarning;
       }
 
       if (_password.length >= 6) {
         _errorPasswordText = null;
-      } else {
+      } else if (_password.length < 6 && _password.isNotEmpty) {
         _errorPasswordText =
             AppLocalizations.of(context)!.passwordInvalidWarning;
       }
 
-      if (_repassword == _password && _repassword.isNotEmpty) {
+      if (_repassword == _password &&
+          _repassword.isNotEmpty &&
+          _password.isNotEmpty) {
         _errorRepasswordText = null;
       } else {
         _errorRepasswordText =
@@ -115,19 +114,14 @@ class RegisterViewModel extends ChangeNotifier {
     }
   }
 
-  void resetState() {
-    _isLoading = false;
-    _error = "";
-  }
-  
   //MARK: Private Functions
 
   //Function of loading animation
   void _startLoading() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _isLoading = true;
-      _error = "";
-      _token = "";
+      error.value = "";
+      token.value = "";
       notifyListeners();
     });
   }
@@ -140,10 +134,10 @@ class RegisterViewModel extends ChangeNotifier {
     });
   }
 
-  //Function set the error value if available 
+  //Function set the error value if available
   void _setError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _error = errorMessage;
+      error.value = errorMessage;
       _isLoading = false;
       notifyListeners();
     });
@@ -154,7 +148,7 @@ class RegisterViewModel extends ChangeNotifier {
     _startLoading();
     final response = await _provider.signUp(username, password);
     _stopLoading();
-    _token = response.data ?? "";
+    token.value = response.data ?? "";
     _setError(response.error ?? "");
   }
 }

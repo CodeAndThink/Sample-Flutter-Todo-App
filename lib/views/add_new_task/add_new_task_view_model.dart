@@ -5,17 +5,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/utilis/converse_time.dart';
 
 class AddNewTaskViewModel extends ChangeNotifier {
-
   //MARK: Properties
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  String _error = "";
-  String get error => _error;
+  final ValueNotifier<String> error = ValueNotifier("");
 
-  bool _isSuccess = false;
-  bool get isSuccess => _isSuccess;
+  final ValueNotifier<bool> isSuccess = ValueNotifier(false);
 
   NoteModel? _data;
   NoteModel? get data => _data;
@@ -54,6 +51,11 @@ class AddNewTaskViewModel extends ChangeNotifier {
 
   //Function prepares new note's data for create note or update note
   void prepareNewNote(BuildContext context) {
+    try {
+      throw "asdas asd asd";
+    } catch (e) {
+      _setError(e.toString());
+    }
     if (_taskTitle.isNotEmpty && _date.isNotEmpty) {
       final status = _data != null ? _data!.status : false;
       final time = _time.isNotEmpty ? _time : null;
@@ -152,7 +154,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
 
     _stopLoading();
 
-    _isSuccess = response.data != null ? true : false;
+    isSuccess.value = response.data != null ? true : false;
 
     _setError(response.error ?? "");
   }
@@ -161,8 +163,8 @@ class AddNewTaskViewModel extends ChangeNotifier {
   void _startLoading() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _isLoading = true;
-      _isSuccess = false;
-      _error = "";
+      isSuccess.value = false;
+      error.value = "";
       notifyListeners();
     });
   }
@@ -175,10 +177,10 @@ class AddNewTaskViewModel extends ChangeNotifier {
     });
   }
 
-  //Function set the error value if available 
+  //Function set the error value if available
   void _setError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _error = errorMessage;
+      error.value = errorMessage;
       _isLoading = false;
       notifyListeners();
     });
@@ -189,7 +191,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
     _startLoading();
     final response = await _provider.createNewNote(newNote);
     _stopLoading();
-    _isSuccess = response.data != null ? true : false;
+    isSuccess.value = response.data != null ? true : false;
     _setError(response.error ?? "");
   }
 }

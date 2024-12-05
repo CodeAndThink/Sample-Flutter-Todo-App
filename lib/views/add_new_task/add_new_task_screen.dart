@@ -29,46 +29,45 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
   NoteModel? data;
   late AddNewTaskViewModel _vm;
-  late VoidCallback _listener;
 
   @override
   void initState() {
     super.initState();
-
-    _vm = AddNewTaskViewModel(ApiProvider.shared, widget.noteData);
-
-    _vm.setInitialData(context);
-
-    _listener = _stateHandling;
-
-    _vm.addListener(_listener);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-  }
 
-  void _stateHandling() {
-    if (_vm.error.isNotEmpty) {
-      _showAlert(
-          context,
-          AppLocalizations.of(context)!.error,
-          data != null
-              ? AppLocalizations.of(context)!.updateNoteError
-              : AppLocalizations.of(context)!.createNewNoteError, () {
-        Navigator.pop(context);
-      }, AppLocalizations.of(context)!.ok, null, null);
-    } else if (_vm.isSuccess) {
-      _showAlert(
-          context,
-          AppLocalizations.of(context)!.success,
-          widget.noteData != null
-              ? AppLocalizations.of(context)!.updateNoteSuccess
-              : AppLocalizations.of(context)!.createNewNoteSuccess, () {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-      }, AppLocalizations.of(context)!.ok, null, null);
-    }
+    _vm = AddNewTaskViewModel(ApiProvider.shared, widget.noteData);
+
+    _vm.setInitialData(context);
+
+    _vm.error.addListener(() {
+      if (_vm.error.value.isNotEmpty) {
+        _showAlert(
+            context,
+            AppLocalizations.of(context)!.error,
+            data != null
+                ? AppLocalizations.of(context)!.updateNoteError
+                : AppLocalizations.of(context)!.createNewNoteError, () {
+          Navigator.pop(context);
+        }, AppLocalizations.of(context)!.ok, null, null);
+      }
+    });
+
+    _vm.isSuccess.addListener(() {
+      if (_vm.isSuccess.value) {
+        _showAlert(
+            context,
+            AppLocalizations.of(context)!.success,
+            widget.noteData != null
+                ? AppLocalizations.of(context)!.updateNoteSuccess
+                : AppLocalizations.of(context)!.createNewNoteSuccess, () {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }, AppLocalizations.of(context)!.ok, null, null);
+      }
+    });
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -105,7 +104,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   @override
   void dispose() {
     super.dispose();
-    _vm.removeListener(_listener);
+    _vm.isSuccess.dispose();
+    _vm.error.dispose();
   }
 
   @override

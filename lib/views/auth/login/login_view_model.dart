@@ -12,11 +12,9 @@ class LoginViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  String _error = "";
-  String get error => _error;
+  ValueNotifier<String> error = ValueNotifier("");
 
-  String _token = "";
-  String get token => _token;
+  ValueNotifier<String> token = ValueNotifier("");
 
   String _username = "";
   String get username => _username;
@@ -49,9 +47,9 @@ class LoginViewModel extends ChangeNotifier {
     _startLoading();
     final response = await _provider.signIn(username, password);
     _stopLoading();
-    _token = response.data ?? "";
-    if (_token.isNotEmpty) {
-      _authManager.saveUserToken(_token);
+    token.value = response.data ?? "";
+    if (token.value.isNotEmpty) {
+      _authManager.saveUserToken(token.value);
       final newUser = UserModel(username: username, password: password);
       _userManager.saveUserData(newUser);
     }
@@ -105,11 +103,6 @@ class LoginViewModel extends ChangeNotifier {
     }
   }
 
-  void resetState() {
-    _isLoading = false;
-    _error = "";
-  }
-
   //Function set the initial value of username equal last username at the last login
   void getLastLoginUsername() async {
     final lastUserLogin = await UserManager.shared.getUserData();
@@ -123,8 +116,8 @@ class LoginViewModel extends ChangeNotifier {
   //Function of loading animation
   void _startLoading() {
     _isLoading = true;
-    _error = "";
-    _token = "";
+    error.value = "";
+    token.value = "";
     notifyListeners();
   }
 
@@ -136,7 +129,7 @@ class LoginViewModel extends ChangeNotifier {
 
   //Function set the error value if available
   void _setError(String errorMessage) {
-    _error = errorMessage;
+    error.value = errorMessage;
     _isLoading = false;
     notifyListeners();
   }

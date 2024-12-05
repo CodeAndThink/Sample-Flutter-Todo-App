@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/alert.dart';
+import 'package:todo_app/common/views/auth_text_box.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
@@ -23,7 +24,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _repassword = TextEditingController();
 
   late RegisterViewModel _vm;
-  late VoidCallback _listener;
 
   @override
   void initState() {
@@ -31,33 +31,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     _vm = RegisterViewModel(ApiProvider.shared);
 
-    _listener = _stateHandling;
+    _vm.error.addListener(() {
+      if (_vm.error.value.isNotEmpty) {
+        _showAlert(context, AppLocalizations.of(context)!.error,
+            AppLocalizations.of(context)!.registerFailure, () {
+          Navigator.pop(context);
+        });
+      }
+    });
 
-    _vm.addListener(_listener);
-  }
-
-  void _stateHandling() {
-    if (_vm.token.isNotEmpty) {
-      _showAlert(context, AppLocalizations.of(context)!.success,
-          AppLocalizations.of(context)!.registerSuccess, () {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-      });
-    } else if (_vm.error.isNotEmpty) {
-      _showAlert(context, AppLocalizations.of(context)!.error,
-          AppLocalizations.of(context)!.registerFailure, () {
-        _vm.resetState();
-        Navigator.pop(context);
-      });
-    }
+    _vm.token.addListener(() {
+      if (_vm.token.value.isNotEmpty) {
+        _showAlert(context, AppLocalizations.of(context)!.success,
+            AppLocalizations.of(context)!.registerSuccess, () {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _vm.removeListener(_listener);
     _username.dispose();
     _password.dispose();
     _repassword.dispose();
+    _vm.error.dispose();
+    _vm.token.dispose();
   }
 
   @override
@@ -75,219 +75,233 @@ class _RegisterScreenState extends State<RegisterScreen> {
             title: _customAppBar(),
             automaticallyImplyLeading: false,
           ),
-          body: Stack(children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Wrap(children: [
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(16)),
-                      color: Theme.of(context).colorScheme.surface),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.registerScreenTitle,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge
-                                ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Stack(children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: Wrap(children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(16)),
+                          color: Theme.of(context).colorScheme.surface),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.usernameLabel,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
+                                AppLocalizations.of(context)!
+                                    .registerScreenTitle,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.usernameLabel,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
 
-                              //MARK: Username Textbox
-                              Selector<RegisterViewModel,
-                                  dartz.Tuple2<String, String?>>(
-                                selector: (context, viewmodel) => dartz.Tuple2(
-                                    viewmodel.username,
-                                    viewmodel.errorUsernameText),
-                                builder: (context, data, child) {
-                                  _username.text = data.value1;
-                                  return CustomTextBox(
-                                    controller: _username,
-                                    hintText: AppLocalizations.of(context)!
-                                        .usernameHint,
-                                    lineNumber: 1,
-                                    textError: data.value2,
-                                    onTap: _vm.resetErrorText,
-                                    textChangeAction: (value) {
-                                      _vm.setUsername(value);
+                                  //MARK: Username Textbox
+                                  Selector<RegisterViewModel,
+                                      dartz.Tuple2<String, String?>>(
+                                    selector: (context, viewmodel) =>
+                                        dartz.Tuple2(viewmodel.username,
+                                            viewmodel.errorUsernameText),
+                                    builder: (context, data, child) {
+                                      _username.text = data.value1;
+                                      return CustomTextBox(
+                                        controller: _username,
+                                        hintText: AppLocalizations.of(context)!
+                                            .usernameHint,
+                                        lineNumber: 1,
+                                        textError: data.value2,
+                                        onTap: _vm.resetErrorText,
+                                        textChangeAction: (value) {
+                                          _vm.setUsername(value);
+                                        },
+                                        cleanAction: () {
+                                          _vm.resetErrorText();
+                                          _vm.setUsername("");
+                                        },
+                                      );
                                     },
-                                    cleanAction: () {
-                                      _vm.setUsername("");
+                                  ),
+
+                                  //========================================================
+
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!.passwordLabel,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+
+                                  //MARK: Password Textbox
+
+                                  Selector<RegisterViewModel,
+                                      dartz.Tuple2<String, String?>>(
+                                    selector: (context, viewmodel) =>
+                                        dartz.Tuple2(viewmodel.password,
+                                            viewmodel.errorPasswordText),
+                                    builder: (context, data, child) {
+                                      _password.text = data.value1;
+                                      return AuthTextBox(
+                                        controller: _password,
+                                        hintText: AppLocalizations.of(context)!
+                                            .passwordHint,
+                                        lineNumber: 1,
+                                        textError: data.value2,
+                                        onTap: _vm.resetErrorText,
+                                        textChangeAction: (value) {
+                                          _vm.setPassword(value);
+                                        },
+                                      );
                                     },
-                                  );
-                                },
-                              ),
+                                  ),
 
-                              //========================================================
+                                  //========================================================
 
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.passwordLabel,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .repasswordLabel,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
 
-                              //MARK: Password Textbox
+                                  //MARK: Confirm Password Textbox
 
-                              Selector<RegisterViewModel,
-                                  dartz.Tuple2<String, String?>>(
-                                selector: (context, viewmodel) => dartz.Tuple2(
-                                    viewmodel.password,
-                                    viewmodel.errorPasswordText),
-                                builder: (context, data, child) {
-                                  _password.text = data.value1;
-                                  return CustomTextBox(
-                                    controller: _password,
-                                    hintText: AppLocalizations.of(context)!
-                                        .passwordHint,
-                                    lineNumber: 1,
-                                    isSecure: true,
-                                    textError: data.value2,
-                                    onTap: _vm.resetErrorText,
-                                    textChangeAction: (value) {
-                                      _vm.setPassword(value);
+                                  Selector<RegisterViewModel,
+                                      dartz.Tuple2<String, String?>>(
+                                    selector: (context, viewmodel) =>
+                                        dartz.Tuple2(viewmodel.repassword,
+                                            viewmodel.errorRepasswordText),
+                                    builder: (context, data, child) {
+                                      _repassword.text = data.value1;
+                                      return AuthTextBox(
+                                        controller: _repassword,
+                                        hintText: AppLocalizations.of(context)!
+                                            .repasswordHint,
+                                        lineNumber: 1,
+                                        textError: data.value2,
+                                        onTap: _vm.resetErrorText,
+                                        textChangeAction: (value) {
+                                          _vm.setRePassword(value);
+                                        },
+                                      );
                                     },
-                                    cleanAction: () {
-                                      _vm.setPassword("");
-                                    },
-                                  );
-                                },
-                              ),
+                                  ),
 
-                              //========================================================
+                                  //========================================================
 
-                              const SizedBox(
-                                height: 8,
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                AppLocalizations.of(context)!.repasswordLabel,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
+                              //MARK: Register Button
 
-                              //MARK: Confirm Password Textbox
-
-                              Selector<RegisterViewModel,
-                                  dartz.Tuple2<String, String?>>(
-                                selector: (context, viewmodel) => dartz.Tuple2(
-                                    viewmodel.repassword,
-                                    viewmodel.errorRepasswordText),
-                                builder: (context, data, child) {
-                                  _repassword.text = data.value1;
-                                  return CustomTextBox(
-                                    controller: _repassword,
-                                    hintText: AppLocalizations.of(context)!
-                                        .repasswordHint,
-                                    lineNumber: 1,
-                                    isSecure: true,
-                                    textError: data.value2,
-                                    onTap: _vm.resetErrorText,
-                                    textChangeAction: (value) {
-                                      _vm.setRePassword(value);
-                                    },
-                                    cleanAction: () {
-                                      _vm.setRePassword("");
-                                    },
-                                  );
-                                },
-                              ),
+                              Row(children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 56,
+                                    child: MainBottomButton(
+                                        ontap: () {
+                                          Provider.of<RegisterViewModel>(
+                                                  context,
+                                                  listen: false)
+                                              .validateInput(context);
+                                        },
+                                        buttonLabel:
+                                            AppLocalizations.of(context)!
+                                                .registerButtonTitle),
+                                  ),
+                                ),
+                              ]),
 
                               //========================================================
 
                               const SizedBox(
                                 height: 16,
                               ),
-                            ],
-                          ),
-                          //MARK: Register Button
-
-                          Row(children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: 56,
-                                child: MainBottomButton(
-                                    ontap: () {
-                                      Provider.of<RegisterViewModel>(context,
-                                              listen: false)
-                                          .validateInput(context);
-                                    },
-                                    buttonLabel: AppLocalizations.of(context)!
-                                        .registerButtonTitle),
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .alreadyHaveAccount,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
-                            ),
-                          ]),
 
-                          //========================================================
+                              //MARK: Move To Login Screen Button
 
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.alreadyHaveAccount,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .loginButtonTitle,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(color: Colors.blueAccent),
+                                  ))
 
-                          //MARK: Move To Login Screen Button
-
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.loginButtonTitle,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(color: Colors.blueAccent),
-                              ))
-
-                          //========================================================
-                        ]),
-                  ),
+                              //========================================================
+                            ]),
+                      ),
+                    ),
+                  ]),
                 ),
+
+                //MARK: Loading
+
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Selector<RegisterViewModel, bool>(
+                      builder: (context, isLoading, child) {
+                        if (isLoading) {
+                          return const Loading();
+                        }
+                        return const SizedBox();
+                      },
+                      selector: (context, viewmodel) => viewmodel.isLoading),
+                )
+
+                //========================================================
               ]),
             ),
-
-            //MARK: Loading
-
-            Selector<RegisterViewModel, bool>(
-                builder: (context, isLoading, child) {
-                  if (isLoading) {
-                    return const Loading();
-                  }
-                  return Container();
-                },
-                selector: (context, viewmodel) => viewmodel.isLoading)
-
-            //========================================================
-          ]),
+          ),
         );
       },
     );
