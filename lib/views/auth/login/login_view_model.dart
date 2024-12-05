@@ -12,9 +12,11 @@ class LoginViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  ValueNotifier<String> error = ValueNotifier("");
+  final ValueNotifier<String> _error = ValueNotifier("");
+  ValueNotifier<String> get error => _error;
 
-  ValueNotifier<String> token = ValueNotifier("");
+  final ValueNotifier<String> _token = ValueNotifier("");
+  ValueNotifier<String> get token => _token;
 
   String _username = "";
   String get username => _username;
@@ -87,14 +89,14 @@ class LoginViewModel extends ChangeNotifier {
       }
       if (isEmail(_username)) {
         _errorUsernameText = null;
-      } else {
+      } else if (_username.isNotEmpty) {
         _errorUsernameText =
             AppLocalizations.of(context)!.usernameInvalidWarning;
       }
 
       if (_password.length >= 6) {
         _errorPasswordText = null;
-      } else {
+      } else if (_password.isNotEmpty) {
         _errorPasswordText =
             AppLocalizations.of(context)!.passwordInvalidWarning;
       }
@@ -116,8 +118,8 @@ class LoginViewModel extends ChangeNotifier {
   //Function of loading animation
   void _startLoading() {
     _isLoading = true;
-    error.value = "";
-    token.value = "";
+    _error.value = "";
+    _token.value = "";
     notifyListeners();
   }
 
@@ -129,7 +131,7 @@ class LoginViewModel extends ChangeNotifier {
 
   //Function set the error value if available
   void _setError(String errorMessage) {
-    error.value = errorMessage;
+    _error.value = errorMessage;
     _isLoading = false;
     notifyListeners();
   }

@@ -9,9 +9,11 @@ class RegisterViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  final ValueNotifier<String> error = ValueNotifier("");
+  final ValueNotifier<String> _error = ValueNotifier("");
+  ValueNotifier<String> get error => _error;
 
-  final ValueNotifier<String> token = ValueNotifier("");
+  final ValueNotifier<String> _token = ValueNotifier("");
+  ValueNotifier<String> get token => _token;
 
   String _username = "";
   String get username => _username;
@@ -87,16 +89,16 @@ class RegisterViewModel extends ChangeNotifier {
         _errorRepasswordText =
             AppLocalizations.of(context)!.passwordEmptyWarning;
       }
-      if (_username.isNotEmpty && isEmail(_username)) {
+      if (isEmail(_username)) {
         _errorUsernameText = null;
-      } else if (_username.isNotEmpty && !isEmail(_username)) {
+      } else if (_username.isNotEmpty) {
         _errorUsernameText =
             AppLocalizations.of(context)!.usernameInvalidWarning;
       }
 
       if (_password.length >= 6) {
         _errorPasswordText = null;
-      } else if (_password.length < 6 && _password.isNotEmpty) {
+      } else if (_password.isNotEmpty) {
         _errorPasswordText =
             AppLocalizations.of(context)!.passwordInvalidWarning;
       }
@@ -120,8 +122,8 @@ class RegisterViewModel extends ChangeNotifier {
   void _startLoading() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _isLoading = true;
-      error.value = "";
-      token.value = "";
+      _error.value = "";
+      _token.value = "";
       notifyListeners();
     });
   }
@@ -137,7 +139,7 @@ class RegisterViewModel extends ChangeNotifier {
   //Function set the error value if available
   void _setError(String errorMessage) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      error.value = errorMessage;
+      _error.value = errorMessage;
       _isLoading = false;
       notifyListeners();
     });
@@ -148,7 +150,7 @@ class RegisterViewModel extends ChangeNotifier {
     _startLoading();
     final response = await _provider.signUp(username, password);
     _stopLoading();
-    token.value = response.data ?? "";
+    _token.value = response.data ?? "";
     _setError(response.error ?? "");
   }
 }

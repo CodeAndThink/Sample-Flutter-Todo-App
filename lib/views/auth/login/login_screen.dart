@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/common/views/alert.dart';
 import 'package:todo_app/common/views/auth_text_box.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
@@ -11,6 +10,7 @@ import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:todo_app/utilis/show_alert_dialog.dart';
 import 'package:todo_app/views/auth/login/login_view_model.dart';
 import 'package:todo_app/views/auth/register/register_screen.dart';
 import 'package:todo_app/views/todo/todo_screen.dart';
@@ -38,10 +38,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     _vm.error.addListener(() {
       if (_vm.error.value.isNotEmpty) {
-        _showAlert(context, AppLocalizations.of(context)!.error,
+        showAlert(context, AppLocalizations.of(context)!.error,
             AppLocalizations.of(context)!.loginFailure, () {
           Navigator.pop(context);
-        });
+        }, AppLocalizations.of(context)!.ok, null, null);
       }
     });
 
@@ -79,244 +79,236 @@ class _LoginScreenState extends State<LoginScreen> {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.primary,
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Positioned(
-                      child: Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: IconButton(
-                        onPressed: () {
-                          widget.toggleLocale();
-                        },
-                        icon: SvgPicture.asset("assets/icons/lang.svg",
-                            colorFilter: const ColorFilter.mode(
-                                Colors.white, BlendMode.srcATop))),
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: Center(
-                        child: Wrap(children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 24),
-                        child: Center(
-                          child: Image.asset(
-                            "assets/images/logo.png",
-                            height: screenWidth * 0.3 > 150
-                                ? 150
-                                : screenWidth * 0.3,
-                            width: screenWidth * 0.3 > 150
-                                ? 150
-                                : screenWidth * 0.3,
-                            fit: BoxFit.cover,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    Positioned(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: IconButton(
+                          onPressed: () {
+                            widget.toggleLocale();
+                          },
+                          icon: SvgPicture.asset("assets/icons/lang.svg",
+                              colorFilter: const ColorFilter.mode(
+                                  Colors.white, BlendMode.srcATop))),
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Center(
+                          child: Wrap(children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 24),
+                          child: Center(
+                            child: Image.asset(
+                              "assets/images/logo.png",
+                              height: screenWidth * 0.3 > 150
+                                  ? 150
+                                  : screenWidth * 0.3,
+                              width: screenWidth * 0.3 > 150
+                                  ? 150
+                                  : screenWidth * 0.3,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
-                          color: Theme.of(context).colorScheme.surface,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .loginScreenTitle,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineLarge
-                                      ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .usernameLabel,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                  
-                                    //MARK: Username
-                                    Selector<LoginViewModel,
-                                        dartz.Tuple2<String, String?>>(
-                                      selector: (context, viewmodel) =>
-                                          dartz.Tuple2(viewmodel.username,
-                                              viewmodel.errorUsernameText),
-                                      builder: (context, data, child) {
-                                        _username.text = data.value1;
-                                        return CustomTextBox(
-                                          controller: _username,
-                                          hintText:
-                                              AppLocalizations.of(context)!
-                                                  .usernameHint,
-                                          lineNumber: 1,
-                                          textError: data.value2,
-                                          onTap: _vm.resetErrorText,
-                                          textChangeAction: (value) {
-                                            _vm.setUsername(value);
-                                          },
-                                          cleanAction: () {
-                                            _vm.resetErrorText();
-                                            _vm.setUsername("");
-                                          },
-                                        );
-                                      },
-                                    ),
-                  
-                                    //========================================================
-                  
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .passwordLabel,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                  
-                                    //MARK: Password
-                  
-                                    Selector<LoginViewModel,
-                                        dartz.Tuple2<String, String?>>(
-                                      selector: (context, viewmodel) =>
-                                          dartz.Tuple2(viewmodel.password,
-                                              viewmodel.errorPasswordText),
-                                      builder: (context, data, child) {
-                                        _password.text = data.value1;
-                                        return AuthTextBox(
-                                          controller: _password,
-                                          hintText:
-                                              AppLocalizations.of(context)!
-                                                  .passwordHint,
-                                          lineNumber: 1,
-                                          textError: data.value2,
-                                          onTap: _vm.resetErrorText,
-                                          textChangeAction: (value) {
-                                            _vm.setPassword(value);
-                                          },
-                                        );
-                                      },
-                                    ),
-                  
-                                    //========================================================
-                  
-                                    const SizedBox(
-                                      height: 16,
-                                    ),
-                                  ],
-                                ),
-                                //MARK: Login Button
-                  
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: SizedBox(
-                                        height: 56,
-                                        child: MainBottomButton(
-                                            ontap: () {
-                                              _vm.validateInput(context);
-                                            },
-                                            buttonLabel:
-                                                AppLocalizations.of(context)!
-                                                    .loginButtonTitle),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(16)),
+                            color: Theme.of(context).colorScheme.surface,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .loginScreenTitle,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge
+                                        ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 8,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                  
-                                //========================================================
-                  
-                                const SizedBox(
-                                  height: 16,
-                                ),
-                  
-                                Text(
-                                  AppLocalizations.of(context)!.becomeNewMember,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                  
-                                //MARK: Register Button
-                  
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const RegisterScreen()));
-                                    },
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .registerButtonTitle,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(color: Colors.blueAccent),
-                                    ))
-                  
-                                //========================================================
-                              ]),
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .usernameLabel,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall,
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+
+                                      //MARK: Username
+                                      Selector<LoginViewModel,
+                                          dartz.Tuple2<String, String?>>(
+                                        selector: (context, viewmodel) =>
+                                            dartz.Tuple2(viewmodel.username,
+                                                viewmodel.errorUsernameText),
+                                        builder: (context, data, child) {
+                                          _username.text = data.value1;
+                                          return CustomTextBox(
+                                            controller: _username,
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .usernameHint,
+                                            lineNumber: 1,
+                                            textError: data.value2,
+                                            onTap: _vm.resetErrorText,
+                                            textChangeAction: (value) {
+                                              _vm.setUsername(value);
+                                            },
+                                            cleanAction: () {
+                                              _vm.resetErrorText();
+                                              _vm.setUsername("");
+                                            },
+                                          );
+                                        },
+                                      ),
+
+                                      //========================================================
+
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .passwordLabel,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall,
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+
+                                      //MARK: Password
+
+                                      Selector<LoginViewModel,
+                                          dartz.Tuple2<String, String?>>(
+                                        selector: (context, viewmodel) =>
+                                            dartz.Tuple2(viewmodel.password,
+                                                viewmodel.errorPasswordText),
+                                        builder: (context, data, child) {
+                                          _password.text = data.value1;
+                                          return AuthTextBox(
+                                            controller: _password,
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .passwordHint,
+                                            lineNumber: 1,
+                                            textError: data.value2,
+                                            onTap: _vm.resetErrorText,
+                                            textChangeAction: (value) {
+                                              _vm.setPassword(value);
+                                            },
+                                          );
+                                        },
+                                      ),
+
+                                      //========================================================
+
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                    ],
+                                  ),
+                                  //MARK: Login Button
+
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: SizedBox(
+                                          height: 56,
+                                          child: MainBottomButton(
+                                              ontap: () {
+                                                _vm.validateInput(context);
+                                              },
+                                              buttonLabel:
+                                                  AppLocalizations.of(context)!
+                                                      .loginButtonTitle),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  //========================================================
+
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .becomeNewMember,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+
+                                  //MARK: Register Button
+
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const RegisterScreen()));
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .registerButtonTitle,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(
+                                                color: Colors.blueAccent),
+                                      ))
+
+                                  //========================================================
+                                ]),
+                          ),
                         ),
-                      ),
-                    ])),
-                  ),
-                  //MARK: Loading
+                      ])),
+                    ),
+                    //MARK: Loading
 
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    child: Selector<LoginViewModel, bool>(
-                        builder: (context, isLoading, child) {
-                          if (isLoading) {
-                            return const Loading();
-                          }
-                          return const SizedBox();
-                        },
-                        selector: (context, viewmodel) => viewmodel.isLoading),
-                  )
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Selector<LoginViewModel, bool>(
+                          builder: (context, isLoading, child) {
+                            if (isLoading) {
+                              return const Loading();
+                            }
+                            return const SizedBox();
+                          },
+                          selector: (context, viewmodel) =>
+                              viewmodel.isLoading),
+                    )
 
-                  //========================================================
-                ],
+                    //========================================================
+                  ],
+                ),
               ),
             ),
           ),
-        );
-      },
-    );
-  }
-
-  void _showAlert(
-      BuildContext context, String title, String content, Function() action) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Alert(
-          title: title,
-          content: content,
-          mainAction: action,
-          mainActionLabel: AppLocalizations.of(context)!.ok,
         );
       },
     );

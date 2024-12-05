@@ -29,7 +29,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
     _scrollController.addListener(() {
       if (_scrollController.position.atEdge) {
-        bool isTop = _scrollController.position.pixels == 100;
+        bool isTop = _scrollController.position.pixels == 0;
         if (isTop) {
           Provider.of<TodoViewModel>(context, listen: false).fetchNote();
         }
@@ -166,8 +166,8 @@ class _TodoScreenState extends State<TodoScreen> {
 
                 SizedBox(
                     height: screenHeight > screenWidth
-                        ? screenHeight * 0.82 - 96
-                        : screenHeight * 0.61 - 96,
+                        ? screenHeight * (0.82 - 96 / screenHeight)
+                        : screenHeight * (0.61 - 96 / screenHeight),
                     child:
                         Consumer<TodoViewModel>(builder: (context, vm, child) {
                       if (vm.isLoading) {
@@ -180,7 +180,7 @@ class _TodoScreenState extends State<TodoScreen> {
                               controller: _scrollController,
                               slivers: [
                                 _listViewSection(vm.todoData),
-                                SliverToBoxAdapter( 
+                                SliverToBoxAdapter(
                                     child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -204,7 +204,12 @@ class _TodoScreenState extends State<TodoScreen> {
                                     )
                                   ],
                                 )),
-                                _listViewSection(vm.doneData)
+                                _listViewSection(vm.doneData),
+                                const SliverToBoxAdapter(
+                                  child: SizedBox(
+                                    height: 30,
+                                  ),
+                                )
                               ],
                             ));
                       } else if (vm.error.isNotEmpty) {

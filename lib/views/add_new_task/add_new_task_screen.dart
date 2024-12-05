@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/common/views/alert.dart';
 import 'package:todo_app/common/views/circle_button.dart';
 import 'package:todo_app/common/views/date_time_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
@@ -13,6 +12,7 @@ import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/utilis/converse_time.dart';
+import 'package:todo_app/utilis/show_alert_dialog.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 
 class AddNewTaskScreen extends StatefulWidget {
@@ -26,8 +26,6 @@ class AddNewTaskScreen extends StatefulWidget {
 class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _taskTitle = TextEditingController();
   final TextEditingController _content = TextEditingController();
-
-  NoteModel? data;
   late AddNewTaskViewModel _vm;
 
   @override
@@ -45,10 +43,10 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
     _vm.error.addListener(() {
       if (_vm.error.value.isNotEmpty) {
-        _showAlert(
+        showAlert(
             context,
             AppLocalizations.of(context)!.error,
-            data != null
+            widget.noteData != null
                 ? AppLocalizations.of(context)!.updateNoteError
                 : AppLocalizations.of(context)!.createNewNoteError, () {
           Navigator.pop(context);
@@ -58,7 +56,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
     _vm.isSuccess.addListener(() {
       if (_vm.isSuccess.value) {
-        _showAlert(
+        showAlert(
             context,
             AppLocalizations.of(context)!.success,
             widget.noteData != null
@@ -136,9 +134,6 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                   const SizedBox(
                                     height: 24,
                                   ),
-
-                                  //MARK: Task title
-
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -174,6 +169,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                             },
                                             textChangeAction: (value) {
                                               if (value.isNotEmpty) {
+                                                _vm.resetErrorText();
                                                 _vm.setTaskTitle(value);
                                               }
                                             },
@@ -187,8 +183,6 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                       //========================================================
                                     ],
                                   ),
-
-                                  //========================================================
 
                                   const SizedBox(
                                     height: 24,
@@ -414,6 +408,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
                         //MARK: Save button
                         Container(
+                            color: Colors.transparent,
                             margin: const EdgeInsets.only(
                                 bottom: 24, left: 16, right: 16),
                             height: 56,
@@ -448,35 +443,17 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         });
   }
 
-  void _showAlert(
-      BuildContext context,
-      String title,
-      String content,
-      Function() mainAction,
-      String mainActionLabel,
-      Function()? subAction,
-      String? subActionLabel) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Alert(
-          title: title,
-          content: content,
-          mainAction: mainAction,
-          mainActionLabel: mainActionLabel,
-          subAction: subAction,
-          subActionLabel: subActionLabel,
-        );
-      },
-    );
-  }
+  //MARK: Custom app bar
 
   Widget _customAppBar(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
     return Container(
-      height: screenHeight * 0.15 < 96 ? 96 : screenHeight * 0.15,
+      constraints: BoxConstraints(
+        minHeight: 96,
+        maxHeight: screenHeight * 0.15,
+      ),
       color: Theme.of(context).colorScheme.primary,
       child: Stack(
         children: [
@@ -489,38 +466,42 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
               top: 0,
               child: Image.asset('assets/images/circle_shape_small.png')),
           Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: screenHeight > screenWidth ? 55 : 30,
-                ),
                 Row(
                   children: [
                     Container(
-                      height: screenHeight * 0.06,
-                      width: screenHeight * 0.06,
+                      height:
+                          screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
+                      width:
+                          screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                               Radius.circular(screenHeight * 0.06 / 2)),
                           color: Colors.white),
                       child: IconButton(
                           onPressed: () {
-                            _showAlert(
-                                context,
-                                AppLocalizations.of(context)!.warning,
-                                AppLocalizations.of(context)!.exitWarning,
-                                () {
-                                  Navigator.popUntil(
-                                    context,
-                                    (route) => route.isFirst,
-                                  );
-                                },
-                                AppLocalizations.of(context)!.ok,
-                                () {
-                                  Navigator.pop(context);
-                                },
-                                AppLocalizations.of(context)!.cancel);
+                            if (_vm.isDataChange(context)) {
+                              showAlert(
+                                  context,
+                                  AppLocalizations.of(context)!.warning,
+                                  AppLocalizations.of(context)!.exitWarning,
+                                  () {
+                                    Navigator.popUntil(
+                                      context,
+                                      (route) => route.isFirst,
+                                    );
+                                  },
+                                  AppLocalizations.of(context)!.ok,
+                                  () {
+                                    Navigator.pop(context);
+                                  },
+                                  AppLocalizations.of(context)!.cancel);
+                            } else {
+                              Navigator.pop(context);
+                            }
                           },
                           icon: SvgPicture.asset(
                             "assets/icons/back.svg",
@@ -539,7 +520,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                       ),
                     )),
                     SizedBox(
-                      width: screenHeight * 0.06,
+                      width: screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
                     )
                   ],
                 ),

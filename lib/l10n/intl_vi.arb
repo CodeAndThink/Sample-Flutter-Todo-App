@@ -56,11 +56,11 @@
   "@registerButtonTitle": {
     "description": "Nhãn cho nút đăng ký"
   },
-  "usernameHint": "Username",
+  "usernameHint": "Tên người dùng",
   "@usernameHint": {
     "description": "Gợi ý cho trường nhập tên người dùng"
   },
-  "passwordHint": "Password",
+  "passwordHint": "Mật khẩu",
   "@passwordHint": {
     "description": "Gợi ý cho trường nhập mật khẩu"
   },
@@ -104,7 +104,7 @@
   "@registerScreenTitle": {
     "description": "Tiêu đề cho màn hình đăng ký"
   },
-  "repasswordHint": "Password",
+  "repasswordHint": "Nhập lại mật khẩu",
   "@repasswordHint": {
     "description": "Gợi ý cho trường nhập lại mật khẩu"
   },

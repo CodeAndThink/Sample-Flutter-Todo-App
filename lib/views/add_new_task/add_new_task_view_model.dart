@@ -10,9 +10,11 @@ class AddNewTaskViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  final ValueNotifier<String> error = ValueNotifier("");
+  final ValueNotifier<String> _error = ValueNotifier("");
+  ValueNotifier<String> get error => _error;
 
-  final ValueNotifier<bool> isSuccess = ValueNotifier(false);
+  final ValueNotifier<bool> _isSuccess = ValueNotifier(false);
+  ValueNotifier<bool> get isSuccess => _isSuccess;
 
   NoteModel? _data;
   NoteModel? get data => _data;
@@ -49,13 +51,30 @@ class AddNewTaskViewModel extends ChangeNotifier {
 
   //MARK: Public Function
 
+  //Function checks if data had any change
+  bool isDataChange(BuildContext context) {
+    if (_data == null) {
+      return !(_taskTitle.isEmpty &&
+          _category == 0 &&
+          _date.isEmpty &&
+          _time.isEmpty &&
+          _content.isEmpty);
+    } else {
+      String time = _data!.time != null
+          ? ConverseTime.timeFormat(_data!.time, context)
+          : "";
+      String content = _data!.content ?? "";
+
+      return !(_data!.taskTitle == _taskTitle &&
+          _data!.category == _category &&
+          _data!.date == _date &&
+          time == _time &&
+          content == _content);
+    }
+  }
+
   //Function prepares new note's data for create note or update note
   void prepareNewNote(BuildContext context) {
-    try {
-      throw "asdas asd asd";
-    } catch (e) {
-      _setError(e.toString());
-    }
     if (_taskTitle.isNotEmpty && _date.isNotEmpty) {
       final status = _data != null ? _data!.status : false;
       final time = _time.isNotEmpty ? _time : null;
@@ -154,36 +173,30 @@ class AddNewTaskViewModel extends ChangeNotifier {
 
     _stopLoading();
 
-    isSuccess.value = response.data != null ? true : false;
+    _isSuccess.value = response.data != null ? true : false;
 
     _setError(response.error ?? "");
   }
 
   //Function of loading animation
   void _startLoading() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _isLoading = true;
-      isSuccess.value = false;
-      error.value = "";
-      notifyListeners();
-    });
+    _isLoading = true;
+    _isSuccess.value = false;
+    _error.value = "";
+    notifyListeners();
   }
 
   //Function for stopping loading animation
   void _stopLoading() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _isLoading = false;
-      notifyListeners();
-    });
+    _isLoading = false;
+    notifyListeners();
   }
 
   //Function set the error value if available
   void _setError(String errorMessage) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      error.value = errorMessage;
-      _isLoading = false;
-      notifyListeners();
-    });
+    _error.value = errorMessage;
+    _isLoading = false;
+    notifyListeners();
   }
 
   //Function of creating new note feature
@@ -191,7 +204,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
     _startLoading();
     final response = await _provider.createNewNote(newNote);
     _stopLoading();
-    isSuccess.value = response.data != null ? true : false;
+    _isSuccess.value = response.data != null ? true : false;
     _setError(response.error ?? "");
   }
 }
