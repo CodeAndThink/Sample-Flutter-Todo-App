@@ -22,6 +22,9 @@ class DateTimeTextBox extends StatelessWidget {
         builder: (context, value, child) {
           return TextField(
             controller: controller,
+            onTap: () async {
+              action(context);
+            },
             readOnly: true,
             decoration: InputDecoration(
                 hintText: hintText,

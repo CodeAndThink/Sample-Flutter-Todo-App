@@ -6,7 +6,8 @@ class CircleButton extends StatefulWidget {
       {super.key,
       required this.onTap,
       required this.backgroundColor,
-      required this.iconPath, required this.isSetAlpha});
+      required this.iconPath,
+      required this.isSetAlpha});
   final VoidCallback onTap;
   final Color backgroundColor;
   final String iconPath;
@@ -33,10 +34,13 @@ class _CircleButtonState extends State<CircleButton> {
           ),
         ),
         child: Center(
-            child: SvgPicture.asset(
-          widget.iconPath,
-          height: 24,
-          width: 24,
+            child: Opacity(
+          opacity: widget.isSetAlpha ? 50/255 : 1,
+          child: SvgPicture.asset(
+            widget.iconPath,
+            height: 24,
+            width: 24,
+          ),
         )),
       ),
     );

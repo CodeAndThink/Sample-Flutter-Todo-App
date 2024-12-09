@@ -255,5 +255,29 @@
   "updateButtonTitle": "Update",
   "@updateButtonTitle": {
     "description": "This is the title of update button"
+  },
+  "noteCategoryTip": "Options for tasks like studying, reading, etc.",
+  "@noteCategoryTip": {
+    "description": "Suggestions for Note category options"
+  },
+  "calendarCategoryTip": "Options for tasks like events, shows, etc.",
+  "@calendarCategoryTip": {
+    "description": "Suggestions for Calendar category options"
+  },
+  "celebratedCategoryTip": "Options for tasks like festivals, memorials, etc.",
+  "@celebratedCategoryTip": {
+    "description": "Suggestions for Celebrated category options"
+  },
+  "changeLanguageTip": "Option to change the application's language.",
+  "@changeLanguageTip": {
+    "description": "Suggestions for the Change Language feature"
+  },
+  "logoutTip": "Option to log out of the current account.",
+  "@logoutTip": {
+    "description": "Suggestions for the Logout feature"
+  },
+  "emptyContent": "You have not create any content for this task!",
+  "@emptyContent": {
+    "description": "This notification when there is no content belonged to this task"
   }
 }

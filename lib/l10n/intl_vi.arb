@@ -255,5 +255,29 @@
   "updateButtonTitle": "Cập nhật",
   "@updateButtonTitle": {
     "description": "Tiêu đề của nút cập nhật"
+  },
+  "noteCategoryTip": "Tuỳ chọn dành cho những công việc như học tập, đọc sách, ...",
+  "@noteCategoryTip": {
+    "description": "Gợi ý cho tuỳ chọn Note"
+  },
+  "calendarCategoryTip": "Tuỳ chọn dành cho những công việc như sự kiện, show diễn, ...",
+  "@calendarCategoryTip": {
+    "description": "Gợi ý cho tuỳ chọn Calendar"
+  },
+  "celebratedCategoryTip": "Tuỳ chọn dành cho những công việc như lễ hội, lễ tưởng niệm, ...",
+  "@celebratedCategoryTip": {
+    "description": "Gợi ý cho tuỳ chọn Celebrated"
+  },
+  "changeLanguageTip": "Tuỳ chọn để thay đổi ngôn ngữ của ứng dụng.",
+  "@changeLanguageTip": {
+    "description": "Gợi ý cho tính năng Thay đổi Ngôn ngữ"
+  },
+  "logoutTip": "Tuỳ chọn để đăng xuất khỏi tài khoản hiện tại.",
+  "@logoutTip": {
+    "description": "Gợi ý cho tính năng Đăng xuất"
+  },
+  "emptyContent": "Bạn chưa tạo nội dung cho công việc này!",
+  "@emptyContent": {
+    "description": "Lời nhắn khi công việc chưa có nội dung đính kèm"
   }
 }

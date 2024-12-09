@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/circle_button.dart';
+import 'package:todo_app/common/views/date_time_picker.dart';
 import 'package:todo_app/common/views/date_time_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
@@ -72,31 +73,21 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     _vm.setInitialData(context);
   }
 
+  //Select Date Function
+
   Future<void> _selectDate(BuildContext context) async {
-    DateTime initialDate = DateTime.now();
-    DateTime firstDate = DateTime(1900);
-    DateTime lastDate = DateTime(2101);
+    final DateTime? picked = await selectDate(context);
 
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: initialDate,
-      firstDate: firstDate,
-      lastDate: lastDate,
-    );
-
-    if (context.mounted && picked != null && picked != initialDate) {
+    if (context.mounted && picked != null) {
       _vm.resetErrorText();
       _vm.setDate("${picked.toLocal()}".split(' ')[0]);
     }
   }
 
-  Future<void> _selectTime(BuildContext context) async {
-    TimeOfDay initialTime = TimeOfDay.now();
+  //Select Time Function
 
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: initialTime,
-    );
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await selectTime(context);
 
     if (context.mounted && picked != null) {
       _vm.setTime(ConverseTime.timeFormat(picked, context));
@@ -160,7 +151,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                             dartz.Tuple2(viewmodel.taskTitle,
                                                 viewmodel.errorTaskTitleText),
                                         builder: (context, data, child) {
-                                          _taskTitleController.text = data.value1;
+                                          _taskTitleController.text =
+                                              data.value1;
                                           return CustomTextBox(
                                             controller: _taskTitleController,
                                             hintText:
@@ -208,14 +200,19 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                       ),
                                       Selector<AddNewTaskViewModel, bool>(
                                         builder: (context, isSetAlpha, child) {
-                                          return CircleButton(
-                                            onTap: () {
-                                              _vm.setCategory(0);
-                                            },
-                                            backgroundColor: Configs
-                                                .noteCategoryBackgroundColor,
-                                            iconPath: "assets/icons/note.svg",
-                                            isSetAlpha: isSetAlpha,
+                                          return Tooltip(
+                                            message:
+                                                AppLocalizations.of(context)!
+                                                    .noteCategoryTip,
+                                            child: CircleButton(
+                                              onTap: () {
+                                                _vm.setCategory(0);
+                                              },
+                                              backgroundColor: Configs
+                                                  .noteCategoryBackgroundColor,
+                                              iconPath: "assets/icons/note.svg",
+                                              isSetAlpha: isSetAlpha,
+                                            ),
                                           );
                                         },
                                         selector: (context, viewmodel) =>
@@ -226,15 +223,20 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                       ),
                                       Selector<AddNewTaskViewModel, bool>(
                                         builder: (context, isSetAlpha, child) {
-                                          return CircleButton(
-                                            onTap: () {
-                                              _vm.setCategory(1);
-                                            },
-                                            backgroundColor: Configs
-                                                .calendarCategoryBackgroundColor,
-                                            iconPath:
-                                                "assets/icons/calendar.svg",
-                                            isSetAlpha: isSetAlpha,
+                                          return Tooltip(
+                                            message:
+                                                AppLocalizations.of(context)!
+                                                    .calendarCategoryTip,
+                                            child: CircleButton(
+                                              onTap: () {
+                                                _vm.setCategory(1);
+                                              },
+                                              backgroundColor: Configs
+                                                  .calendarCategoryBackgroundColor,
+                                              iconPath:
+                                                  "assets/icons/calendar.svg",
+                                              isSetAlpha: isSetAlpha,
+                                            ),
                                           );
                                         },
                                         selector: (context, viewmodel) =>
@@ -245,14 +247,19 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                       ),
                                       Selector<AddNewTaskViewModel, bool>(
                                         builder: (context, isSetAlpha, child) {
-                                          return CircleButton(
-                                            onTap: () {
-                                              _vm.setCategory(2);
-                                            },
-                                            backgroundColor: Configs
-                                                .celeCategoryBackgroundColor,
-                                            iconPath: "assets/icons/cele.svg",
-                                            isSetAlpha: isSetAlpha,
+                                          return Tooltip(
+                                            message:
+                                                AppLocalizations.of(context)!
+                                                    .celebratedCategoryTip,
+                                            child: CircleButton(
+                                              onTap: () {
+                                                _vm.setCategory(2);
+                                              },
+                                              backgroundColor: Configs
+                                                  .celeCategoryBackgroundColor,
+                                              iconPath: "assets/icons/cele.svg",
+                                              isSetAlpha: isSetAlpha,
+                                            ),
                                           );
                                         },
                                         selector: (context, viewmodel) =>
@@ -524,7 +531,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                       ),
                     )),
                     SizedBox(
-                      width: screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
+                      width:
+                          screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
                     )
                   ],
                 ),

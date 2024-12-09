@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/common/views/custom_tool_tip_card.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/models/note_model.dart';
@@ -144,14 +145,18 @@ class _TodoScreenState extends State<TodoScreen> {
                             children: [
 //MARK: Change Language Button
 
-                              IconButton(
-                                  onPressed: () {
-                                    widget.toggleLocale();
-                                  },
-                                  icon: SvgPicture.asset(
-                                      "assets/icons/lang.svg",
-                                      colorFilter: const ColorFilter.mode(
-                                          Colors.white, BlendMode.srcATop))),
+                              Tooltip(
+                                message: AppLocalizations.of(context)!
+                                    .changeLanguageTip,
+                                child: IconButton(
+                                    onPressed: () {
+                                      widget.toggleLocale();
+                                    },
+                                    icon: SvgPicture.asset(
+                                        "assets/icons/lang.svg",
+                                        colorFilter: const ColorFilter.mode(
+                                            Colors.white, BlendMode.srcATop))),
+                              ),
 
 //========================================================
 
@@ -172,25 +177,29 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //MARK: Logout Button
 
-                              IconButton(
-                                  onPressed: () {
-                                    Provider.of<TodoViewModel>(context,
-                                            listen: false)
-                                        .signout();
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginScreen(
-                                              toggleLocale:
-                                                  widget.toggleLocale)),
-                                      (route) => false,
-                                    );
-                                  },
-                                  icon: SvgPicture.asset(
-                                    "assets/icons/signout.svg",
-                                    colorFilter: const ColorFilter.mode(
-                                        Colors.redAccent, BlendMode.srcATop),
-                                  ))
+                              Tooltip(
+                                message:
+                                    AppLocalizations.of(context)!.logoutTip,
+                                child: IconButton(
+                                    onPressed: () {
+                                      Provider.of<TodoViewModel>(context,
+                                              listen: false)
+                                          .signout();
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => LoginScreen(
+                                                toggleLocale:
+                                                    widget.toggleLocale)),
+                                        (route) => false,
+                                      );
+                                    },
+                                    icon: SvgPicture.asset(
+                                      "assets/icons/signout.svg",
+                                      colorFilter: const ColorFilter.mode(
+                                          Colors.redAccent, BlendMode.srcATop),
+                                    )),
+                              )
 
 //========================================================
                             ],
@@ -380,32 +389,53 @@ class _TodoScreenState extends State<TodoScreen> {
                 color: Colors.red,
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Icon(Icons.delete,
-                    color: Theme.of(context).colorScheme.surface)),
-            child: NoteCard(
-                data: inputData[index],
-                onTap: () {
-                  final todoViewmodel =
-                      Provider.of<TodoViewModel>(context, listen: false);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddNewTaskScreen(
-                        noteData: inputData[index],
-                      ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.delete,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.surface),
                     ),
-                  ).then((_) {
-                    if (context.mounted) {
-                      todoViewmodel.fetchNote();
-                    }
-                  });
-                },
-                checkBoxAction: (value) {
-                  Provider.of<TodoViewModel>(context, listen: false)
-                      .updateNote(inputData[index]);
-                },
-                isTop: isTop,
-                isBottom: isBottom),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Icon(Icons.delete,
+                        color: Theme.of(context).colorScheme.surface),
+                  ],
+                )),
+            child: CustomTooltipCard(
+              tooltipContent: Text(
+                inputData[index].content!.isEmpty
+                    ? AppLocalizations.of(context)!.emptyContent
+                    : inputData[index].content!,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              child: NoteCard(
+                  data: inputData[index],
+                  onTap: () {
+                    final todoViewmodel =
+                        Provider.of<TodoViewModel>(context, listen: false);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddNewTaskScreen(
+                          noteData: inputData[index],
+                        ),
+                      ),
+                    ).then((_) {
+                      if (context.mounted) {
+                        todoViewmodel.fetchNote();
+                      }
+                    });
+                  },
+                  checkBoxAction: (value) {
+                    Provider.of<TodoViewModel>(context, listen: false)
+                        .updateNote(inputData[index]);
+                  },
+                  isTop: isTop,
+                  isBottom: isBottom),
+            ),
           );
         },
         childCount: inputData.length,

@@ -18,6 +18,7 @@ class SettingManager {
     if (languageCode != null) {
       final langCode = languageCode.split('-')[0];
       final counCode = languageCode.split('-')[1];
+
       return Locale(langCode, counCode);
     }
 
