@@ -110,6 +110,7 @@ class LoginViewModel extends ChangeNotifier {
     final lastUserLogin = await UserManager.shared.getUserData();
     if (lastUserLogin != null) {
       setUsername(lastUserLogin.username);
+      setPassword(lastUserLogin.password);
     }
   }
 

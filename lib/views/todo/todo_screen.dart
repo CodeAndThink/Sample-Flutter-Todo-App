@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +25,7 @@ class TodoScreen extends StatefulWidget {
 class _TodoScreenState extends State<TodoScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey widgetKey = GlobalKey();
+  late Size screenSize;
   Color? _textColor;
 
   @override
@@ -67,15 +70,25 @@ class _TodoScreenState extends State<TodoScreen> {
     if (renderBox != null) {
       Offset position = renderBox.localToGlobal(Offset.zero);
 
-      if (position.dy < 222) {
-        setState(() {
-          _textColor = Colors.white;
-        });
+      if (position.dy < max(222, screenSize.height * 0.26)) {
+        if (_textColor != Colors.white) {
+          setState(() {
+            _textColor = Colors.white;
+          });
+        }
       } else {
         if (MediaQuery.of(context).platformBrightness == Brightness.light) {
-          setState(() {
-            _textColor = Colors.black;
-          });
+          if (_textColor != Colors.black) {
+            setState(() {
+              _textColor = Colors.black;
+            });
+          }
+        } else {
+          if (_textColor != Colors.white) {
+            setState(() {
+              _textColor = Colors.white;
+            });
+          }
         }
       }
     }
@@ -90,7 +103,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
     final currentDate = DateTime.now();
