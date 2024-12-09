@@ -34,7 +34,7 @@ class NoteCardState extends State<NoteCard>
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: Configs.animationDuration,
       vsync: this,
     );
 
