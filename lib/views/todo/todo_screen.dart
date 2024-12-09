@@ -22,12 +22,15 @@ class TodoScreen extends StatefulWidget {
 
 class _TodoScreenState extends State<TodoScreen> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey widgetKey = GlobalKey();
+  Color? _textColor;
 
   @override
   void initState() {
     super.initState();
 
     _scrollController.addListener(() {
+      _changeTitleColorBasedOnPosition();
       if (_scrollController.position.atEdge) {
         bool isTop = _scrollController.position.pixels == 0;
         if (isTop) {
@@ -57,8 +60,30 @@ class _TodoScreenState extends State<TodoScreen> {
     return result;
   }
 
+  //Function change color of text based on the position of it
+  void _changeTitleColorBasedOnPosition() {
+    RenderBox? renderBox =
+        widgetKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      Offset position = renderBox.localToGlobal(Offset.zero);
+
+      if (position.dy < 222) {
+        setState(() {
+          _textColor = Colors.white;
+        });
+      } else {
+        if (MediaQuery.of(context).platformBrightness == Brightness.light) {
+          setState(() {
+            _textColor = Colors.black;
+          });
+        }
+      }
+    }
+  }
+
   @override
   void dispose() {
+    _scrollController.removeListener(_changeTitleColorBasedOnPosition);
     _scrollController.dispose();
     super.dispose();
   }
@@ -188,6 +213,7 @@ class _TodoScreenState extends State<TodoScreen> {
                                       height: 24,
                                     ),
                                     Text(
+                                        key: widgetKey,
                                         AppLocalizations.of(context)!.completed,
                                         style: vm.todoData.isEmpty
                                             ? Theme.of(context)
@@ -198,7 +224,8 @@ class _TodoScreenState extends State<TodoScreen> {
                                                 )
                                             : Theme.of(context)
                                                 .textTheme
-                                                .headlineSmall),
+                                                .headlineSmall
+                                                ?.copyWith(color: _textColor)),
                                     const SizedBox(
                                       height: 24,
                                     )
