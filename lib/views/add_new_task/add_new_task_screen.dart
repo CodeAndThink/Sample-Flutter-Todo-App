@@ -34,6 +34,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
     _vm = AddNewTaskViewModel(ApiProvider.shared, widget.noteData);
 
+//MARK: Event Listener
+
     _vm.error.addListener(() {
       if (_vm.error.value.isNotEmpty) {
         showAlert(
@@ -59,6 +61,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         }, AppLocalizations.of(context)!.ok, null, null);
       }
     });
+
+//========================================================
   }
 
   @override

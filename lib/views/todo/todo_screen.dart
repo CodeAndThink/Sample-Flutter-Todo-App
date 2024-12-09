@@ -142,6 +142,8 @@ class _TodoScreenState extends State<TodoScreen> {
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Row(
                             children: [
+//MARK: Change Language Button
+
                               IconButton(
                                   onPressed: () {
                                     widget.toggleLocale();
@@ -150,6 +152,11 @@ class _TodoScreenState extends State<TodoScreen> {
                                       "assets/icons/lang.svg",
                                       colorFilter: const ColorFilter.mode(
                                           Colors.white, BlendMode.srcATop))),
+
+//========================================================
+
+//MARK: Local Date
+
                               Expanded(
                                 child: Text(
                                   formattedDate,
@@ -160,6 +167,11 @@ class _TodoScreenState extends State<TodoScreen> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
+
+//========================================================
+
+//MARK: Logout Button
+
                               IconButton(
                                   onPressed: () {
                                     Provider.of<TodoViewModel>(context,
@@ -179,6 +191,8 @@ class _TodoScreenState extends State<TodoScreen> {
                                     colorFilter: const ColorFilter.mode(
                                         Colors.redAccent, BlendMode.srcATop),
                                   ))
+
+//========================================================
                             ],
                           ),
                         ),
@@ -200,7 +214,7 @@ class _TodoScreenState extends State<TodoScreen> {
                       screenHeight * 0.185 < 158 ? 158 : screenHeight * 0.185,
                 ),
 
-                //MARK: Consumer - Main List
+//MARK: Consumer - Main List
 
                 SizedBox(
                     height: screenHeight > screenWidth
@@ -304,9 +318,9 @@ class _TodoScreenState extends State<TodoScreen> {
               ],
             ),
 
-            //========================================================
+//========================================================
 
-            //MARK: Add New Task Button
+//MARK: Add New Task Button
 
             Positioned(
                 left: 16,
@@ -329,7 +343,7 @@ class _TodoScreenState extends State<TodoScreen> {
                       AppLocalizations.of(context)!.addNewTaskButtonTitle,
                 ))
 
-            //========================================================
+//========================================================
           ],
         ),
       ),

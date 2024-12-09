@@ -31,6 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     _vm = RegisterViewModel(ApiProvider.shared);
 
+//MARK: Event Listener
+
     _vm.error.addListener(() {
       if (_vm.error.value.isNotEmpty) {
         showAlert(context, AppLocalizations.of(context)!.error,
@@ -48,6 +50,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }, AppLocalizations.of(context)!.ok, null, null);
       }
     });
+
+//========================================================
   }
 
   @override
@@ -309,6 +313,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+//MARK: App Bar
+
   Widget _customAppBar() {
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
@@ -338,3 +344,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
+
+//========================================================

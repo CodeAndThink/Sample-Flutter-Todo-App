@@ -36,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _vm = LoginViewModel(
         ApiProvider.shared, UserManager.shared, AuthManager.shared);
 
+//MARK: Event Listener
+
     _vm.error.addListener(() {
       if (_vm.error.value.isNotEmpty) {
         showAlert(context, AppLocalizations.of(context)!.error,
@@ -56,6 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     });
+
+//========================================================
 
     _vm.getLastLoginUsername();
   }
