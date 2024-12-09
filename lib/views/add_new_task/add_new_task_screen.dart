@@ -24,22 +24,15 @@ class AddNewTaskScreen extends StatefulWidget {
 }
 
 class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
-  final TextEditingController _taskTitle = TextEditingController();
-  final TextEditingController _content = TextEditingController();
+  final TextEditingController _taskTitleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
   late AddNewTaskViewModel _vm;
 
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
 
     _vm = AddNewTaskViewModel(ApiProvider.shared, widget.noteData);
-
-    _vm.setInitialData(context);
 
     _vm.error.addListener(() {
       if (_vm.error.value.isNotEmpty) {
@@ -66,6 +59,13 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         }, AppLocalizations.of(context)!.ok, null, null);
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _vm.setInitialData(context);
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -156,9 +156,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                             dartz.Tuple2(viewmodel.taskTitle,
                                                 viewmodel.errorTaskTitleText),
                                         builder: (context, data, child) {
-                                          _taskTitle.text = data.value1;
+                                          _taskTitleController.text = data.value1;
                                           return CustomTextBox(
-                                            controller: _taskTitle,
+                                            controller: _taskTitleController,
                                             hintText:
                                                 AppLocalizations.of(context)!
                                                     .taskHint,
@@ -378,9 +378,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                       ),
                                       Selector<AddNewTaskViewModel, String>(
                                           builder: (context, content, child) {
-                                            _content.text = content;
+                                            _contentController.text = content;
                                             return CustomTextBox(
-                                              controller: _content,
+                                              controller: _contentController,
                                               hintText:
                                                   AppLocalizations.of(context)!
                                                       .notesHint,
