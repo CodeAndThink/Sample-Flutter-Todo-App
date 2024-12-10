@@ -23,43 +23,39 @@ class CustomTextBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<TextEditingValue>(
-        valueListenable: controller,
-        builder: (context, value, child) {
-          return TextField(
-            onTap: onTap,
-            textInputAction: TextInputAction.done,
-            controller: controller,
-            keyboardType: TextInputType.multiline,
-            maxLines: lineNumber,
-            obscureText: isSecure == null ? false : isSecure!,
-            onEditingComplete: () {
-              FocusScope.of(context).unfocus();
-            },
-            decoration: InputDecoration(
-                hintText: hintText,
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: const Color(0xFF1B1B1D)),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: const BorderSide(
-                    color: Color(0xFFE0E0E0),
-                    width: 2.0,
-                  ),
-                ),
-                suffixIcon: value.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () => cleanAction(),
-                      )
-                    : null,
-                errorText: textError),
-            onChanged: textChangeAction,
-          );
-        });
+    return TextField(
+      onTap: onTap,
+      textInputAction: TextInputAction.done,
+      controller: controller,
+      keyboardType: TextInputType.multiline,
+      maxLines: lineNumber,
+      obscureText: isSecure == null ? false : isSecure!,
+      onEditingComplete: () {
+        FocusScope.of(context).unfocus();
+      },
+      decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: const Color(0xFF1B1B1D)),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: const BorderSide(
+              color: Color(0xFFE0E0E0),
+              width: 2.0,
+            ),
+          ),
+          suffixIcon: controller.text.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () => cleanAction(),
+                )
+              : null,
+          errorText: textError),
+      onChanged: textChangeAction,
+    );
   }
 }

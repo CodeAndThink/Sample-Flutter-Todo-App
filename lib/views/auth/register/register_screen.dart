@@ -114,7 +114,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context)!.usernameLabel,
+                                      AppLocalizations.of(context)!
+                                          .usernameLabel,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineSmall,
@@ -122,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-              
+
                                     //MARK: Username Textbox
                                     Selector<RegisterViewModel,
                                         dartz.Tuple2<String, String?>>(
@@ -133,8 +134,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         _username.text = data.value1;
                                         return CustomTextBox(
                                           controller: _username,
-                                          hintText: AppLocalizations.of(context)!
-                                              .usernameHint,
+                                          hintText:
+                                              AppLocalizations.of(context)!
+                                                  .usernameHint,
                                           lineNumber: 1,
                                           textError: data.value2,
                                           onTap: _vm.resetErrorText,
@@ -148,14 +150,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         );
                                       },
                                     ),
-              
+
                                     //========================================================
-              
+
                                     const SizedBox(
                                       height: 8,
                                     ),
                                     Text(
-                                      AppLocalizations.of(context)!.passwordLabel,
+                                      AppLocalizations.of(context)!
+                                          .passwordLabel,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineSmall,
@@ -163,9 +166,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-              
+
                                     //MARK: Password Textbox
-              
+
                                     Selector<RegisterViewModel,
                                         dartz.Tuple2<String, String?>>(
                                       selector: (context, viewmodel) =>
@@ -175,8 +178,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         _password.text = data.value1;
                                         return AuthTextBox(
                                           controller: _password,
-                                          hintText: AppLocalizations.of(context)!
-                                              .passwordHint,
+                                          hintText:
+                                              AppLocalizations.of(context)!
+                                                  .passwordHint,
                                           lineNumber: 1,
                                           textError: data.value2,
                                           onTap: _vm.resetErrorText,
@@ -186,9 +190,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         );
                                       },
                                     ),
-              
+
                                     //========================================================
-              
+
                                     const SizedBox(
                                       height: 8,
                                     ),
@@ -202,9 +206,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-              
+
                                     //MARK: Confirm Password Textbox
-              
+
                                     Selector<RegisterViewModel,
                                         dartz.Tuple2<String, String?>>(
                                       selector: (context, viewmodel) =>
@@ -214,8 +218,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         _repassword.text = data.value1;
                                         return AuthTextBox(
                                           controller: _repassword,
-                                          hintText: AppLocalizations.of(context)!
-                                              .repasswordHint,
+                                          hintText:
+                                              AppLocalizations.of(context)!
+                                                  .repasswordHint,
                                           lineNumber: 1,
                                           textError: data.value2,
                                           onTap: _vm.resetErrorText,
@@ -225,16 +230,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         );
                                       },
                                     ),
-              
+
                                     //========================================================
-              
+
                                     const SizedBox(
                                       height: 16,
                                     ),
                                   ],
                                 ),
                                 //MARK: Register Button
-              
+
                                 Row(children: [
                                   Expanded(
                                     child: SizedBox(
@@ -252,9 +257,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   ),
                                 ]),
-              
+
                                 //========================================================
-              
+
                                 const SizedBox(
                                   height: 16,
                                 ),
@@ -263,9 +268,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       .alreadyHaveAccount,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
-              
+
                                 //MARK: Move To Login Screen Button
-              
+
                                 TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -278,16 +283,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           .headlineSmall
                                           ?.copyWith(color: Colors.blueAccent),
                                     ))
-              
+
                                 //========================================================
                               ]),
                         ),
                       ),
                     ]),
                   ),
-              
+
                   //MARK: Loading
-              
+
                   Positioned(
                     left: 0,
                     right: 0,
@@ -302,7 +307,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         selector: (context, viewmodel) => viewmodel.isLoading),
                   )
-              
+
                   //========================================================
                 ]),
               ),
@@ -323,8 +328,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Row(
         children: [
           Container(
-            height: screenHeight * 0.06,
-            width: screenHeight * 0.06,
+            height: screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
+            width: screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
             decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.all(Radius.circular(screenHeight * 0.06 / 2)),

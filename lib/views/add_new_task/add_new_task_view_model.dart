@@ -81,7 +81,6 @@ class AddNewTaskViewModel extends ChangeNotifier {
     if (_taskTitle.isNotEmpty && _date.isNotEmpty) {
       final status = _data != null ? _data!.status : false;
       final time = _time.isNotEmpty ? _time : null;
-      final content = _content.isNotEmpty ? _content : null;
       final deviceId = _data?.deviceId;
       final id = _data?.id;
       final date = ConverseDateTime.convertDateToDefaltFormat(context, _date);
@@ -92,7 +91,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
           taskTitle: _taskTitle,
           category: _category,
           status: status,
-          content: content,
+          content: _content,
           date: date,
           time: time);
       if (_data == null) {

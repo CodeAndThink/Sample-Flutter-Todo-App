@@ -100,8 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     )),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Center(
-                          child: Wrap(children: [
+                      child: Wrap(children: [
                         Container(
                           margin: const EdgeInsets.only(bottom: 24),
                           child: Center(
@@ -287,7 +286,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ]),
                           ),
                         ),
-                      ])),
+                      ]),
                     ),
                     //MARK: Loading
 

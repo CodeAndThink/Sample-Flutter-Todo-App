@@ -76,8 +76,8 @@ class NoteCardState extends State<NoteCard>
     }
   }
 
-  //Function detechs which border apply for each card
-  List<double> borderRadiusCal() {
+  //Function detects which border apply for each card
+  List<double> _borderRadiusCal() {
     if (widget.isTop && widget.isBottom) {
       return [10, 10, 10, 10];
     } else if (widget.isTop) {
@@ -100,14 +100,14 @@ class NoteCardState extends State<NoteCard>
           child: SizedBox(
             height: 80,
             child: Card(
-              margin: const EdgeInsets.all(1),
+              margin: const EdgeInsets.symmetric(vertical: 1),
               color: Theme.of(context).colorScheme.secondary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(borderRadiusCal()[0]),
-                  topRight: Radius.circular(borderRadiusCal()[1]),
-                  bottomLeft: Radius.circular(borderRadiusCal()[2]),
-                  bottomRight: Radius.circular(borderRadiusCal()[3]),
+                  topLeft: Radius.circular(_borderRadiusCal()[0]),
+                  topRight: Radius.circular(_borderRadiusCal()[1]),
+                  bottomLeft: Radius.circular(_borderRadiusCal()[2]),
+                  bottomRight: Radius.circular(_borderRadiusCal()[3]),
                 ),
               ),
               child: Padding(

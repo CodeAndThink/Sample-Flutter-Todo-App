@@ -27,6 +27,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _taskTitleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   late AddNewTaskViewModel _vm;
+  bool isInitData = false;
 
   @override
   void initState() {
@@ -69,7 +70,10 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _vm.setInitialData(context);
+    if (!isInitData) {
+      _vm.setInitialData(context);
+      isInitData = true;
+    }
   }
 
   //MARK: Select Date Function
