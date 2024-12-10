@@ -95,8 +95,13 @@ class AddNewTaskViewModel extends ChangeNotifier {
           content: content,
           date: date,
           time: time);
-
-      _data == null ? _createNote(newNote) : _updateData(newNote);
+      if (_data == null) {
+        _createNote(newNote);
+      } else {
+        if (isDataChange(context)) {
+          _updateData(newNote);
+        }
+      }
     } else {
       _validateInput(context);
     }
