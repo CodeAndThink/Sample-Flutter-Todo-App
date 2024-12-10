@@ -409,7 +409,10 @@ class _TodoScreenState extends State<TodoScreen> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.content,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(color: Colors.white),
                   ),
                   Text(
                     inputData[index].content!.isEmpty
@@ -418,7 +421,7 @@ class _TodoScreenState extends State<TodoScreen> {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: inputData[index].content!.isEmpty
                             ? Colors.grey
-                            : null),
+                            : Colors.white),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
