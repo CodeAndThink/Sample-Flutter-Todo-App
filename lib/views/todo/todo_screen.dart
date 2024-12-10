@@ -9,7 +9,7 @@ import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/models/note_model.dart';
-import 'package:todo_app/utilis/capitalize.dart';
+import 'package:todo_app/utilities/capitalize.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_screen.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/todo/item/note_card.dart';
