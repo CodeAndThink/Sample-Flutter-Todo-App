@@ -18,7 +18,7 @@ class CustomTooltipCardState extends State<CustomTooltipCard> {
   OverlayEntry? _overlayEntry;
   final GlobalKey _tooltipKey = GlobalKey();
 
-  void _showTooltip(BuildContext context) {
+  void _showTooltip() {
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
     final Size size = renderBox.size;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -65,7 +65,7 @@ class CustomTooltipCardState extends State<CustomTooltipCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onLongPressStart: (details) => _showTooltip(context),
+        onLongPressStart: (details) => _showTooltip(),
         onLongPressEnd: (details) => _hideTooltip(),
         child: widget.child);
   }

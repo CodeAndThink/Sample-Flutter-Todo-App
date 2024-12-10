@@ -2,7 +2,6 @@ import 'dart:ui';
 
 class Configs {
   //Network
-
   static Duration timeOut = const Duration(seconds: 5);
   static const apiSupabaseBaseUrl = "https://jwtukvndlexkwbqasypb.supabase.co";
   static const apiSubabaseKey =
@@ -15,4 +14,13 @@ class Configs {
 
   //Animation
   static Duration animationDuration = const Duration(milliseconds: 400);
+
+  //Date Format
+  static const longEnDate = 'MMMM d';
+  static const mediumEnDate = 'dd MMM yyyy';
+  static const mediumVnDate = 'dd/MM/yyyy';
+  static const mediumDefaltDate = 'yyyy-MM-dd';
+  static String formatLongVnDate(DateTime date) {
+    return 'Ngày ${date.day} tháng ${date.month} năm ${date.year}';
+  }
 }

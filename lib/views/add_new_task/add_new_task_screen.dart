@@ -12,7 +12,6 @@ import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
-import 'package:todo_app/utilis/converse_time.dart';
 import 'package:todo_app/utilis/show_alert_dialog.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 
@@ -73,24 +72,24 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     _vm.setInitialData(context);
   }
 
-  //Select Date Function
+  //MARK: Select Date Function
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await selectDate(context);
 
     if (context.mounted && picked != null) {
       _vm.resetErrorText();
-      _vm.setDate("${picked.toLocal()}".split(' ')[0]);
+      _vm.setDate(context, picked);
     }
   }
 
-  //Select Time Function
+  //MARK: Select Time Function
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await selectTime(context);
 
     if (context.mounted && picked != null) {
-      _vm.setTime(ConverseTime.timeFormat(picked, context));
+      _vm.setTime(context, picked);
     }
   }
 

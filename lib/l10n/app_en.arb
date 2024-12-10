@@ -279,5 +279,9 @@
   "emptyContent": "You have not create any content for this task!",
   "@emptyContent": {
     "description": "This notification when there is no content belonged to this task"
+  },
+  "content": "Content",
+  "@content": {
+    "description": "Label of content part"
   }
 }

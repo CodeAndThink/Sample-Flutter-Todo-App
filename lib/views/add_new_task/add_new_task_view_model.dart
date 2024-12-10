@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_app/utilis/converse_time.dart';
+import 'package:todo_app/utilis/converse_datetime.dart';
 
 class AddNewTaskViewModel extends ChangeNotifier {
   //MARK: Properties
@@ -61,13 +63,14 @@ class AddNewTaskViewModel extends ChangeNotifier {
           _content.isEmpty);
     } else {
       String time = _data!.time != null
-          ? ConverseTime.timeFormat(_data!.time, context)
+          ? ConverseDateTime.timeFormat(_data!.time, context)
           : "";
       String content = _data!.content ?? "";
-
+      String date =
+          ConverseDateTime.convertDateToDefaltFormat(context, _data!.date);
       return !(_data!.taskTitle == _taskTitle &&
           _data!.category == _category &&
-          _data!.date == _date &&
+          _data!.date == date &&
           time == _time &&
           content == _content);
     }
@@ -81,6 +84,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
       final content = _content.isNotEmpty ? _content : null;
       final deviceId = _data?.deviceId;
       final id = _data?.id;
+      final date = ConverseDateTime.convertDateToDefaltFormat(context, _date);
 
       final newNote = NoteModel(
           id: id,
@@ -89,7 +93,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
           category: _category,
           status: status,
           content: content,
-          date: _date,
+          date: date,
           time: time);
 
       _data == null ? _createNote(newNote) : _updateData(newNote);
@@ -117,14 +121,18 @@ class AddNewTaskViewModel extends ChangeNotifier {
   }
 
   //Function set the date value
-  void setDate(String newDate) {
-    _date = newDate;
+  void setDate(BuildContext context, DateTime newDate) {
+    if (Localizations.localeOf(context).languageCode == 'vi') {
+      _date = DateFormat(Configs.mediumVnDate).format(newDate);
+    } else {
+      _date = DateFormat(Configs.mediumEnDate).format(newDate);
+    }
     notifyListeners();
   }
 
   //Function set the time value
-  void setTime(String newTime) {
-    _time = newTime;
+  void setTime(BuildContext context, TimeOfDay newTime) {
+    _time = ConverseDateTime.timeFormat(newTime, context);
     notifyListeners();
   }
 
@@ -139,9 +147,16 @@ class AddNewTaskViewModel extends ChangeNotifier {
     if (_data != null) {
       _taskTitle = _data!.taskTitle;
       _category = _data!.category;
-      _date = _data!.date;
+      DateTime date =
+          ConverseDateTime.convertStringToDateTime(context, _data!.date) ??
+              DateTime.now();
+      if (Localizations.localeOf(context).languageCode == 'vi') {
+        _date = DateFormat(Configs.mediumVnDate).format(date);
+      } else {
+        _date = DateFormat(Configs.mediumEnDate).format(date);
+      }
       if (_data!.time != null) {
-        _time = ConverseTime.timeFormat(_data!.time, context);
+        _time = ConverseDateTime.timeFormat(_data!.time, context);
       }
       _content = _data!.content ?? "";
     }

@@ -279,5 +279,9 @@
   "emptyContent": "Bạn chưa tạo nội dung cho công việc này!",
   "@emptyContent": {
     "description": "Lời nhắn khi công việc chưa có nội dung đính kèm"
+  },
+  "content": "Nội dung",
+  "@content": {
+    "description": "Tiêu đề của phần nội dung"
   }
 }

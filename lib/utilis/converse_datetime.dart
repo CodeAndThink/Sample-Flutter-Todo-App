@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_app/configs/configs.dart';
 
-class ConverseTime {
+class ConverseDateTime {
   //Function converses time in string type to TimeOfDay type
   static TimeOfDay parseTimeOfDay(String time) {
     final parts = time.split(':');
@@ -32,5 +34,34 @@ class ConverseTime {
       }
     }
     return time.format(context);
+  }
+
+  static DateTime? convertStringToDateTime(
+      BuildContext context, String inputDate) {
+    final formats = [
+      Configs.mediumDefaltDate,
+      Configs.mediumEnDate,
+      Configs.mediumVnDate,
+    ];
+
+    for (var format in formats) {
+      try {
+        DateTime date = DateFormat(format).parse(inputDate);
+        return date;
+      } catch (e) {
+        continue;
+      }
+    }
+    return null;
+  }
+
+  //Function converse custom String date to ISO 8601 String date
+  static String convertDateToDefaltFormat(
+      BuildContext context, String inputDate) {
+    DateTime date =
+        convertStringToDateTime(context, inputDate) ?? DateTime.now();
+    String formattedDate = DateFormat(Configs.mediumDefaltDate).format(date);
+
+    return formattedDate;
   }
 }

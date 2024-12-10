@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_tool_tip_card.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
+import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilis/capitalize.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_screen.dart';
@@ -49,15 +49,14 @@ class _TodoScreenState extends State<TodoScreen> {
   //Function format the date time on header of screen
   String formatDate(DateTime date) {
     final locale = Localizations.localeOf(context).toString();
-    String formattedDate = "";
     String result = "";
-    final year = date.year;
     setState(() {
       if (locale == 'en_US') {
-        formattedDate = DateFormat('MMMM d', locale).format(date);
-        result = '${formattedDate.capitalizeFirstLetter}, $year';
+        String formattedDate =
+            DateFormat(Configs.longEnDate, locale).format(date);
+        result = '${formattedDate.capitalizeFirstLetter}, ${date.year}';
       } else {
-        result = 'Ngày ${date.day} tháng ${date.month} năm ${date.year}';
+        result = Configs.formatLongVnDate(date);
       }
     });
 
@@ -405,11 +404,24 @@ class _TodoScreenState extends State<TodoScreen> {
                   ],
                 )),
             child: CustomTooltipCard(
-              tooltipContent: Text(
-                inputData[index].content!.isEmpty
-                    ? AppLocalizations.of(context)!.emptyContent
-                    : inputData[index].content!,
-                style: Theme.of(context).textTheme.bodySmall,
+              tooltipContent: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.content,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  Text(
+                    inputData[index].content!.isEmpty
+                        ? AppLocalizations.of(context)!.emptyContent
+                        : inputData[index].content!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: inputData[index].content!.isEmpty
+                            ? Colors.grey
+                            : null),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
               child: NoteCard(
                   data: inputData[index],
@@ -439,18 +451,6 @@ class _TodoScreenState extends State<TodoScreen> {
           );
         },
         childCount: inputData.length,
-      ),
-    );
-  }
-
-//========================================================
-
-//MARK: Bottom Notification
-
-  void bottomNotification(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(AppLocalizations.of(context)!.endScrollNotification),
       ),
     );
   }

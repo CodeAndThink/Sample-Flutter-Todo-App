@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/models/note_model.dart';
-import 'package:todo_app/utilis/converse_time.dart';
+import 'package:todo_app/utilis/converse_datetime.dart';
 
 class NoteCard extends StatefulWidget {
   final NoteModel data;
@@ -156,7 +156,7 @@ class NoteCardState extends State<NoteCard>
                             if (widget.data.time != null) ...[
                               const SizedBox(height: 2),
                               Text(
-                                ConverseTime.timeFormat(
+                                ConverseDateTime.timeFormat(
                                         widget.data.time!, context)
                                     .toString(),
                                 style: TextStyle(
