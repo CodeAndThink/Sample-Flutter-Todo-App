@@ -1,3 +1,4 @@
+//Capitalize the first char in string function
 extension StringExtension on String {
   String get capitalizeFirstLetter {
     if (isEmpty) return this;

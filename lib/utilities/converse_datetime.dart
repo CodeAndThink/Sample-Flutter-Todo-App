@@ -36,6 +36,7 @@ class ConverseDateTime {
     return time.format(context);
   }
 
+  //Convert String to DateTime type
   static DateTime? convertStringToDateTime(
       BuildContext context, String inputDate) {
     final formats = [
