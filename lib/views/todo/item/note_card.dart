@@ -152,6 +152,8 @@ class NoteCardState extends State<NoteCard>
                                       decoration: widget.data.status
                                           ? TextDecoration.lineThrough
                                           : TextDecoration.none),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                             if (widget.data.time != null) ...[
                               const SizedBox(height: 2),
