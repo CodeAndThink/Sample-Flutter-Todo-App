@@ -283,5 +283,9 @@
   "content": "Nội dung",
   "@content": {
     "description": "Tiêu đề của phần nội dung"
+  },
+  "anotherWayToLoginTitle": "Hoặc",
+  "@anotherWayToLoginTitle": {
+    "description": "Tiêu đề của phần đăng nhập bằng các cách khác"
   }
 }

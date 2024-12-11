@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/auth_text_box.dart';
+import 'package:todo_app/common/views/circle_button.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
@@ -266,34 +267,68 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: 16,
                                   ),
 
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .becomeNewMember,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-
-                                  //MARK: Register Button
-
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const RegisterScreen()));
-                                      },
-                                      child: Text(
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
                                         AppLocalizations.of(context)!
-                                            .registerButtonTitle,
+                                            .becomeNewMember,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headlineSmall
-                                            ?.copyWith(
-                                                color: Colors.blueAccent),
-                                      ))
+                                            .bodySmall,
+                                      ),
 
-                                  //========================================================
+                                      //MARK: Register Button
+
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const RegisterScreen()));
+                                          },
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .registerButtonTitle,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall
+                                                ?.copyWith(
+                                                    color: Colors.blueAccent),
+                                          )),
+
+                                      //========================================================
+                                    ],
+                                  ),
+
+                                  // Text(
+                                  //     AppLocalizations.of(context)!
+                                  //         .anotherWayToLoginTitle,
+                                  //     style: Theme.of(context)
+                                  //         .textTheme
+                                  //         .bodySmall),
+
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   children: [
+                                  //     CircleButton(
+                                  //         onTap: onTap,
+                                  //         backgroundColor: backgroundColor,
+                                  //         iconPath: iconPath,
+                                  //         isSetAlpha: isSetAlpha),
+                                  //     CircleButton(
+                                  //         onTap: onTap,
+                                  //         backgroundColor: backgroundColor,
+                                  //         iconPath: iconPath,
+                                  //         isSetAlpha: isSetAlpha),
+                                  //     CircleButton(
+                                  //         onTap: onTap,
+                                  //         backgroundColor: backgroundColor,
+                                  //         iconPath: iconPath,
+                                  //         isSetAlpha: isSetAlpha)
+                                  //   ],
+                                  // )
                                 ]),
                           ),
                         ),

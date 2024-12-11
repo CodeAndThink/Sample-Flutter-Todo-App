@@ -81,13 +81,13 @@ class AddNewTaskViewModel extends ChangeNotifier {
     if (_taskTitle.isNotEmpty && _date.isNotEmpty) {
       final status = _data != null ? _data!.status : false;
       final time = _time.isNotEmpty ? _time : null;
-      final deviceId = _data?.deviceId;
+      final userId = _data?.userId;
       final id = _data?.id;
       final date = ConverseDateTime.convertDateToDefaltFormat(context, _date);
 
       final newNote = NoteModel(
           id: id,
-          deviceId: deviceId,
+          userId: userId,
           taskTitle: _taskTitle,
           category: _category,
           status: status,

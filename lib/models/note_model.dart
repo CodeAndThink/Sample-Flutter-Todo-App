@@ -1,6 +1,6 @@
 class NoteModel {
   int? id;
-  String? deviceId;
+  String? userId;
   final String taskTitle;
   final int category;
   final String? content;
@@ -10,7 +10,7 @@ class NoteModel {
 
   NoteModel(
       {this.id,
-      this.deviceId,
+      this.userId,
       required this.taskTitle,
       required this.category,
       this.content,
@@ -21,7 +21,7 @@ class NoteModel {
   factory NoteModel.fromJson(Map<String, dynamic> json) {
     return NoteModel(
       id: json['id'] as int?,
-      deviceId: json['device_id'] as String?,
+      userId: json['user_id'] as String?,
       taskTitle: json['task_title'] as String,
       category: json['category'] as int,
       content: json['content'] as String?,
@@ -33,7 +33,7 @@ class NoteModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{
-      'device_id': deviceId,
+      'user_id': userId,
       'task_title': taskTitle,
       'category': category,
       'status': status,

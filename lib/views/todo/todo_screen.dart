@@ -204,14 +204,17 @@ class _TodoScreenState extends State<TodoScreen> {
                             ],
                           ),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.todoScreenTitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge
-                              ?.copyWith(color: Colors.white),
-                        ),
                       ]),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      AppLocalizations.of(context)!.todoScreenTitle,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(color: Colors.white),
+                    ),
+                  )
                 ],
               ),
             ),

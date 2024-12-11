@@ -283,5 +283,9 @@
   "content": "Content",
   "@content": {
     "description": "Label of content part"
+  },
+  "anotherWayToLoginTitle": "Or",
+  "@anotherWayToLoginTitle": {
+    "description": "Title for the alternative login methods section"
   }
 }

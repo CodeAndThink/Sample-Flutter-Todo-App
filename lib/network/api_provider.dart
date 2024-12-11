@@ -61,7 +61,7 @@ class ApiProvider {
 
   Future<Result<NoteModel>> createNewNote(NoteModel newNote) async {
     try {
-      newNote.deviceId = Supabase.instance.client.auth.currentUser!.email;
+      newNote.userId = Supabase.instance.client.auth.currentUser!.id;
       final response = await Supabase.instance.client
           .from('Notes')
           .insert(newNote)
@@ -71,6 +71,7 @@ class ApiProvider {
     } on TimeoutException catch (_) {
       return Result(error: "Error: Request timed out");
     } catch (e) {
+      print("cmmc : $e");
       return Result(error: e.toString());
     }
   }
