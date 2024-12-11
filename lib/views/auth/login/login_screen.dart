@@ -302,33 +302,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ],
                                   ),
 
-                                  // Text(
-                                  //     AppLocalizations.of(context)!
-                                  //         .anotherWayToLoginTitle,
-                                  //     style: Theme.of(context)
-                                  //         .textTheme
-                                  //         .bodySmall),
+                                  Text(
+                                      AppLocalizations.of(context)!
+                                          .anotherWayToLoginTitle,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
 
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   children: [
-                                  //     CircleButton(
-                                  //         onTap: onTap,
-                                  //         backgroundColor: backgroundColor,
-                                  //         iconPath: iconPath,
-                                  //         isSetAlpha: isSetAlpha),
-                                  //     CircleButton(
-                                  //         onTap: onTap,
-                                  //         backgroundColor: backgroundColor,
-                                  //         iconPath: iconPath,
-                                  //         isSetAlpha: isSetAlpha),
-                                  //     CircleButton(
-                                  //         onTap: onTap,
-                                  //         backgroundColor: backgroundColor,
-                                  //         iconPath: iconPath,
-                                  //         isSetAlpha: isSetAlpha)
-                                  //   ],
-                                  // )
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Image.asset(
+                                              'assets/icons/google.png')),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Image.asset(
+                                              'assets/icons/facebook.png')),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Image.asset(
+                                              'assets/icons/apple.png')),
+                                    ],
+                                  )
                                 ]),
                           ),
                         ),

@@ -58,3 +58,6 @@ flutter:
   - assets/images/circle_shape_small.png
   - assets/icons/view.svg
   - assets/icons/hide.svg
+  - assets/icons/google.png
+  - assets/icons/facebook.png
+  - assets/icons/apple.png
