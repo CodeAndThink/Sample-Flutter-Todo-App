@@ -100,20 +100,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     )),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Wrap(children: [
+                      child: Column(children: [
                         Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                screenWidth * 0.3 > 150
+                                    ? 150
+                                    : screenWidth * 0.3),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 4,
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 4)),
+                            ],
+                          ),
                           margin: const EdgeInsets.only(bottom: 24),
-                          child: Center(
-                            child: Image.asset(
-                              "assets/images/logo.png",
-                              height: screenWidth * 0.3 > 150
-                                  ? 150
-                                  : screenWidth * 0.3,
-                              width: screenWidth * 0.3 > 150
-                                  ? 150
-                                  : screenWidth * 0.3,
-                              fit: BoxFit.cover,
-                            ),
+                          child: Image.asset(
+                            "assets/images/logo.png",
+                            height: screenWidth * 0.3 > 150
+                                ? 150
+                                : screenWidth * 0.3,
+                            width: screenWidth * 0.3 > 150
+                                ? 150
+                                : screenWidth * 0.3,
+                            fit: BoxFit.cover,
                           ),
                         ),
                         Container(
