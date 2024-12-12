@@ -3,18 +3,24 @@
 This is Todo App using Provider to manager states
 
 ## How to dev
+
 type this command in terminal
+
 ```sh
   - chmod +x runner.sh
   - ./runner.sh
 ```
-or 
+
+or
+
 ```sh
   flutter pub get
   flutter gen-l10n
   flutter run
 ```
+
 using this command when you want to add some assets (image, font,, etc.)
+
 ```sh
   flutter pub run build_runner build --delete-conflicting-outputs
 ```
@@ -27,14 +33,20 @@ While running app
 
 ScreenShot of app
 
-<img src="screenshots/LoginScreen.png" alt="Signin Screen" width="400">
-<img src="screenshots/RegisterScreen.png" alt="Sign up Screen" width="400">
-<img src="screenshots/HomeScreen.png" alt="Home Screen" width="400">
-<img src="screenshots/AddNewTaskScreen.png" alt="Detail / Create Screen" width="400">
-<img src="screenshots/HomeScreenVnLanguage.png" alt="Home Screen" width="400">
-<img src="screenshots/AddNewTaskScreenVnLanguage.png" alt="Detail / Create Screen" width="400">
+<p align="center">
+  <img src="screenshots/LoginScreen.png" alt="Signin Screen" width="200">
+  <img src="screenshots/RegisterScreen.png" alt="Sign up Screen" width="200">
+  <img src="screenshots/HomeScreen.png" alt="Home Screen" width="200">
+</p>
+
+<p align="center">
+  <img src="screenshots/AddNewTaskScreen.png" alt="Detail / Create Screen" width="200">
+  <img src="screenshots/HomeScreenVnLanguage.png" alt="Home Screen VN" width="200">
+  <img src="screenshots/AddNewTaskScreenVnLanguage.png" alt="Detail / Create Screen VN" width="200">
+</p>
 
 ### Project Structure
+
 ```
 $PROJECT_ROOT
 ├── lib                  # Main application code
