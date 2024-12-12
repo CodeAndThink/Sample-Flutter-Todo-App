@@ -1,4 +1,4 @@
-# todo_app
+# Todo App
 
 This is Todo App using Provider to manager states
 
