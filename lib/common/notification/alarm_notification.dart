@@ -1,4 +1,5 @@
 import 'package:alarm/alarm.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 
 class AlarmNotification {
   Future<void> createAlarm(String alarmTitle, String alarmContent,
@@ -6,7 +7,7 @@ class AlarmNotification {
     final alarmSettings = AlarmSettings(
       id: 1,
       dateTime: DateTime.now().add(const Duration(seconds: 10)),
-      assetAudioPath: 'assets/images/logo.png',
+      assetAudioPath: Assets.images.logo.path,
       loopAudio: true,
       vibrate: true,
       notificationSettings: NotificationSettings(

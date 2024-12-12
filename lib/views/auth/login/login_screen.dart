@@ -8,6 +8,7 @@ import 'package:todo_app/common/views/custom_icon_button.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
@@ -95,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             widget.toggleLocale();
                           },
-                          icon: SvgPicture.asset("assets/icons/lang.svg",
+                          icon: SvgPicture.asset(Assets.icons.lang,
                               colorFilter: const ColorFilter.mode(
                                   Colors.white, BlendMode.srcATop))),
                     )),
@@ -118,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           margin: const EdgeInsets.only(bottom: 24),
                           child: Image.asset(
-                            "assets/images/logo.png",
+                            Assets.images.logo.path,
                             height: screenWidth * 0.3 > 150
                                 ? 150
                                 : screenWidth * 0.3,
@@ -314,20 +315,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                     children: [
                                       CustomIconButton(
                                           action: () {},
-                                          iconPath: 'assets/icons/google.png'),
+                                          iconPath: Assets.icons.google.path),
                                       const SizedBox(
                                         width: 16,
                                       ),
                                       CustomIconButton(
                                           action: () {},
-                                          iconPath:
-                                              'assets/icons/facebook.png'),
+                                          iconPath: Assets.icons.facebook.path),
                                       const SizedBox(
                                         width: 16,
                                       ),
                                       CustomIconButton(
                                           action: () {},
-                                          iconPath: 'assets/icons/apple.png'),
+                                          iconPath: Assets.icons.apple.path),
                                     ],
                                   )
                                 ]),

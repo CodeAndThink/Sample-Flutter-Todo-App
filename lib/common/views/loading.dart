@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 
 class Loading extends StatelessWidget {
   const Loading({super.key});
@@ -11,7 +12,7 @@ class Loading extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Image.asset(
-            "assets/gifs/loading.gif",
+            Assets.gifs.loading.path,
             height: 80,
             width: 80,
             fit: BoxFit.cover,

@@ -8,6 +8,7 @@ import 'package:todo_app/common/views/custom_tool_tip_card.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/configs/configs.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilities/capitalize.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_screen.dart';
@@ -126,12 +127,11 @@ class _TodoScreenState extends State<TodoScreen> {
                   Positioned(
                       right: screenWidth * 0.6,
                       top: screenWidth * 0.2,
-                      child: Image.asset('assets/images/circle_shape_big.png')),
+                      child: Image.asset(Assets.images.circleShapeBig.path)),
                   Positioned(
                       left: screenWidth * 0.8,
                       top: 0,
-                      child:
-                          Image.asset('assets/images/circle_shape_small.png')),
+                      child: Image.asset(Assets.images.circleShapeSmall.path)),
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -151,8 +151,7 @@ class _TodoScreenState extends State<TodoScreen> {
                                     onPressed: () {
                                       widget.toggleLocale();
                                     },
-                                    icon: SvgPicture.asset(
-                                        "assets/icons/lang.svg",
+                                    icon: SvgPicture.asset(Assets.icons.lang,
                                         colorFilter: const ColorFilter.mode(
                                             Colors.white, BlendMode.srcATop))),
                               ),
@@ -194,7 +193,7 @@ class _TodoScreenState extends State<TodoScreen> {
                                       );
                                     },
                                     icon: SvgPicture.asset(
-                                      "assets/icons/signout.svg",
+                                      Assets.icons.signout,
                                       colorFilter: const ColorFilter.mode(
                                           Colors.redAccent, BlendMode.srcATop),
                                     )),
@@ -309,7 +308,7 @@ class _TodoScreenState extends State<TodoScreen> {
                           child: Column(
                             children: [
                               Image.asset(
-                                "assets/images/logo.png",
+                                Assets.images.logo.path,
                                 height: 48,
                                 width: 48,
                               ),

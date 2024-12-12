@@ -10,6 +10,7 @@ import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/utilities/show_alert_dialog.dart';
@@ -213,7 +214,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                               },
                                               backgroundColor: Configs
                                                   .noteCategoryBackgroundColor,
-                                              iconPath: "assets/icons/note.svg",
+                                              iconPath: Assets.icons.note,
                                               isSetAlpha: isSetAlpha,
                                             ),
                                           );
@@ -236,8 +237,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                               },
                                               backgroundColor: Configs
                                                   .calendarCategoryBackgroundColor,
-                                              iconPath:
-                                                  "assets/icons/calendar.svg",
+                                              iconPath: Assets.icons.calendar,
                                               isSetAlpha: isSetAlpha,
                                             ),
                                           );
@@ -260,7 +260,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                               },
                                               backgroundColor: Configs
                                                   .celeCategoryBackgroundColor,
-                                              iconPath: "assets/icons/cele.svg",
+                                              iconPath: Assets.icons.cele,
                                               isSetAlpha: isSetAlpha,
                                             ),
                                           );
@@ -311,7 +311,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                                                 context)!
                                                             .dateHint,
                                                     iconPath:
-                                                        "assets/icons/selectDate.svg",
+                                                        Assets.icons.selectDate,
                                                     action: _selectDate,
                                                     errorText: data.value2,
                                                   );
@@ -354,7 +354,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                                                 context)!
                                                             .timeHint,
                                                     iconPath:
-                                                        "assets/icons/selectTime.svg",
+                                                        Assets.icons.selectTime,
                                                     action: _selectTime,
                                                     errorText: null,
                                                   );
@@ -474,11 +474,11 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
           Positioned(
               right: screenWidth * 0.6,
               top: 0,
-              child: Image.asset('assets/images/circle_shape_big.png')),
+              child: Image.asset(Assets.images.circleShapeBig.path)),
           Positioned(
               left: screenWidth * 0.8,
               top: 0,
-              child: Image.asset('assets/images/circle_shape_small.png')),
+              child: Image.asset(Assets.images.circleShapeSmall.path)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -518,7 +518,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                             }
                           },
                           icon: SvgPicture.asset(
-                            "assets/icons/back.svg",
+                            Assets.icons.back,
                             height: screenHeight * 0.015,
                             width: screenHeight * 0.015,
                           )),

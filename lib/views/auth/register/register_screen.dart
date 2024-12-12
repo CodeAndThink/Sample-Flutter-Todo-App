@@ -7,6 +7,7 @@ import 'package:todo_app/common/views/auth_text_box.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/utilities/show_alert_dialog.dart';
 import 'package:todo_app/views/auth/register/register_view_model.dart';
@@ -339,7 +340,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Navigator.pop(context);
                 },
                 icon: SvgPicture.asset(
-                  "assets/icons/back.svg",
+                  Assets.icons.back,
                   height: screenHeight * 0.015,
                   width: screenHeight * 0.015,
                 )),

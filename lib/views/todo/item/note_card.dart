@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/configs/configs.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilities/converse_datetime.dart';
 
@@ -52,13 +53,13 @@ class NoteCardState extends State<NoteCard>
   String _cateIconSelected(int cateNumber) {
     switch (cateNumber) {
       case 0:
-        return 'assets/icons/note.svg';
+        return Assets.icons.note;
       case 1:
-        return 'assets/icons/calendar.svg';
+        return Assets.icons.calendar;
       case 2:
-        return 'assets/icons/cele.svg';
+        return Assets.icons.cele;
       default:
-        return 'assets/icons/note.svg';
+        return Assets.icons.note;
     }
   }
 

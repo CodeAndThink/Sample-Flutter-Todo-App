@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 
 class AuthTextBox extends StatefulWidget {
   const AuthTextBox({
@@ -59,9 +60,9 @@ class _AuthTextBoxState extends State<AuthTextBox> {
                 suffixIcon: value.text.isNotEmpty
                     ? IconButton(
                         icon: isHided
-                            ? SvgPicture.asset("assets/icons/hide.svg",
+                            ? SvgPicture.asset(Assets.icons.hide,
                                 height: 24, width: 24, fit: BoxFit.cover)
-                            : SvgPicture.asset("assets/icons/view.svg",
+                            : SvgPicture.asset(Assets.icons.view,
                                 height: 24, width: 24, fit: BoxFit.cover),
                         onPressed: () => setState(() {
                           isHided = !isHided;
