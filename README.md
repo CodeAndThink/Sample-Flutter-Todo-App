@@ -29,38 +29,21 @@ using this command when you want to add some assets (image, font,, etc.)
 
 While running app
 
-<img src="screenshots/AppRecord.gif" alt="App Running Record" width="200">
-
+<p align="center">
+  <img src="screenshots/AppRecord.gif" alt="App Running Record" width="200">
+</p>
 ScreenShot of app
 
 <p align="center">
-  <figure style="display:inline-block; margin: 10px;">
-    <img src="screenshots/LoginScreen.png" alt="Signin Screen" width="200">
-    <figcaption>Login Screen (in Vietnamese)</figcaption>
-  </figure>
-  <figure style="display:inline-block; margin: 10px;">
-    <img src="screenshots/RegisterScreen.png" alt="Sign up Screen" width="200">
-    <figcaption>Register Screen (in Vietnamese)</figcaption>
-  </figure>
-  <figure style="display:inline-block; margin: 10px;">
-    <img src="screenshots/HomeScreen.png" alt="Home Screen" width="200">
-    <figcaption>Home Screen</figcaption>
-  </figure>
+  <img src="screenshots/LoginScreen.png" alt="Signin Screen" width="200">
+  <img src="screenshots/RegisterScreen.png" alt="Sign up Screen" width="200">
+  <img src="screenshots/HomeScreen.png" alt="Home Screen" width="200">
 </p>
 
 <p align="center">
-  <figure style="display:inline-block; margin: 10px;">
-    <img src="screenshots/AddNewTaskScreen.png" alt="Add New Task Screen" width="200">
-    <figcaption>Add New Task Screen</figcaption>
-  </figure>
-  <figure style="display:inline-block; margin: 10px;">
-    <img src="screenshots/HomeScreenVnLanguage.png" alt="Home Screen VN" width="200">
-    <figcaption>Home Screen (in Vietnamese)</figcaption>
-  </figure>
-  <figure style="display:inline-block; margin: 10px;">
-    <img src="screenshots/AddNewTaskScreenVnLanguage.png" alt="Add New Task Screen VN" width="200">
-    <figcaption>Add New Task Screen (in Vietnamese)</figcaption>
-  </figure>
+  <img src="screenshots/AddNewTaskScreen.png" alt="Detail / Create Screen" width="200">
+  <img src="screenshots/HomeScreenVnLanguage.png" alt="Home Screen VN" width="200">
+  <img src="screenshots/AddNewTaskScreenVnLanguage.png" alt="Detail / Create Screen VN" width="200">
 </p>
 
 ### Project Structure
