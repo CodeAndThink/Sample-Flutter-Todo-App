@@ -235,47 +235,73 @@ class _TodoScreenState extends State<TodoScreen> {
                       if (vm.isLoading) {
                         return const Loading();
                       } else if (vm.error.isEmpty) {
-                        return Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            child: CustomScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              controller: _scrollController,
-                              slivers: [
-                                _listViewSection(vm.todoData),
-                                SliverToBoxAdapter(
-                                    child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 24,
+                        if (vm.doneData.isNotEmpty || vm.todoData.isNotEmpty) {
+                          return Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 16),
+                              child: CustomScrollView(
+                                physics: const BouncingScrollPhysics(),
+                                controller: _scrollController,
+                                slivers: [
+                                  _listViewSection(vm.todoData),
+                                  SliverToBoxAdapter(
+                                      child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 24,
+                                      ),
+                                      Text(
+                                          key: widgetKey,
+                                          AppLocalizations.of(context)!
+                                              .completed,
+                                          style: vm.todoData.isEmpty
+                                              ? Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall
+                                                  ?.copyWith(
+                                                    color: Colors.white,
+                                                  )
+                                              : Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall
+                                                  ?.copyWith(
+                                                      color: _textColor)),
+                                      const SizedBox(
+                                        height: 24,
+                                      )
+                                    ],
+                                  )),
+                                  _listViewSection(vm.doneData),
+                                  const SliverToBoxAdapter(
+                                    child: SizedBox(
+                                      height: 30,
                                     ),
-                                    Text(
-                                        key: widgetKey,
-                                        AppLocalizations.of(context)!.completed,
-                                        style: vm.todoData.isEmpty
-                                            ? Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.copyWith(
-                                                  color: Colors.white,
-                                                )
-                                            : Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.copyWith(color: _textColor)),
-                                    const SizedBox(
-                                      height: 24,
-                                    )
-                                  ],
-                                )),
-                                _listViewSection(vm.doneData),
-                                const SliverToBoxAdapter(
-                                  child: SizedBox(
-                                    height: 30,
-                                  ),
-                                )
-                              ],
-                            ));
+                                  )
+                                ],
+                              ));
+                        }
+                        return Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                Assets.images.logo.path,
+                                height: 150,
+                                width: 150,
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.textHolder,
+                                style: Theme.of(context).textTheme.headlineSmall,
+                              )
+                            ],
+                          ),
+                        );
                       } else if (vm.error.isNotEmpty) {
                         return Center(
                           child: SizedBox(
