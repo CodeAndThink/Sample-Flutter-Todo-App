@@ -12,7 +12,7 @@ flutter clean
 # Installing dependencies
 flutter pub get
 
-# Generating localization files
+# Generating localization's and asset's files
 flutter gen-l10n
 
 # Build APK

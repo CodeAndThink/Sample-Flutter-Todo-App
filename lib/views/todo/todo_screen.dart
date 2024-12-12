@@ -289,15 +289,16 @@ class _TodoScreenState extends State<TodoScreen> {
                             children: [
                               Image.asset(
                                 Assets.images.logo.path,
-                                height: 150,
-                                width: 150,
+                                height: 100,
+                                width: 100,
                               ),
                               const SizedBox(
                                 height: 16,
                               ),
                               Text(
                                 AppLocalizations.of(context)!.textHolder,
-                                style: Theme.of(context).textTheme.headlineSmall,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               )
                             ],
                           ),
