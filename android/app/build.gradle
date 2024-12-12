@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.todo_app"
+    namespace = "com.truong.todoapp"
     compileSdk = flutter.compileSdkVersion
     // ndkVersion = flutter.ndkVersion
     ndkVersion = "27.0.12077973"
@@ -23,20 +23,24 @@ android {
         jvmTarget = JavaVersion.VERSION_11
     }
 
-    flavorDimensions "default"
+    flavorDimensions += "default"
 
     productFlavors {
-        production {
-            dimension "default"
+        create("development") {
+            dimension = "default"
+            applicationIdSuffix = ".development"
+            versionNameSuffix "-development"
         }
-        staging {
-            dimension "default"
+        create("production") {
+            dimension = "default"
+            applicationIdSuffix = ".production"
+            versionNameSuffix "-production"
         }
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.todo_app"
+        applicationId = "com.truong.todoapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

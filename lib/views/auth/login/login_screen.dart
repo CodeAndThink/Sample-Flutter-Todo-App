@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/auth_text_box.dart';
-import 'package:todo_app/common/views/circle_button.dart';
+import 'package:todo_app/common/views/custom_icon_button.dart';
 import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
@@ -312,18 +312,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Image.asset(
-                                              'assets/icons/google.png')),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Image.asset(
-                                              'assets/icons/facebook.png')),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Image.asset(
-                                              'assets/icons/apple.png')),
+                                      CustomIconButton(
+                                          action: () {},
+                                          iconPath: 'assets/icons/google.png'),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      CustomIconButton(
+                                          action: () {},
+                                          iconPath:
+                                              'assets/icons/facebook.png'),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      CustomIconButton(
+                                          action: () {},
+                                          iconPath: 'assets/icons/apple.png'),
                                     ],
                                   )
                                 ]),

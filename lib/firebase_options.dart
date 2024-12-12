@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAKXovXkNn8Byp_tLzeemhoPQEx7KywC9I',
-    appId: '1:724255966399:android:013c969e0d8410c4e7720a',
+    appId: '1:724255966399:android:121181d6a956c114e7720a',
     messagingSenderId: '724255966399',
     projectId: 'flutter-todo-app-bf9d7',
     storageBucket: 'flutter-todo-app-bf9d7.firebasestorage.app',
@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'flutter-todo-app-bf9d7.firebasestorage.app',
     iosBundleId: 'com.truongngo.todoapp',
   );
+
 }

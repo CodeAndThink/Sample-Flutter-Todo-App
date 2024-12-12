@@ -71,7 +71,6 @@ class ApiProvider {
     } on TimeoutException catch (_) {
       return Result(error: "Error: Request timed out");
     } catch (e) {
-      print("cmmc : $e");
       return Result(error: e.toString());
     }
   }
