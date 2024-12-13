@@ -33,6 +33,7 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_changeTitleColorBasedOnPosition);
 
     Provider.of<TodoViewModel>(context, listen: false).fetchNote();
   }
