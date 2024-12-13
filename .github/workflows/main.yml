@@ -32,6 +32,13 @@ jobs:
         channel: 'stable'
     - run: flutter --version
 
+    # Setup Environment Variables
+    - name: Create .env file
+      run: |
+        echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+        echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+
     # Install dependencies
     - name: Install dependencies
       run: flutter pub get
