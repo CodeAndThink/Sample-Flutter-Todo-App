@@ -1,0 +1,49 @@
+name: Flutter CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Test Flutter App
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout source code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Setup Flutter
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: "stable"
+
+    # Install dependencies
+    - name: Install dependencies
+      run: flutter pub get
+
+    # Run Flutter analyzer
+    - name: Run Flutter analyze
+      run: flutter analyze
+
+    # Run Flutter tests
+    - name: Run Flutter tests
+      run: flutter test
+
+    # Build APK for each flavor
+    - name: Build APK for development
+      run: flutter build apk --release --flavor development --target lib/main.dart
+
+    # Upload artifacts (APKs for each flavor)
+    - name: Upload APK Artifact for development
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: development-release-apk
+        path: build/app/outputs/flutter-apk/app-development-release.apk
