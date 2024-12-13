@@ -4,7 +4,7 @@
 set -e 
 
 # Flutter Build APK Script
-echo "=== Building Developed Flutter APK ==="
+echo "=== Building Stable Flutter APK ==="
 
 # Clean old build
 flutter clean
@@ -16,9 +16,9 @@ flutter pub get
 flutter gen-l10n
 
 # Build APK
-if flutter build apk --release --flavor development; then
+if flutter build apk --release --flavor production; then
     echo "Building APK successfully!"
-    echo "APK's path: build/app/outputs/flutter-apk/app-development-release.apk"
+    echo "APK's path: build/app/outputs/flutter-apk/app-production-release.apk"
 else
     echo "Error: Unable to build APK."
     exit 1
