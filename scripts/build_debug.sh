@@ -16,7 +16,7 @@ flutter pub get
 flutter gen-l10n
 
 # Build APK
-if flutter run; then
+if flutter run --flavor development; then
     echo "Building debug successfully!"
 else
     echo "Error: Unable to build debug."
