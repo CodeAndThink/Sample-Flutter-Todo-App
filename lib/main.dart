@@ -1,5 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/manager/auth_manager.dart';
@@ -10,14 +11,16 @@ import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/views/todo/todo_screen.dart';
 import 'package:todo_app/views/todo/todo_view_model.dart';
-import 'configs/configs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Load file .env
+  await dotenv.load();
+
   await Supabase.initialize(
-    url: Configs.apiSupabaseBaseUrl,
-    anonKey: Configs.apiSubabaseKey,
+    url: dotenv.env['API_URL'] ?? "",
+    anonKey: dotenv.env['API_KEY'] ?? "",
   );
 
   await Alarm.init();
