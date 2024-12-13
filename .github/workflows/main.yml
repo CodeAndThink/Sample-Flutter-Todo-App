@@ -23,7 +23,7 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: stable
-        flutter-version: 3.5.1
+        flutter-version-file: pubspec.yaml
     - run: flutter --version
 
     # Install dependencies
