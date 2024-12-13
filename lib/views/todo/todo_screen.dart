@@ -34,16 +34,6 @@ class _TodoScreenState extends State<TodoScreen> {
   void initState() {
     super.initState();
 
-    _scrollController.addListener(() {
-      _changeTitleColorBasedOnPosition();
-      if (_scrollController.position.atEdge) {
-        bool isTop = _scrollController.position.pixels == 0;
-        if (isTop) {
-          Provider.of<TodoViewModel>(context, listen: false).fetchNote();
-        }
-      }
-    });
-
     Provider.of<TodoViewModel>(context, listen: false).fetchNote();
   }
 
@@ -239,47 +229,50 @@ class _TodoScreenState extends State<TodoScreen> {
                           return Padding(
                               padding:
                                   const EdgeInsets.only(left: 16, right: 16),
-                              child: CustomScrollView(
-                                physics: const BouncingScrollPhysics(),
-                                controller: _scrollController,
-                                slivers: [
-                                  _listViewSection(vm.todoData),
-                                  SliverToBoxAdapter(
-                                      child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(
-                                        height: 24,
+                              child: RefreshIndicator(
+                                onRefresh: vm.fetchNote,
+                                child: CustomScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  controller: _scrollController,
+                                  slivers: [
+                                    _listViewSection(vm.todoData),
+                                    SliverToBoxAdapter(
+                                        child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                        Text(
+                                            key: widgetKey,
+                                            AppLocalizations.of(context)!
+                                                .completed,
+                                            style: vm.todoData.isEmpty
+                                                ? Theme.of(context)
+                                                    .textTheme
+                                                    .headlineSmall
+                                                    ?.copyWith(
+                                                      color: Colors.white,
+                                                    )
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .headlineSmall
+                                                    ?.copyWith(
+                                                        color: _textColor)),
+                                        const SizedBox(
+                                          height: 24,
+                                        )
+                                      ],
+                                    )),
+                                    _listViewSection(vm.doneData),
+                                    const SliverToBoxAdapter(
+                                      child: SizedBox(
+                                        height: 30,
                                       ),
-                                      Text(
-                                          key: widgetKey,
-                                          AppLocalizations.of(context)!
-                                              .completed,
-                                          style: vm.todoData.isEmpty
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .headlineSmall
-                                                  ?.copyWith(
-                                                    color: Colors.white,
-                                                  )
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .headlineSmall
-                                                  ?.copyWith(
-                                                      color: _textColor)),
-                                      const SizedBox(
-                                        height: 24,
-                                      )
-                                    ],
-                                  )),
-                                  _listViewSection(vm.doneData),
-                                  const SliverToBoxAdapter(
-                                    child: SizedBox(
-                                      height: 30,
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ));
                         }
                         return Align(

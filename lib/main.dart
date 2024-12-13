@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,7 +20,7 @@ void main() async {
     anonKey: Configs.apiSubabaseKey,
   );
 
-  // await Alarm.init();
+  await Alarm.init();
 
   final lastLocale = await SettingManager.shared.getUserLocale();
 

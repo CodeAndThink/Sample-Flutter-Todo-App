@@ -36,8 +36,8 @@ class ConverseDateTime {
     return time.format(context);
   }
 
-  //Convert String to DateTime type
-  static DateTime? convertStringToDateTime(
+  //Convert String to DateTime type based on locale
+  static DateTime? convertStringToDateTimeByLocale(
       BuildContext context, String inputDate) {
     final formats = [
       Configs.mediumDefaltDate,
@@ -56,11 +56,17 @@ class ConverseDateTime {
     return null;
   }
 
+  //Convert String to DateTime type
+  static DateTime convertStringToDateTime(String inputDate) {
+    DateTime date = DateFormat(Configs.mediumDefaltDate).parse(inputDate);
+    return date;
+  }
+
   //Function converse custom String date to ISO 8601 String date
   static String convertDateToDefaltFormat(
       BuildContext context, String inputDate) {
     DateTime date =
-        convertStringToDateTime(context, inputDate) ?? DateTime.now();
+        convertStringToDateTimeByLocale(context, inputDate) ?? DateTime.now();
     String formattedDate = DateFormat(Configs.mediumDefaltDate).format(date);
 
     return formattedDate;

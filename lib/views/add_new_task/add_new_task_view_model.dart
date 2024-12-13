@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/common/notification/alarm_notification.dart';
 import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
@@ -151,9 +152,9 @@ class AddNewTaskViewModel extends ChangeNotifier {
     if (_data != null) {
       _taskTitle = _data!.taskTitle;
       _category = _data!.category;
-      DateTime date =
-          ConverseDateTime.convertStringToDateTime(context, _data!.date) ??
-              DateTime.now();
+      DateTime date = ConverseDateTime.convertStringToDateTimeByLocale(
+              context, _data!.date) ??
+          DateTime.now();
       if (Localizations.localeOf(context).languageCode == 'vi') {
         _date = DateFormat(Configs.mediumVnDate).format(date);
       } else {
@@ -224,6 +225,34 @@ class AddNewTaskViewModel extends ChangeNotifier {
     final response = await _provider.createNewNote(newNote);
     _stopLoading();
     _isSuccess.value = response.data != null ? true : false;
+    // if (_isSuccess.value) {
+    //   if (response.data!.time == null) {
+    //     DateTime activeTime =
+    //         ConverseDateTime.convertStringToDateTime(response.data!.date);
+    //     activeTime = activeTime.copyWith(hour: 7, minute: 0);
+    //     AlarmNotification.createAlarm(
+    //         response.data!.id!,
+    //         activeTime,
+    //         response.data!.taskTitle,
+    //         response.data!.content ?? "",
+    //         Configs.cateIcon(response.data!.category),
+    //         'OK');
+    //   } else {
+    //     TimeOfDay timeOfDay =
+    //         ConverseDateTime.parseTimeOfDay(response.data!.time!);
+    //     DateTime activeTime =
+    //         ConverseDateTime.convertStringToDateTime(response.data!.date);
+    //     activeTime =
+    //         activeTime.copyWith(hour: timeOfDay.hour, minute: timeOfDay.minute);
+    //     AlarmNotification.createAlarm(
+    //         response.data!.id!,
+    //         activeTime,
+    //         response.data!.taskTitle,
+    //         response.data!.content ?? "",
+    //         Configs.cateIcon(response.data!.category),
+    //         'OK');
+    //   }
+    // }
     _setError(response.error ?? "");
   }
 }

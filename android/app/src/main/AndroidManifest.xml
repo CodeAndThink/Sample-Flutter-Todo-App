@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.SET_ALARM" />
     <application
         android:label="todo_app"
         android:name="${applicationName}"

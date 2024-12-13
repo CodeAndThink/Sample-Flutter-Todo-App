@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/configs/configs.dart';
-import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utilities/converse_datetime.dart';
 
@@ -49,34 +48,6 @@ class NoteCardState extends State<NoteCard>
     super.dispose();
   }
 
-  //Function receives type of category and return the path of icon
-  String _cateIconSelected(int cateNumber) {
-    switch (cateNumber) {
-      case 0:
-        return Assets.icons.note;
-      case 1:
-        return Assets.icons.calendar;
-      case 2:
-        return Assets.icons.cele;
-      default:
-        return Assets.icons.note;
-    }
-  }
-
-  //Function receives type of category and return color for each category
-  Color _cateIconBackgroundColor(int cateNumber) {
-    switch (cateNumber) {
-      case 0:
-        return Configs.noteCategoryBackgroundColor;
-      case 1:
-        return Configs.calendarCategoryBackgroundColor;
-      case 2:
-        return Configs.celeCategoryBackgroundColor;
-      default:
-        return Configs.noteCategoryBackgroundColor;
-    }
-  }
-
   //Function detects which border apply for each card
   List<double> _borderRadiusCal() {
     if (widget.isTop && widget.isBottom) {
@@ -120,12 +91,12 @@ class NoteCardState extends State<NoteCard>
 
                       ClipOval(
                         child: Container(
-                          color: _cateIconBackgroundColor(widget.data.category),
+                          color: Configs.cateIconBackgroundColor(widget.data.category),
                           width: 48,
                           height: 48,
                           child: Center(
                             child: SvgPicture.asset(
-                              _cateIconSelected(widget.data.category),
+                              Configs.cateIcon(widget.data.category),
                               width: 24,
                               height: 24,
                               fit: BoxFit.contain,

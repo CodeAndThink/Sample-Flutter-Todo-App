@@ -2,12 +2,17 @@ import 'package:alarm/alarm.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 
 class AlarmNotification {
-  Future<void> createAlarm(String alarmTitle, String alarmContent,
-      String alarmIcon, String stopButtonTitle) async {
+  static Future<void> createAlarm(
+      int id,
+      DateTime activeTime,
+      String alarmTitle,
+      String alarmContent,
+      String alarmIcon,
+      String stopButtonTitle) async {
     final alarmSettings = AlarmSettings(
-      id: 1,
-      dateTime: DateTime.now().add(const Duration(seconds: 10)),
-      assetAudioPath: Assets.images.logo.path,
+      id: id,
+      dateTime: activeTime,
+      assetAudioPath: Assets.audios.alarmSource,
       loopAudio: true,
       vibrate: true,
       notificationSettings: NotificationSettings(
@@ -17,15 +22,14 @@ class AlarmNotification {
         icon: alarmIcon,
       ),
     );
-
     await Alarm.set(alarmSettings: alarmSettings);
   }
 
-  Future<void> stopAlarm() async {
-    await Alarm.stop(1);
+  static Future<void> stopAlarm(int id) async {
+    await Alarm.stop(id);
   }
 
-  Future<bool> isAlarmActive() async {
-    return await Alarm.isRinging(1);
+  static Future<bool> isAlarmActive(int id) async {
+    return await Alarm.isRinging(id);
   }
 }
