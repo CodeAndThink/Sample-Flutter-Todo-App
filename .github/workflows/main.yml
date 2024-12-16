@@ -18,12 +18,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Setup Java 11
-    - name: Setup Java 11
+    # Setup Java 17
+    - name: Setup Java 17
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: '11'
+        java-version: '17'
 
     # Setup Flutter
     - name: Setup Flutter
