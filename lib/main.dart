@@ -4,8 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/manager/auth_manager.dart';
-import 'package:todo_app/manager/setting_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:todo_app/views/setting/setting_view_model.dart';
 import 'package:todo_app/theme/theme.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,26 +25,25 @@ void main() async {
 
   await Alarm.init();
 
-  final lastLocale = await SettingManager.shared.getUserLocale();
-
   final lastUserLoginToken = await AuthManager.shared.getUserToken();
+
+  // requestNotificationPermission();
 
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
-          create: (context) => TodoViewModel(
-              ApiProvider.shared, AuthManager.shared)),
+          create: (context) =>
+              TodoViewModel(ApiProvider.shared, AuthManager.shared)),
+      ChangeNotifierProvider(create: (context) => SettingViewModel())
     ],
     child: MainApp(
-      lastLocale: lastLocale,
       lastUserLoginToken: lastUserLoginToken,
     ),
   ));
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key, required this.lastLocale, this.lastUserLoginToken});
-  final Locale lastLocale;
+  const MainApp({super.key, this.lastUserLoginToken});
   final String? lastUserLoginToken;
 
   @override
@@ -52,31 +51,21 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAppState extends State<MainApp> {
-  Locale _locale = const Locale('en', 'US');
-
-  void _toggleLocale() {
-    setState(() {
-      _locale = _locale.languageCode == 'en'
-          ? const Locale('vi', 'VN')
-          : const Locale('en', 'US');
-      SettingManager.shared
-          .saveUserLocale(_locale.languageCode, _locale.countryCode!);
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    _locale = widget.lastLocale;
   }
 
   @override
   Widget build(BuildContext context) {
+    final settingProvider =
+        Provider.of<SettingViewModel>(context);
+
     return MaterialApp(
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      locale: _locale,
+      locale: settingProvider.currentLocale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: const [
         Locale('en', 'US'),
@@ -86,9 +75,9 @@ class MainAppState extends State<MainApp> {
         body: Center(
           child: widget.lastUserLoginToken != null
               ? Supabase.instance.client.auth.currentSession?.isExpired == false
-                  ? TodoScreen(toggleLocale: _toggleLocale)
-                  : LoginScreen(toggleLocale: _toggleLocale)
-              : LoginScreen(toggleLocale: _toggleLocale),
+                  ? const TodoScreen()
+                  : const LoginScreen()
+              : const LoginScreen(),
         ),
       ),
     );

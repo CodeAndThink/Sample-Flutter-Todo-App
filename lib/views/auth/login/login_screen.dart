@@ -12,14 +12,14 @@ import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:todo_app/views/setting/setting_view_model.dart';
 import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/auth/login/login_view_model.dart';
 import 'package:todo_app/views/auth/register/register_screen.dart';
 import 'package:todo_app/views/todo/todo_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.toggleLocale});
-  final VoidCallback toggleLocale;
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -53,9 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (_vm.token.value.isNotEmpty) {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  TodoScreen(toggleLocale: widget.toggleLocale)),
+          MaterialPageRoute(builder: (context) => const TodoScreen()),
           (route) => false,
         );
       }
@@ -94,7 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.only(left: 16),
                       child: IconButton(
                           onPressed: () {
-                            widget.toggleLocale();
+                            Provider.of<SettingViewModel>(context, listen: false)
+                                .toggleLocale();
                           },
                           icon: SvgPicture.asset(Assets.icons.lang,
                               colorFilter: const ColorFilter.mode(

@@ -287,5 +287,41 @@
   "anotherWayToLoginTitle": "Hoặc",
   "@anotherWayToLoginTitle": {
     "description": "Tiêu đề của phần đăng nhập bằng các cách khác"
+  },
+  "settings" : "Cài đặt",
+  "@settings" : {
+    "description": "Tiêu đề của màn hình Cài đặt"
+  },
+  "profile": "Hồ sơ",
+  "@profile": {
+    "description": "Tiêu đề của màn hình Hồ sơ"
+  },
+  "about": "Giới thiệu",
+  "@about": {
+    "description": "Tiêu đề của màn hình Giới thiệu"
+  },
+  "enableNotification": "Bật Thông báo",
+  "@enableNotification": {
+    "description": "Nhãn của phần Bật Thông báo trong màn hình Cài đặt"
+  },
+  "privacy": "Quyền riêng tư",
+  "@privacy" : {
+    "description": "Nhãn của phần Quyền riêng tư trong màn hình Cài đặt"
+  },
+  "languageChange": "Đổi ngôn ngữ",
+  "@languageChange": {
+    "description": "Nhãn của phần Đổi ngôn ngữ trong màn hình Cài đặt"
+  },
+  "buyMeACoffee": "Ủng hộ tôi",
+  "@buyMeACoffee": {
+    "description": "Nhãn của phần Ủng hộ ứng dụng trong màn hình Cài đặt"
+  },
+  "sampleAbout": "Ứng dụng Note này là một công cụ đơn giản và trực quan, được thiết kế dành cho những ai yêu thích tổ chức suy nghĩ và ý tưởng của mình. Được phát triển bởi một lập trình viên duy nhất với tất cả đam mê, ứng dụng hiện vẫn đang trong giai đoạn phát triển. Mặc dù đã cố gắng mang lại trải nghiệm tốt nhất, nhưng có thể sẽ xảy ra một số lỗi. Sự thông cảm và góp ý của bạn là rất quý giá để cải thiện ứng dụng. Cảm ơn bạn đã ủng hộ dự án này!",
+  "@sampleAbout": {
+    "description": "Nội dung cho màn hình Thông tin"
+  },
+  "samplePrivacy": "Quyền riêng tư của bạn là ưu tiên hàng đầu. Ứng dụng Note này không thu thập, lưu trữ hay chia sẻ bất kỳ dữ liệu cá nhân nào của bạn. Tất cả ghi chú và thông tin bạn tạo ra đều được lưu trữ trên thiết bị của bạn. Xin lưu ý rằng do ứng dụng đang trong quá trình phát triển, hiện tại chưa có tính năng sao lưu. Vì vậy, hãy đảm bảo bạn lưu hoặc xuất các ghi chú quan trọng một cách riêng biệt. Cảm ơn bạn đã tin tưởng và sử dụng ứng dụng.",
+  "@samplePrivacy": {
+    "description": "Nội dung cho màn hình Quyền riêng tư"
   }
 }

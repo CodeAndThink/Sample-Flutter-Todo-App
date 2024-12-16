@@ -13,12 +13,12 @@ import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utils/capitalize.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_screen.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
+import 'package:todo_app/views/setting/setting_screen.dart';
 import 'package:todo_app/views/todo/item/note_card.dart';
 import 'package:todo_app/views/todo/todo_view_model.dart';
 
 class TodoScreen extends StatefulWidget {
-  const TodoScreen({super.key, required this.toggleLocale});
-  final VoidCallback toggleLocale;
+  const TodoScreen({super.key});
 
   @override
   State<TodoScreen> createState() => _TodoScreenState();
@@ -133,18 +133,25 @@ class _TodoScreenState extends State<TodoScreen> {
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Row(
                             children: [
-//MARK: Change Language Button
+//MARK: Settings Button
 
                               Tooltip(
                                 message: AppLocalizations.of(context)!
                                     .changeLanguageTip,
                                 child: IconButton(
                                     onPressed: () {
-                                      widget.toggleLocale();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SettingScreen()));
                                     },
-                                    icon: SvgPicture.asset(Assets.icons.lang,
-                                        colorFilter: const ColorFilter.mode(
-                                            Colors.white, BlendMode.srcATop))),
+                                    icon: Image.asset(
+                                      Assets.icons.settings.path,
+                                      height: 24,
+                                      width: 24,
+                                      fit: BoxFit.cover,
+                                    )),
                               ),
 
 //========================================================
@@ -177,9 +184,7 @@ class _TodoScreenState extends State<TodoScreen> {
                                       Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => LoginScreen(
-                                                toggleLocale:
-                                                    widget.toggleLocale)),
+                                            builder: (context) => const LoginScreen()),
                                         (route) => false,
                                       );
                                     },

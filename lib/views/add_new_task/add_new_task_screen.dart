@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/circle_button.dart';
+import 'package:todo_app/common/views/custom_app_bar.dart';
 import 'package:todo_app/common/views/date_time_picker.dart';
 import 'package:todo_app/common/views/date_time_text_box.dart';
 import 'package:todo_app/common/views/loading.dart';
@@ -121,7 +121,30 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                   children: [
                     Column(
                       children: [
-                        _customAppBar(context),
+                        CustomAppBar(
+                            title: AppLocalizations.of(context)!
+                                .addNewTaskScreenTitle,
+                            action: () {
+                              if (_vm.isDataChange(context)) {
+                                showAlert(
+                                    context,
+                                    AppLocalizations.of(context)!.warning,
+                                    AppLocalizations.of(context)!.exitWarning,
+                                    () {
+                                      Navigator.popUntil(
+                                        context,
+                                        (route) => route.isFirst,
+                                      );
+                                    },
+                                    AppLocalizations.of(context)!.ok,
+                                    () {
+                                      Navigator.pop(context);
+                                    },
+                                    AppLocalizations.of(context)!.cancel);
+                              } else {
+                                Navigator.pop(context);
+                              }
+                            }),
 
                         Expanded(
                           child: SingleChildScrollView(
@@ -455,95 +478,5 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                 ),
               ));
         });
-  }
-
-  //MARK: Custom app bar
-
-  Widget _customAppBar(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenHeight = screenSize.height;
-    final screenWidth = screenSize.width;
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: 96,
-        maxHeight: screenHeight * 0.15,
-      ),
-      color: Theme.of(context).colorScheme.primary,
-      child: Stack(
-        children: [
-          Positioned(
-              right: screenWidth * 0.6,
-              top: 0,
-              child: Image.asset(Assets.images.circleShapeBig.path)),
-          Positioned(
-              left: screenWidth * 0.8,
-              top: 0,
-              child: Image.asset(Assets.images.circleShapeSmall.path)),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height:
-                          screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
-                      width:
-                          screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(screenHeight * 0.06 / 2)),
-                          color: Colors.white),
-                      child: IconButton(
-                          onPressed: () {
-                            if (_vm.isDataChange(context)) {
-                              showAlert(
-                                  context,
-                                  AppLocalizations.of(context)!.warning,
-                                  AppLocalizations.of(context)!.exitWarning,
-                                  () {
-                                    Navigator.popUntil(
-                                      context,
-                                      (route) => route.isFirst,
-                                    );
-                                  },
-                                  AppLocalizations.of(context)!.ok,
-                                  () {
-                                    Navigator.pop(context);
-                                  },
-                                  AppLocalizations.of(context)!.cancel);
-                            } else {
-                              Navigator.pop(context);
-                            }
-                          },
-                          icon: SvgPicture.asset(
-                            Assets.icons.back,
-                            height: screenHeight * 0.015,
-                            width: screenHeight * 0.015,
-                          )),
-                    ),
-                    Expanded(
-                        child: Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.addNewTaskScreenTitle,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall
-                            ?.copyWith(color: Colors.white),
-                      ),
-                    )),
-                    SizedBox(
-                      width:
-                          screenHeight * 0.06 > 48 ? 48 : screenHeight * 0.06,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

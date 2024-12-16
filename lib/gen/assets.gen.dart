@@ -44,6 +44,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cele.svg
   String get cele => 'assets/icons/cele.svg';
 
+  /// File path: assets/icons/coffeeCup.png
+  AssetGenImage get coffeeCup =>
+      const AssetGenImage('assets/icons/coffeeCup.png');
+
   /// File path: assets/icons/facebook.png
   AssetGenImage get facebook =>
       const AssetGenImage('assets/icons/facebook.png');
@@ -54,11 +58,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/hide.svg
   String get hide => 'assets/icons/hide.svg';
 
+  /// File path: assets/icons/info.png
+  AssetGenImage get info => const AssetGenImage('assets/icons/info.png');
+
   /// File path: assets/icons/lang.svg
   String get lang => 'assets/icons/lang.svg';
 
   /// File path: assets/icons/note.svg
   String get note => 'assets/icons/note.svg';
+
+  /// File path: assets/icons/privacyPolicy.png
+  AssetGenImage get privacyPolicy =>
+      const AssetGenImage('assets/icons/privacyPolicy.png');
 
   /// File path: assets/icons/selectDate.svg
   String get selectDate => 'assets/icons/selectDate.svg';
@@ -66,11 +77,21 @@ class $AssetsIconsGen {
   /// File path: assets/icons/selectTime.svg
   String get selectTime => 'assets/icons/selectTime.svg';
 
+  /// File path: assets/icons/settings.png
+  AssetGenImage get settings =>
+      const AssetGenImage('assets/icons/settings.png');
+
   /// File path: assets/icons/signout.svg
   String get signout => 'assets/icons/signout.svg';
 
+  /// File path: assets/icons/us.png
+  AssetGenImage get us => const AssetGenImage('assets/icons/us.png');
+
   /// File path: assets/icons/view.svg
   String get view => 'assets/icons/view.svg';
+
+  /// File path: assets/icons/vn.png
+  AssetGenImage get vn => const AssetGenImage('assets/icons/vn.png');
 
   /// List of all assets
   List<dynamic> get values => [
@@ -78,15 +99,21 @@ class $AssetsIconsGen {
         back,
         calendar,
         cele,
+        coffeeCup,
         facebook,
         google,
         hide,
+        info,
         lang,
         note,
+        privacyPolicy,
         selectDate,
         selectTime,
+        settings,
         signout,
-        view
+        us,
+        view,
+        vn
       ];
 }
 
@@ -111,10 +138,14 @@ class $AssetsImagesGen {
 class Assets {
   Assets._();
 
+  static const String aEnv = '.env';
   static const $AssetsAudiosGen audios = $AssetsAudiosGen();
   static const $AssetsGifsGen gifs = $AssetsGifsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+
+  /// List of all assets
+  static List<String> get values => [aEnv];
 }
 
 class AssetGenImage {

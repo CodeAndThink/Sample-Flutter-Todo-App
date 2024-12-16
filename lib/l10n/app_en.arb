@@ -287,5 +287,41 @@
   "anotherWayToLoginTitle": "Or",
   "@anotherWayToLoginTitle": {
     "description": "Title for the alternative login methods section"
+  },
+  "settings" : "Settings",
+  "@settings" : {
+    "description": "Title of Settings screen"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Title of Profile screen"
+  },
+  "about": "About",
+  "@about": {
+    "description": "Title of About screen"
+  },
+  "enableNotification": "Enable Notification",
+  "@enableNotification": {
+    "description": "Label of Enable Notification part in Settings screen"
+  },
+  "privacy": "Privacy",
+  "@privacy" : {
+    "description": "Label of Privacy part in Settings screen"
+  },
+  "languageChange": "Language Change",
+  "@languageChange": {
+    "description": "Label of Language Change part in Settings screen"
+  },
+  "buyMeACoffee": "Buy Me A Coffee",
+  "@buyMeACoffee": {
+    "description": "Label of Buy Me A Coffee part in Settings screen"
+  },
+  "sampleAbout": "This Note App is a simple and intuitive tool designed for anyone who loves to organize their thoughts and ideas. Developed by a single passionate developer, the app is still in its early stages of development. While every effort has been made to ensure a smooth experience, some bugs may occur. Your understanding and feedback are greatly appreciated to help improve the app. Thank you for supporting this project!",
+  "@sampleAbout": {
+    "description": "Content of About screen"
+  },
+  "samplePrivacy": "Your privacy is a top priority. This Note App does not collect, store, or share any of your personal data. All notes and information you create are stored locally on your device. Please be aware that since the app is in development, there is no built-in backup feature at this time, so ensure you save or export important notes separately. Thank you for trusting and using the app.",
+  "@samplePrivacy": {
+    "description": "Content of Privacy screen"
   }
 }

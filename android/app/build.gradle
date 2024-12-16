@@ -11,7 +11,7 @@ plugins {
 android {
     namespace = "com.truong.todoapp"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = '28.0.12674087 rc2'
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

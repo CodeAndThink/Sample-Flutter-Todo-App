@@ -49,4 +49,7 @@ class Configs {
   static String formatLongVnDate(DateTime date) {
     return 'Ngày ${date.day} tháng ${date.month} năm ${date.year}';
   }
+
+  //Notification
+  static const defaultNotificationHour = 7;
 }

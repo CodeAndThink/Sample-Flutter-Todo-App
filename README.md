@@ -4,14 +4,14 @@ This is Todo App using Provider to manager states
 
 ## How to dev
 
-type this command in terminal
+Type this command in terminal
 
 ```sh
   - chmod +x runner.sh
   - ./runner.sh
 ```
 
-or
+Or
 
 ```sh
   flutter pub get
@@ -19,7 +19,7 @@ or
   flutter run
 ```
 
-using this command when you want to add some assets (image, font,, etc.)
+Using this command when you want to add some assets (image, font,, etc.)
 
 ```sh
   flutter pub run build_runner build --delete-conflicting-outputs
