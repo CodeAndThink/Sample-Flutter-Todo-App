@@ -38,6 +38,9 @@ jobs:
         echo "API_KEY=${{ secrets.API_KEY }}" >> .env
         echo "API_URL=${{ secrets.API_URL }}" >> .env
 
+    - name: Debug .env file
+      run: cat .env
+
     # Install dependencies
     - name: Install dependencies
       run: flutter pub get
