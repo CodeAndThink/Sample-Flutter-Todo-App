@@ -60,7 +60,7 @@ $PROJECT_ROOT
 │   ├── models           # Data models (e.g., User, Note, etc.)
 │   ├── network          # Folder for communicate with remote storages
 │   ├── theme            # Folder for custom app theme
-│   ├── utilities        # Folder for reused functions
+│   ├── utils            # Folder for reused functions
 │   └── views            # Folder for views
 ├── assets               # Static resources (images, gifs, etc.)
 └── pubspec.yaml         # Flutter project configuration file

@@ -9,7 +9,7 @@ import 'package:todo_app/common/views/loading.dart';
 import 'package:todo_app/common/views/main_bottom_button.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/network/api_provider.dart';
-import 'package:todo_app/utilities/show_alert_dialog.dart';
+import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/auth/register/register_view_model.dart';
 
 class RegisterScreen extends StatefulWidget {

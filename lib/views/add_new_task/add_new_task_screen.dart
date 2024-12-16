@@ -13,7 +13,7 @@ import 'package:todo_app/common/views/custom_text_box.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
-import 'package:todo_app/utilities/show_alert_dialog.dart';
+import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_view_model.dart';
 
 class AddNewTaskScreen extends StatefulWidget {

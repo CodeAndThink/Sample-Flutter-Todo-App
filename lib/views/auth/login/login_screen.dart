@@ -12,7 +12,7 @@ import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/user_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
-import 'package:todo_app/utilities/show_alert_dialog.dart';
+import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/auth/login/login_view_model.dart';
 import 'package:todo_app/views/auth/register/register_screen.dart';
 import 'package:todo_app/views/todo/todo_screen.dart';
