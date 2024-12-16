@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
+import 'package:todo_app/gen/assets.gen.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -21,9 +22,51 @@ class AboutScreen extends StatelessWidget {
                   }),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  AppLocalizations.of(context)!.sampleAbout,
-                  overflow: TextOverflow.clip,
+                child: Column(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.sampleAbout,
+                      overflow: TextOverflow.clip,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          Assets.icons.heart.path,
+                          height: 48,
+                          width: 48,
+                          fit: BoxFit.cover,
+                        ),
+                        Image.asset(
+                          Assets.icons.plus.path,
+                          height: 24,
+                          width: 24,
+                          fit: BoxFit.cover,
+                        ),
+                        Image.asset(
+                          Assets.images.logo.path,
+                          height: 48,
+                          width: 48,
+                          fit: BoxFit.cover,
+                        ),
+                        Image.asset(
+                          Assets.icons.plus.path,
+                          height: 24,
+                          width: 24,
+                          fit: BoxFit.cover,
+                        ),
+                        Image.asset(
+                          Assets.icons.coffeeCup.path,
+                          height: 48,
+                          width: 48,
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               )
             ],

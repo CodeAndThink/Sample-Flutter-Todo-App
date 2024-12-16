@@ -59,7 +59,7 @@ jobs:
     # Upload artifacts (APKs for each flavor)
     - name: Upload APK Artifact for development
       if: success()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: development-release-apk
         path: build/app/outputs/flutter-apk/app-development-release.apk

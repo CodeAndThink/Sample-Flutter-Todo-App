@@ -55,6 +55,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google.png
   AssetGenImage get google => const AssetGenImage('assets/icons/google.png');
 
+  /// File path: assets/icons/heart.png
+  AssetGenImage get heart => const AssetGenImage('assets/icons/heart.png');
+
   /// File path: assets/icons/hide.svg
   String get hide => 'assets/icons/hide.svg';
 
@@ -66,6 +69,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/note.svg
   String get note => 'assets/icons/note.svg';
+
+  /// File path: assets/icons/plus.png
+  AssetGenImage get plus => const AssetGenImage('assets/icons/plus.png');
 
   /// File path: assets/icons/privacyPolicy.png
   AssetGenImage get privacyPolicy =>
@@ -102,10 +108,12 @@ class $AssetsIconsGen {
         coffeeCup,
         facebook,
         google,
+        heart,
         hide,
         info,
         lang,
         note,
+        plus,
         privacyPolicy,
         selectDate,
         selectTime,
