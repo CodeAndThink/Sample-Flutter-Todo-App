@@ -14,6 +14,8 @@ void main() {
   late AuthManager authManager;
   late LoginViewModel viewModel;
 
+//MARK: Setup Environment
+
   setUp(() {
     mockApiProvider = MockApiProvider();
     userManager = UserManager.shared;
@@ -21,7 +23,12 @@ void main() {
     viewModel = LoginViewModel(mockApiProvider, userManager, authManager);
   });
 
+//========================================================
+
   group('LoginViewModel', () {
+
+//MARK: Test ViewModel Initialize Variables
+
     test('Initial values are correct', () {
       expect(viewModel.isLoading, false);
       expect(viewModel.username, "");
@@ -30,24 +37,42 @@ void main() {
       expect(viewModel.error.value, "");
     });
 
+//========================================================
+
+//MARK: Test setUsername Function
+
     test('setUsername updates username and notifies listeners', () {
       viewModel.setUsername('hello');
       expect(viewModel.username, 'hello');
     });
+
+//========================================================
+
+//MARK: Test setPassword Function
 
     test('setPassword updates password and notifies listeners', () {
       viewModel.setPassword('hello123');
       expect(viewModel.password, 'hello123');
     });
 
+//========================================================
+
+//MARK: Test resetErrorText Function For Password Text Field
+
     test('Reset password text field error', () {
       viewModel.resetErrorText();
       expect(viewModel.errorPasswordText, null);
     });
 
+//========================================================
+
+//MARK: Test resetErrorText Funtion For Username Text Field
+
     test('Reset username text field error', () {
       viewModel.resetErrorText();
       expect(viewModel.errorUsernameText, null);
     });
+
+//========================================================
   });
 }

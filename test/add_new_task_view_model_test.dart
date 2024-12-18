@@ -14,12 +14,18 @@ void main() {
   late MockApiProvider mockApiProvider;
   late AddNewTaskViewModel viewModel;
 
+//MARK: Setup Environment
+  
   setUp(() {
     mockApiProvider = MockApiProvider();
     viewModel = AddNewTaskViewModel(mockApiProvider, null);
   });
 
+//========================================================
+
   group('AddNewTaskViewModel', () {
+
+//MARK: Test ViewModel Initialize Variables
     test('Initial values are correct', () {
       expect(viewModel.isLoading, false);
       expect(viewModel.taskTitle, "");
@@ -29,20 +35,36 @@ void main() {
       expect(viewModel.content, "");
     });
 
+//========================================================
+
+//MARK: Test setTaskTitle Function
+
     test('setTaskTitle updates task title and notifies listeners', () {
       viewModel.setTaskTitle('New Task');
       expect(viewModel.taskTitle, 'New Task');
     });
+
+//========================================================
+
+//MARK: Test setCategory Function
 
     test('setCategory updates category and notifies listeners', () {
       viewModel.setCategory(1);
       expect(viewModel.category, 1);
     });
 
+//========================================================
+
+//MARK: Test setContent Function
+
     test('setContent updates content and notifies listeners', () {
       viewModel.setContent('New content');
       expect(viewModel.content, 'New content');
     });
+
+//========================================================
+
+//MARK: Test setDate Function In English Locale
 
     testWidgets('Simulate setDate with Locale en_US',
         (WidgetTester tester) async {
@@ -67,6 +89,10 @@ void main() {
       expect(viewModel.date, '25 Dec 2024');
     });
 
+//========================================================
+
+//MARK: Test setDate Function In Vietnamese Locale
+
     testWidgets('Simulate setDate with Locale vi_VN',
         (WidgetTester tester) async {
       final viewModel = AddNewTaskViewModel(MockApiProvider(), null);
@@ -89,6 +115,10 @@ void main() {
 
       expect(viewModel.date, '25/12/2024');
     });
+
+//========================================================
+
+//MARK: Test setTime Function In English Locale
 
     testWidgets('Simulate setTime with Locale en_US',
         (WidgetTester tester) async {
@@ -113,6 +143,10 @@ void main() {
       expect(viewModel.time, '1:01 AM');
     });
 
+//========================================================
+
+//MARK: Test setTime Function In Vietnamese Locale
+
     testWidgets('Simulate setTime with Locale vi_VN',
         (WidgetTester tester) async {
       final viewModel = AddNewTaskViewModel(MockApiProvider(), null);
@@ -134,6 +168,10 @@ void main() {
       );
       expect(viewModel.time, '13:13');
     });
+
+//========================================================
+
+//MARK: Test Set Initial Date For ViewModel In Vietnamese Locale
 
     testWidgets('Simulate set initial data with Locale vi_VN',
         (WidgetTester tester) async {
@@ -159,5 +197,7 @@ void main() {
       expect(viewModel.data?.category, 0);
       expect(viewModel.data?.date, '2001-01-01');
     });
+  
+//========================================================
   });
 }

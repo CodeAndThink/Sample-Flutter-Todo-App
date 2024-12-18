@@ -17,18 +17,22 @@ import 'package:todo_app/views/todo/todo_view_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load file .env
+  // Load File .env
   await dotenv.load();
 
+  //Initialize Supabase
   await Supabase.initialize(
     url: dotenv.env['API_URL'] ?? "",
     anonKey: dotenv.env['API_KEY'] ?? "",
   );
 
+  //Initialize Alarm
   await Alarm.init();
 
+  //Get Last Login Token
   final lastUserLoginToken = await AuthManager.shared.getUserToken();
 
+  //Notification Request
   PermissionManager.shared.notificationPermissionRequest();
 
   runApp(MultiProvider(
