@@ -1,10 +1,10 @@
 # Todo App
 
-This is Todo App using Provider to manager states
+This is the Todo App using Provider to manager states
 
-## How to dev
+## How to get started on the project
 
-Type this command in terminal
+Type this command in the terminal
 
 ```sh
   - chmod +x runner.sh
@@ -19,10 +19,28 @@ Or
   flutter run
 ```
 
-Using this command when you want to add some assets (image, font,, etc.)
+Use this command to add some assets (image, font, etc.)
 
 ```sh
   flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+Use this command when you want to build a developed APK version in the Git Bash terminal
+
+```sh
+  bash scripts/build_dev_apk.sh
+```
+
+Or use this command when you want to build a product APK version in the Git Bash terminal
+
+```sh
+  bash scripts/build_pro_apk.sh
+```
+
+Or use this command when you want to Debug the developed version in the Git Bash terminal
+
+```sh
+  bash scripts/build_debug.sh
 ```
 
 ## App Running
@@ -55,10 +73,10 @@ $PROJECT_ROOT
 │   ├── configs          # Folder stores static variables (e.g., color of buttons)
 │   ├── gen              # Folder for generated code (e.g., from build_runner)
 │   ├── l10n             # Localization files
-│   ├── local            # Folder for communicate with local storages
+│   ├── local            # Folder for communicating with local storage
 │   ├── manager          # Folder for managing information (e.g., token, user's last login information)
 │   ├── models           # Data models (e.g., User, Note, etc.)
-│   ├── network          # Folder for communicate with remote storages
+│   ├── network          # Folder for communicating with remote storage
 │   ├── theme            # Folder for custom app theme
 │   ├── utils            # Folder for reused functions
 │   └── views            # Folder for views
