@@ -38,6 +38,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/back.svg
   String get back => 'assets/icons/back.svg';
 
+  /// File path: assets/icons/bell.png
+  AssetGenImage get bell => const AssetGenImage('assets/icons/bell.png');
+
   /// File path: assets/icons/calendar.svg
   String get calendar => 'assets/icons/calendar.svg';
 
@@ -77,6 +80,9 @@ class $AssetsIconsGen {
   AssetGenImage get privacyPolicy =>
       const AssetGenImage('assets/icons/privacyPolicy.png');
 
+  /// File path: assets/icons/profile.png
+  AssetGenImage get profile => const AssetGenImage('assets/icons/profile.png');
+
   /// File path: assets/icons/selectDate.svg
   String get selectDate => 'assets/icons/selectDate.svg';
 
@@ -89,6 +95,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/signout.svg
   String get signout => 'assets/icons/signout.svg';
+
+  /// File path: assets/icons/translation.png
+  AssetGenImage get translation =>
+      const AssetGenImage('assets/icons/translation.png');
 
   /// File path: assets/icons/us.png
   AssetGenImage get us => const AssetGenImage('assets/icons/us.png');
@@ -103,6 +113,7 @@ class $AssetsIconsGen {
   List<dynamic> get values => [
         apple,
         back,
+        bell,
         calendar,
         cele,
         coffeeCup,
@@ -115,10 +126,12 @@ class $AssetsIconsGen {
         note,
         plus,
         privacyPolicy,
+        profile,
         selectDate,
         selectTime,
         settings,
         signout,
+        translation,
         us,
         view,
         vn

@@ -7,6 +7,7 @@ import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/views/about/about_screen.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/privacy/privacy_screen.dart';
+import 'package:todo_app/views/profile/profile_screen.dart';
 import 'package:todo_app/views/setting/setting_view_model.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -35,6 +36,20 @@ class _SettingScreenState extends State<SettingScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: CustomScrollView(
                   slivers: [
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        if (index == 0) {
+                          return _navigateProfileScreenListTile();
+                        }
+
+                        return null;
+                      },
+                      childCount: 1,
+                    )),
+                    const SliverToBoxAdapter(
+                      child: Divider(),
+                    ),
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
@@ -98,6 +113,26 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
+//MARK: Navigate To Profile Screen
+
+  Widget _navigateProfileScreenListTile() {
+    return ListTile(
+      title: Text(AppLocalizations.of(context)!.profile),
+      leading: Image.asset(
+        Assets.icons.profile.path,
+        height: 24,
+        width: 24,
+        fit: BoxFit.cover,
+      ),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ProfileScreen()));
+      },
+    );
+  }
+
+//========================================================
+
 //MARK: Change Language Button
 
   Widget _changeLanguageSwitchListTile() {
@@ -146,7 +181,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget _navigatePrivacyScreenListTile() {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.privacy),
-      trailing: Image.asset(
+      leading: Image.asset(
         Assets.icons.privacyPolicy.path,
         height: 24,
         width: 24,
@@ -166,7 +201,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget _navigateAboutScreenListTile() {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.about),
-      trailing: Image.asset(
+      leading: Image.asset(
         Assets.icons.info.path,
         height: 24,
         width: 24,
@@ -186,7 +221,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget _buyMeCoffeeListTile() {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.buyMeACoffee),
-      trailing: Image.asset(
+      leading: Image.asset(
         Assets.icons.coffeeCup.path,
         height: 24,
         width: 24,
@@ -203,8 +238,10 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget _logoutListTile() {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.logout),
-      trailing: SvgPicture.asset(
+      leading: SvgPicture.asset(
         Assets.icons.signout,
+        height: 24,
+        width: 24,
         colorFilter:
             const ColorFilter.mode(Colors.redAccent, BlendMode.srcATop),
       ),
