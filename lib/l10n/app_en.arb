@@ -323,5 +323,9 @@
   "samplePrivacy": "Your privacy is a top priority. This Note App does not collect, store, or share any of your personal data. All notes and information you create are stored locally on your device. Please be aware that since the app is in development, there is no built-in backup feature at this time, so ensure you save or export important notes separately. Thank you for trusting and using the app.",
   "@samplePrivacy": {
     "description": "Content of Privacy screen"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Title of logout button"
   }
 }

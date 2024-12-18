@@ -158,10 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const SizedBox(
                                         height: 8,
                                       ),
-                                      
-//MARK: Username Text Box                                      
+
+//MARK: Username Text Box
                                       _usernameTextBox(),
-                                      
+
                                       const SizedBox(
                                         height: 8,
                                       ),
@@ -175,16 +175,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const SizedBox(
                                         height: 8,
                                       ),
-                                      
-//MARK: Password Text Box                                      
+
+//MARK: Password Text Box
                                       _passwordTextBox(),
-                                      
+
                                       const SizedBox(
                                         height: 16,
                                       ),
                                     ],
                                   ),
-                                  
+
 //MARK: Login Button
                                   _loginButton(),
 
@@ -201,8 +201,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             .textTheme
                                             .bodySmall,
                                       ),
-                                      
-//MARK: Register Button                                      
+
+//MARK: Register Button
                                       _navigateRegisterScreenTextButton()
                                     ],
                                   ),
@@ -212,8 +212,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall),
-                                  
-//MARK: Google - Facebook - Apple Login Buttons                                  
+
+//MARK: Google - Facebook - Apple Login Buttons
                                   _otherWayLoginButton()
                                 ]),
                           ),
@@ -237,17 +237,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _changeLanguageButton() {
     return Positioned(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: IconButton(
-            onPressed: () {
-              Provider.of<SettingViewModel>(context, listen: false)
-                  .toggleLocale();
-            },
-            icon: SvgPicture.asset(Assets.icons.lang,
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcATop))),
-      ),
+      left: 16,
+      child: IconButton(
+          onPressed: () {
+            Provider.of<SettingViewModel>(context, listen: false)
+                .toggleLocale();
+          },
+          icon: SvgPicture.asset(Assets.icons.lang,
+              height: 30,
+              width: 30,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcATop))),
     );
   }
 

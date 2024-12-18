@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_tool_tip_card.dart';
@@ -12,7 +11,6 @@ import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/utils/capitalize.dart';
 import 'package:todo_app/views/add_new_task/add_new_task_screen.dart';
-import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/setting/setting_screen.dart';
 import 'package:todo_app/views/todo/item/note_card.dart';
 import 'package:todo_app/views/todo/todo_view_model.dart';
@@ -131,14 +129,15 @@ class _TodoScreenState extends State<TodoScreen> {
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Row(
                             children: [
-//MARK: Setting Button                              
+//MARK: Setting Button
                               _settingButton(),
 
-//MARK: Header Date                              
+//MARK: Header Date
                               _headerDate(),
 
-//MARK: Logout Button                              
-                              _logoutButton()
+                              const SizedBox(
+                                width: 48,
+                              )
                             ],
                           ),
                         ),
@@ -153,7 +152,7 @@ class _TodoScreenState extends State<TodoScreen> {
 //MARK: COnsumer - Main List
             _consumerMainList(),
 
-//MARK: Add New Task Button            
+//MARK: Add New Task Button
             _addNewTaskButton()
           ],
         ),
@@ -178,30 +177,6 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //========================================================
 
-//MARK: Logout Button
-
-  Widget _logoutButton() {
-    return Tooltip(
-      message: AppLocalizations.of(context)!.logoutTip,
-      child: IconButton(
-          onPressed: () {
-            Provider.of<TodoViewModel>(context, listen: false).signout();
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-              (route) => false,
-            );
-          },
-          icon: SvgPicture.asset(
-            Assets.icons.signout,
-            colorFilter:
-                const ColorFilter.mode(Colors.redAccent, BlendMode.srcATop),
-          )),
-    );
-  }
-
-//========================================================
-
 //MARK: Settings Button
 
   Widget _settingButton() {
@@ -214,8 +189,8 @@ class _TodoScreenState extends State<TodoScreen> {
           },
           icon: Image.asset(
             Assets.icons.settings.path,
-            height: 24,
-            width: 24,
+            height: 30,
+            width: 30,
             fit: BoxFit.cover,
           )),
     );

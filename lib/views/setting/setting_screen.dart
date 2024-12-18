@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/views/about/about_screen.dart';
+import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/privacy/privacy_screen.dart';
 import 'package:todo_app/views/setting/setting_view_model.dart';
 
@@ -61,13 +63,29 @@ class _SettingScreenState extends State<SettingScreen> {
 //MARK: Navigate To About Screen
                             return _navigateAboutScreenListTile();
                           } else if (index == 1) {
-//MARK: Buy Me Coffee Button                            
+//MARK: Buy Me Coffee Button
                             return _buyMeCoffeeListTile();
                           }
 
                           return null;
                         },
                         childCount: 2,
+                      ),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: Divider(),
+                    ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          if (index == 0) {
+//MARK: Logout And Navigate To Login Screen
+                            return _logoutListTile();
+                          }
+
+                          return null;
+                        },
+                        childCount: 1,
                       ),
                     ),
                   ],
@@ -175,6 +193,29 @@ class _SettingScreenState extends State<SettingScreen> {
         fit: BoxFit.cover,
       ),
       onTap: () {},
+    );
+  }
+
+//========================================================
+
+//MARK: Logout Button
+
+  Widget _logoutListTile() {
+    return ListTile(
+      title: Text(AppLocalizations.of(context)!.logout),
+      trailing: SvgPicture.asset(
+        Assets.icons.signout,
+        colorFilter:
+            const ColorFilter.mode(Colors.redAccent, BlendMode.srcATop),
+      ),
+      onTap: () {
+        Provider.of<SettingViewModel>(context, listen: false).signout();
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (route) => false,
+        );
+      },
     );
   }
 

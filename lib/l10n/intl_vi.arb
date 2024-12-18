@@ -323,5 +323,9 @@
   "samplePrivacy": "Quyền riêng tư của bạn là ưu tiên hàng đầu. Ứng dụng Note này không thu thập, lưu trữ hay chia sẻ bất kỳ dữ liệu cá nhân nào của bạn. Tất cả ghi chú và thông tin bạn tạo ra đều được lưu trữ trên thiết bị của bạn. Xin lưu ý rằng do ứng dụng đang trong quá trình phát triển, hiện tại chưa có tính năng sao lưu. Vì vậy, hãy đảm bảo bạn lưu hoặc xuất các ghi chú quan trọng một cách riêng biệt. Cảm ơn bạn đã tin tưởng và sử dụng ứng dụng.",
   "@samplePrivacy": {
     "description": "Nội dung cho màn hình Quyền riêng tư"
+  },
+  "logout": "Đăng xuất",
+  "@logout": {
+    "description": "Tiêu đề của nút đăng xuất"
   }
 }

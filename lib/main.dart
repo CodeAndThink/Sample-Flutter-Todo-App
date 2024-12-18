@@ -38,9 +38,10 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
+          create: (context) => TodoViewModel(ApiProvider.shared)),
+      ChangeNotifierProvider(
           create: (context) =>
-              TodoViewModel(ApiProvider.shared, AuthManager.shared)),
-      ChangeNotifierProvider(create: (context) => SettingViewModel())
+              SettingViewModel(ApiProvider.shared, AuthManager.shared))
     ],
     child: MainApp(
       lastUserLoginToken: lastUserLoginToken,

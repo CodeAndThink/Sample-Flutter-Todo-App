@@ -5,9 +5,7 @@ class PermissionManager {
   bool _notificationPermission = false;
   bool get notificationPermission => _notificationPermission;
 
-  PermissionManager() {
-    notificationPermissionRequest();
-  }
+  PermissionManager();
 
   void notificationPermissionRequest() async {
     _notificationPermission = await requestNotificationPermission();

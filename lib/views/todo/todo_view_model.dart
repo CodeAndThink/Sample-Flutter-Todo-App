@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 
@@ -12,9 +11,6 @@ class TodoViewModel extends ChangeNotifier {
   String _error = "";
   String get error => _error;
 
-  late ApiProvider _provider;
-  late AuthManager _authManager;
-
   List<NoteModel> _data = [];
 
   final List<NoteModel> _todoData = [];
@@ -23,20 +19,15 @@ class TodoViewModel extends ChangeNotifier {
   final List<NoteModel> _doneData = [];
   List<NoteModel> get doneData => _doneData;
 
+  late ApiProvider _provider;
+
   //MARK: Construction
 
-  TodoViewModel(provider, authManager) {
+  TodoViewModel(provider) {
     _provider = provider;
-    _authManager = authManager;
   }
 
   //MARK: Public Functions
-
-  //Function for signout
-  void signout() {
-    _provider.signOut();
-    _authManager.removeUserToken();
-  }
 
   //Function for updating feature
   void updateNote(NoteModel oldNote) async {
