@@ -327,5 +327,13 @@
   "logout": "Đăng xuất",
   "@logout": {
     "description": "Tiêu đề của nút đăng xuất"
+  },
+  "version": "Phiên bản",
+  "@version": {
+    "description": "Nhãn của màn hình Giới thiệu"
+  },
+  "advancedSettings": "Cài đặt nâng cao",
+  "@advancedSettings": {
+    "description": "Tiêu đề phần cài đặt nâng cao"
   }
 }

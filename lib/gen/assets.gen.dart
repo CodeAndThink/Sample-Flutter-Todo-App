@@ -25,8 +25,11 @@ class $AssetsGifsGen {
   /// File path: assets/gifs/loading.gif
   AssetGenImage get loading => const AssetGenImage('assets/gifs/loading.gif');
 
+  /// File path: assets/gifs/love.gif
+  AssetGenImage get love => const AssetGenImage('assets/gifs/love.gif');
+
   /// List of all assets
-  List<AssetGenImage> get values => [loading];
+  List<AssetGenImage> get values => [loading, love];
 }
 
 class $AssetsIconsGen {

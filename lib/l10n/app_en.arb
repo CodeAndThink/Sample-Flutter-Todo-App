@@ -327,5 +327,13 @@
   "logout": "Logout",
   "@logout": {
     "description": "Title of logout button"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "Lable of app version text"
+  },
+  "advancedSettings": "Advanced Settings",
+  "@advancedSettings": {
+    "description": "Title of advanced settings"
   }
 }

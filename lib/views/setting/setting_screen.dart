@@ -3,7 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
+import 'package:todo_app/common/views/custom_list_tile.dart';
+import 'package:todo_app/common/views/custom_separated_part_title.dart';
+import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/gen/assets.gen.dart';
+import 'package:todo_app/utils/gif_overlay_show.dart';
 import 'package:todo_app/views/about/about_screen.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/privacy/privacy_screen.dart';
@@ -33,9 +37,12 @@ class _SettingScreenState extends State<SettingScreen> {
                 }),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.all(16),
                 child: CustomScrollView(
                   slivers: [
+                    SliverToBoxAdapter(
+                        child: CustomSeparatedPartTitle(
+                            title: AppLocalizations.of(context)!.profile)),
                     SliverList(
                         delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
@@ -47,9 +54,9 @@ class _SettingScreenState extends State<SettingScreen> {
                       },
                       childCount: 1,
                     )),
-                    const SliverToBoxAdapter(
-                      child: Divider(),
-                    ),
+                    SliverToBoxAdapter(
+                        child: CustomSeparatedPartTitle(
+                            title: AppLocalizations.of(context)!.settings)),
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
@@ -59,37 +66,38 @@ class _SettingScreenState extends State<SettingScreen> {
                           } else if (index == 1) {
 //MARK: Change Notification Setting Button
                             return _changeNotificationSettingSwitchListTile();
-                          } else if (index == 2) {
-//MARK: Navigate To Privacy Screen
-                            return _navigatePrivacyScreenListTile();
                           }
                           return null;
                         },
-                        childCount: 3,
+                        childCount: 2,
                       ),
                     ),
-                    const SliverToBoxAdapter(
-                      child: Divider(),
-                    ),
+                    SliverToBoxAdapter(
+                        child: CustomSeparatedPartTitle(
+                            title: AppLocalizations.of(context)!.about)),
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                           if (index == 0) {
+//MARK: Navigate To Privacy Screen
+                            return _navigatePrivacyScreenListTile();
+                          } else if (index == 1) {
 //MARK: Navigate To About Screen
                             return _navigateAboutScreenListTile();
-                          } else if (index == 1) {
+                          } else if (index == 2) {
 //MARK: Buy Me Coffee Button
                             return _buyMeCoffeeListTile();
                           }
 
                           return null;
                         },
-                        childCount: 2,
+                        childCount: 3,
                       ),
                     ),
-                    const SliverToBoxAdapter(
-                      child: Divider(),
-                    ),
+                    SliverToBoxAdapter(
+                        child: CustomSeparatedPartTitle(
+                            title: AppLocalizations.of(context)!
+                                .advancedSettings)),
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
@@ -138,20 +146,21 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget _changeLanguageSwitchListTile() {
     return Selector<SettingViewModel, bool>(
         selector: (context, viewmodel) =>
-            viewmodel.currentLocale.languageCode != 'en',
+            viewmodel.currentLocale.languageCode !=
+            Configs.defaultLocale.languageCode,
         builder: (context, isNotEng, child) {
-          return SwitchListTile(
-            activeThumbImage: AssetImage(Assets.icons.vn.path),
-            activeTrackColor: const Color(0xFFF48F8A),
-            inactiveThumbImage: AssetImage(Assets.icons.us.path),
-            inactiveTrackColor: const Color(0xFF5256B6),
-            title: Text(AppLocalizations.of(context)!.languageChange),
-            value: isNotEng,
-            onChanged: (bool value) {
-              Provider.of<SettingViewModel>(context, listen: false)
-                  .toggleLocale();
-            },
-          );
+          return CustomListTile(
+              iconPath: Assets.icons.translation.path,
+              title: AppLocalizations.of(context)!.languageChange,
+              value: isNotEng,
+              activeThumbImage: AssetImage(Assets.icons.vn.path),
+              activeTrackColor: const Color(0xFFF48F8A),
+              inactiveThumbImage: AssetImage(Assets.icons.us.path),
+              inactiveTrackColor: const Color(0xFF5256B6),
+              action: () {
+                Provider.of<SettingViewModel>(context, listen: false)
+                    .toggleLocale();
+              });
         });
   }
 
@@ -163,14 +172,14 @@ class _SettingScreenState extends State<SettingScreen> {
     return Selector<SettingViewModel, bool>(
         selector: (context, viewmodel) => viewmodel.isNotiEnable,
         builder: (context, isEnable, child) {
-          return SwitchListTile(
-            title: Text(AppLocalizations.of(context)!.enableNotification),
-            value: isEnable,
-            onChanged: (bool value) {
-              Provider.of<SettingViewModel>(context, listen: false)
-                  .toggleNoti();
-            },
-          );
+          return CustomListTile(
+              iconPath: Assets.icons.bell.path,
+              title: AppLocalizations.of(context)!.enableNotification,
+              value: isEnable,
+              action: () {
+                Provider.of<SettingViewModel>(context, listen: false)
+                    .toggleNoti();
+              });
         });
   }
 
@@ -227,7 +236,9 @@ class _SettingScreenState extends State<SettingScreen> {
         width: 24,
         fit: BoxFit.cover,
       ),
-      onTap: () {},
+      onTap: () {
+        showOverlay(context, Assets.gifs.love.path);
+      },
     );
   }
 
@@ -237,7 +248,13 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Widget _logoutListTile() {
     return ListTile(
-      title: Text(AppLocalizations.of(context)!.logout),
+      title: Text(
+        AppLocalizations.of(context)!.logout,
+        style: Theme.of(context)
+            .textTheme
+            .headlineMedium
+            ?.copyWith(color: Colors.redAccent),
+      ),
       leading: SvgPicture.asset(
         Assets.icons.signout,
         height: 24,

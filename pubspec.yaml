@@ -29,6 +29,8 @@ dependencies:
   firebase_core: ^3.8.1
   flutter_gen_runner: ^5.8.0
   flutter_dotenv: ^5.2.1
+  package_info_plus: ^8.1.2
+  gif: ^2.3.0
 
 flutter_launcher_icons:
   android: true
