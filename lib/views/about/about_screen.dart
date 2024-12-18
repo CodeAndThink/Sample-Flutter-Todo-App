@@ -15,11 +15,8 @@ class AboutScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(
-                  title: AppLocalizations.of(context)!.about,
-                  action: () {
-                    Navigator.pop(context);
-                  }),
+//MARK: App Bar
+              _appBar(context),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -31,41 +28,9 @@ class AboutScreen extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset(
-                          Assets.icons.heart.path,
-                          height: 48,
-                          width: 48,
-                          fit: BoxFit.cover,
-                        ),
-                        Image.asset(
-                          Assets.icons.plus.path,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover,
-                        ),
-                        Image.asset(
-                          Assets.images.logo.path,
-                          height: 48,
-                          width: 48,
-                          fit: BoxFit.cover,
-                        ),
-                        Image.asset(
-                          Assets.icons.plus.path,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover,
-                        ),
-                        Image.asset(
-                          Assets.icons.coffeeCup.path,
-                          height: 48,
-                          width: 48,
-                          fit: BoxFit.cover,
-                        ),
-                      ],
-                    )
+
+//MARK: Bottom Decoration
+                    _bottomDecoration()
                   ],
                 ),
               )
@@ -75,4 +40,58 @@ class AboutScreen extends StatelessWidget {
       ),
     );
   }
+
+//MARK: App Bar
+
+  Widget _appBar(BuildContext context) {
+    return CustomAppBar(
+        title: AppLocalizations.of(context)!.about,
+        action: () {
+          Navigator.pop(context);
+        });
+  }
+
+//========================================================
+
+//MARK: Bottom Decoration
+
+  Widget _bottomDecoration() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Image.asset(
+          Assets.icons.heart.path,
+          height: 48,
+          width: 48,
+          fit: BoxFit.cover,
+        ),
+        Image.asset(
+          Assets.icons.plus.path,
+          height: 24,
+          width: 24,
+          fit: BoxFit.cover,
+        ),
+        Image.asset(
+          Assets.images.logo.path,
+          height: 48,
+          width: 48,
+          fit: BoxFit.cover,
+        ),
+        Image.asset(
+          Assets.icons.plus.path,
+          height: 24,
+          width: 24,
+          fit: BoxFit.cover,
+        ),
+        Image.asset(
+          Assets.icons.coffeeCup.path,
+          height: 48,
+          width: 48,
+          fit: BoxFit.cover,
+        ),
+      ],
+    );
+  }
+
+//========================================================
 }

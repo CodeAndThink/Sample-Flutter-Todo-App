@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/configs/configs.dart';
 
 class SettingManager {
   static final shared = SettingManager();
@@ -22,6 +23,6 @@ class SettingManager {
       return Locale(langCode, counCode);
     }
 
-    return const Locale('en', 'US');
+    return Configs.defaultLocale;
   }
 }

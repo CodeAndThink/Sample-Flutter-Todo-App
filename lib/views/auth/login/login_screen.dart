@@ -87,18 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SingleChildScrollView(
                 child: Stack(
                   children: [
-                    Positioned(
-                        child: Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: IconButton(
-                          onPressed: () {
-                            Provider.of<SettingViewModel>(context, listen: false)
-                                .toggleLocale();
-                          },
-                          icon: SvgPicture.asset(Assets.icons.lang,
-                              colorFilter: const ColorFilter.mode(
-                                  Colors.white, BlendMode.srcATop))),
-                    )),
+//MARK: Change Language Button
+                    _changeLanguageButton(),
+
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(children: [
@@ -167,36 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const SizedBox(
                                         height: 8,
                                       ),
-
-                                      //MARK: Username
-                                      Selector<LoginViewModel,
-                                          dartz.Tuple2<String, String?>>(
-                                        selector: (context, viewmodel) =>
-                                            dartz.Tuple2(viewmodel.username,
-                                                viewmodel.errorUsernameText),
-                                        builder: (context, data, child) {
-                                          _username.text = data.value1;
-                                          return CustomTextBox(
-                                            controller: _username,
-                                            hintText:
-                                                AppLocalizations.of(context)!
-                                                    .usernameHint,
-                                            lineNumber: 1,
-                                            textError: data.value2,
-                                            onTap: _vm.resetErrorText,
-                                            textChangeAction: (value) {
-                                              _vm.setUsername(value);
-                                            },
-                                            cleanAction: () {
-                                              _vm.resetErrorText();
-                                              _vm.setUsername("");
-                                            },
-                                          );
-                                        },
-                                      ),
-
-                                      //========================================================
-
+                                      
+//MARK: Username Text Box                                      
+                                      _usernameTextBox(),
+                                      
                                       const SizedBox(
                                         height: 8,
                                       ),
@@ -210,63 +175,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const SizedBox(
                                         height: 8,
                                       ),
-
-                                      //MARK: Password
-
-                                      Selector<LoginViewModel,
-                                          dartz.Tuple2<String, String?>>(
-                                        selector: (context, viewmodel) =>
-                                            dartz.Tuple2(viewmodel.password,
-                                                viewmodel.errorPasswordText),
-                                        builder: (context, data, child) {
-                                          _password.text = data.value1;
-                                          return AuthTextBox(
-                                            controller: _password,
-                                            hintText:
-                                                AppLocalizations.of(context)!
-                                                    .passwordHint,
-                                            lineNumber: 1,
-                                            textError: data.value2,
-                                            onTap: _vm.resetErrorText,
-                                            textChangeAction: (value) {
-                                              _vm.setPassword(value);
-                                            },
-                                          );
-                                        },
-                                      ),
-
-                                      //========================================================
-
+                                      
+//MARK: Password Text Box                                      
+                                      _passwordTextBox(),
+                                      
                                       const SizedBox(
                                         height: 16,
                                       ),
                                     ],
                                   ),
-                                  //MARK: Login Button
-
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: SizedBox(
-                                          height: 56,
-                                          child: MainBottomButton(
-                                              ontap: () {
-                                                _vm.validateInput(context);
-                                              },
-                                              buttonLabel:
-                                                  AppLocalizations.of(context)!
-                                                      .loginButtonTitle),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //========================================================
+                                  
+//MARK: Login Button
+                                  _loginButton(),
 
                                   const SizedBox(
                                     height: 16,
                                   ),
-
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -277,82 +201,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                             .textTheme
                                             .bodySmall,
                                       ),
-
-                                      //MARK: Register Button
-
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const RegisterScreen()));
-                                          },
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .registerButtonTitle,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.copyWith(
-                                                    color: Colors.blueAccent),
-                                          )),
-
-                                      //========================================================
+                                      
+//MARK: Register Button                                      
+                                      _navigateRegisterScreenTextButton()
                                     ],
                                   ),
-
                                   Text(
                                       AppLocalizations.of(context)!
                                           .anotherWayToLoginTitle,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall),
-
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CustomIconButton(
-                                          action: () {},
-                                          iconPath: Assets.icons.google.path),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      CustomIconButton(
-                                          action: () {},
-                                          iconPath: Assets.icons.facebook.path),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      CustomIconButton(
-                                          action: () {},
-                                          iconPath: Assets.icons.apple.path),
-                                    ],
-                                  )
+                                  
+//MARK: Google - Facebook - Apple Login Buttons                                  
+                                  _otherWayLoginButton()
                                 ]),
                           ),
                         ),
                       ]),
                     ),
-                    //MARK: Loading
 
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: Selector<LoginViewModel, bool>(
-                          builder: (context, isLoading, child) {
-                            if (isLoading) {
-                              return const Loading();
-                            }
-                            return const SizedBox();
-                          },
-                          selector: (context, viewmodel) =>
-                              viewmodel.isLoading),
-                    )
-
-                    //========================================================
+//MARK: Loading Animation
+                    _loadingAnimation()
                   ],
                 ),
               ),
@@ -362,4 +232,158 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
   }
+
+//MARK: Change Language Button
+
+  Widget _changeLanguageButton() {
+    return Positioned(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: IconButton(
+            onPressed: () {
+              Provider.of<SettingViewModel>(context, listen: false)
+                  .toggleLocale();
+            },
+            icon: SvgPicture.asset(Assets.icons.lang,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcATop))),
+      ),
+    );
+  }
+
+//========================================================
+
+//MARK: Username Text Box
+
+  Widget _usernameTextBox() {
+    return Selector<LoginViewModel, dartz.Tuple2<String, String?>>(
+      selector: (context, viewmodel) =>
+          dartz.Tuple2(viewmodel.username, viewmodel.errorUsernameText),
+      builder: (context, data, child) {
+        _username.text = data.value1;
+        return CustomTextBox(
+          controller: _username,
+          hintText: AppLocalizations.of(context)!.usernameHint,
+          lineNumber: 1,
+          textError: data.value2,
+          onTap: _vm.resetErrorText,
+          textChangeAction: (value) {
+            _vm.setUsername(value);
+          },
+          cleanAction: () {
+            _vm.resetErrorText();
+            _vm.setUsername("");
+          },
+        );
+      },
+    );
+  }
+
+//========================================================
+
+//MARK: Password Text Box
+
+  Widget _passwordTextBox() {
+    return Selector<LoginViewModel, dartz.Tuple2<String, String?>>(
+      selector: (context, viewmodel) =>
+          dartz.Tuple2(viewmodel.password, viewmodel.errorPasswordText),
+      builder: (context, data, child) {
+        _password.text = data.value1;
+        return AuthTextBox(
+          controller: _password,
+          hintText: AppLocalizations.of(context)!.passwordHint,
+          lineNumber: 1,
+          textError: data.value2,
+          onTap: _vm.resetErrorText,
+          textChangeAction: (value) {
+            _vm.setPassword(value);
+          },
+        );
+      },
+    );
+  }
+
+//========================================================
+
+//MARK: Login Button
+
+  Widget _loginButton() {
+    return Row(
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: 56,
+            child: MainBottomButton(
+                ontap: () {
+                  _vm.validateInput(context);
+                },
+                buttonLabel: AppLocalizations.of(context)!.loginButtonTitle),
+          ),
+        ),
+      ],
+    );
+  }
+
+//========================================================
+
+//MARK: Register Button
+
+  Widget _navigateRegisterScreenTextButton() {
+    return TextButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const RegisterScreen()));
+        },
+        child: Text(
+          AppLocalizations.of(context)!.registerButtonTitle,
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall
+              ?.copyWith(color: Colors.blueAccent),
+        ));
+  }
+
+//========================================================
+
+//MARK: Google - Facebook - Apple Login Buttons
+
+  Widget _otherWayLoginButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomIconButton(action: () {}, iconPath: Assets.icons.google.path),
+        const SizedBox(
+          width: 16,
+        ),
+        CustomIconButton(action: () {}, iconPath: Assets.icons.facebook.path),
+        const SizedBox(
+          width: 16,
+        ),
+        CustomIconButton(action: () {}, iconPath: Assets.icons.apple.path),
+      ],
+    );
+  }
+
+//========================================================
+
+//MARK: Loading Animation
+
+  Widget _loadingAnimation() {
+    return Positioned(
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      child: Selector<LoginViewModel, bool>(
+          builder: (context, isLoading, child) {
+            if (isLoading) {
+              return const Loading();
+            }
+            return const SizedBox();
+          },
+          selector: (context, viewmodel) => viewmodel.isLoading),
+    );
+  }
+
+//========================================================
 }

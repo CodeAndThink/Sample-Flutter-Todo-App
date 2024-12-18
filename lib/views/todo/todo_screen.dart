@@ -98,8 +98,6 @@ class _TodoScreenState extends State<TodoScreen> {
     screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
-    final currentDate = DateTime.now();
-    final formattedDate = formatDate(currentDate);
 
     return Scaffold(
       body: SafeArea(
@@ -133,258 +131,278 @@ class _TodoScreenState extends State<TodoScreen> {
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Row(
                             children: [
-//MARK: Settings Button
+//MARK: Setting Button                              
+                              _settingButton(),
 
-                              Tooltip(
-                                message: AppLocalizations.of(context)!
-                                    .changeLanguageTip,
-                                child: IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SettingScreen()));
-                                    },
-                                    icon: Image.asset(
-                                      Assets.icons.settings.path,
-                                      height: 24,
-                                      width: 24,
-                                      fit: BoxFit.cover,
-                                    )),
-                              ),
+//MARK: Header Date                              
+                              _headerDate(),
 
-//========================================================
-
-//MARK: Local Date
-
-                              Expanded(
-                                child: Text(
-                                  formattedDate,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall
-                                      ?.copyWith(color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-
-//========================================================
-
-//MARK: Logout Button
-
-                              Tooltip(
-                                message:
-                                    AppLocalizations.of(context)!.logoutTip,
-                                child: IconButton(
-                                    onPressed: () {
-                                      Provider.of<TodoViewModel>(context,
-                                              listen: false)
-                                          .signout();
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => const LoginScreen()),
-                                        (route) => false,
-                                      );
-                                    },
-                                    icon: SvgPicture.asset(
-                                      Assets.icons.signout,
-                                      colorFilter: const ColorFilter.mode(
-                                          Colors.redAccent, BlendMode.srcATop),
-                                    )),
-                              )
-
-//========================================================
+//MARK: Logout Button                              
+                              _logoutButton()
                             ],
                           ),
                         ),
                       ]),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      AppLocalizations.of(context)!.todoScreenTitle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.copyWith(color: Colors.white),
-                    ),
-                  )
+
+//MARK: Header Title
+                  _headerTitle()
                 ],
               ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height:
-                      screenHeight * 0.185 < 158 ? 158 : screenHeight * 0.185,
-                ),
 
-//MARK: Consumer - Main List
+//MARK: COnsumer - Main List
+            _consumerMainList(),
 
-                SizedBox(
-                    height: screenHeight > screenWidth
-                        ? screenHeight * (0.82 - 96 / screenHeight)
-                        : screenHeight * (0.61 - 96 / screenHeight),
-                    child:
-                        Consumer<TodoViewModel>(builder: (context, vm, child) {
-                      if (vm.isLoading) {
-                        return const Loading();
-                      } else if (vm.error.isEmpty) {
-                        if (vm.doneData.isNotEmpty || vm.todoData.isNotEmpty) {
-                          return Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 16, right: 16),
-                              child: RefreshIndicator(
-                                onRefresh: vm.fetchNote,
-                                child: CustomScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  controller: _scrollController,
-                                  slivers: [
-                                    _listViewSection(vm.todoData),
-                                    SliverToBoxAdapter(
-                                        child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 24,
-                                        ),
-                                        Text(
-                                            key: widgetKey,
-                                            AppLocalizations.of(context)!
-                                                .completed,
-                                            style: vm.todoData.isEmpty
-                                                ? Theme.of(context)
-                                                    .textTheme
-                                                    .headlineSmall
-                                                    ?.copyWith(
-                                                      color: Colors.white,
-                                                    )
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .headlineSmall
-                                                    ?.copyWith(
-                                                        color: _textColor)),
-                                        const SizedBox(
-                                          height: 24,
-                                        )
-                                      ],
-                                    )),
-                                    _listViewSection(vm.doneData),
-                                    const SliverToBoxAdapter(
-                                      child: SizedBox(
-                                        height: 30,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ));
-                        }
-                        return Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Assets.images.logo.path,
-                                height: 100,
-                                width: 100,
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.textHolder,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              )
-                            ],
-                          ),
-                        );
-                      } else if (vm.error.isNotEmpty) {
-                        return Center(
-                          child: SizedBox(
-                            height: screenHeight * 0.3,
-                            width: screenWidth * 0.8,
-                            child: Column(
-                              children: [
-                                Text(
-                                  vm.error,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 4,
-                                ),
-                                const SizedBox(
-                                  height: 16,
-                                ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Provider.of<TodoViewModel>(context,
-                                              listen: false)
-                                          .fetchNote();
-                                    },
-                                    child: Text(
-                                        AppLocalizations.of(context)!.reload))
-                              ],
-                            ),
-                          ),
-                        );
-                      } else {
-                        return Center(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                Assets.images.logo.path,
-                                height: 48,
-                                width: 48,
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.textHolder,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              )
-                            ],
-                          ),
-                        );
-                      }
-                    }))
-              ],
-            ),
-
-//========================================================
-
-//MARK: Add New Task Button
-
-            Positioned(
-                left: 16,
-                right: 16,
-                bottom: 24,
-                height: 56,
-                child: MainBottomButton(
-                  ontap: () {
-                    final todoViewmodel =
-                        Provider.of<TodoViewModel>(context, listen: false);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AddNewTaskScreen()),
-                    ).then((_) {
-                      todoViewmodel.fetchNote();
-                    });
-                  },
-                  buttonLabel:
-                      AppLocalizations.of(context)!.addNewTaskButtonTitle,
-                ))
-
-//========================================================
+//MARK: Add New Task Button            
+            _addNewTaskButton()
           ],
         ),
       ),
     );
   }
+
+//MARK: Header Title
+
+  Widget _headerTitle() {
+    return Align(
+      alignment: Alignment.center,
+      child: Text(
+        AppLocalizations.of(context)!.todoScreenTitle,
+        style: Theme.of(context)
+            .textTheme
+            .headlineLarge
+            ?.copyWith(color: Colors.white),
+      ),
+    );
+  }
+
+//========================================================
+
+//MARK: Logout Button
+
+  Widget _logoutButton() {
+    return Tooltip(
+      message: AppLocalizations.of(context)!.logoutTip,
+      child: IconButton(
+          onPressed: () {
+            Provider.of<TodoViewModel>(context, listen: false).signout();
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+              (route) => false,
+            );
+          },
+          icon: SvgPicture.asset(
+            Assets.icons.signout,
+            colorFilter:
+                const ColorFilter.mode(Colors.redAccent, BlendMode.srcATop),
+          )),
+    );
+  }
+
+//========================================================
+
+//MARK: Settings Button
+
+  Widget _settingButton() {
+    return Tooltip(
+      message: AppLocalizations.of(context)!.changeLanguageTip,
+      child: IconButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SettingScreen()));
+          },
+          icon: Image.asset(
+            Assets.icons.settings.path,
+            height: 24,
+            width: 24,
+            fit: BoxFit.cover,
+          )),
+    );
+  }
+
+//========================================================
+
+//MARK: Local Date
+
+  Widget _headerDate() {
+    final currentDate = DateTime.now();
+    final formattedDate = formatDate(currentDate);
+    return Expanded(
+      child: Text(
+        formattedDate,
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(color: Colors.white),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+//========================================================
+
+//MARK: Consumer - Main List
+
+  Widget _consumerMainList() {
+    final screenHeight = screenSize.height;
+    final screenWidth = screenSize.width;
+
+    return Column(
+      children: [
+        SizedBox(
+          height: screenHeight * 0.185 < 158 ? 158 : screenHeight * 0.185,
+        ),
+        SizedBox(
+            height: screenHeight > screenWidth
+                ? screenHeight * (0.82 - 96 / screenHeight)
+                : screenHeight * (0.61 - 96 / screenHeight),
+            child: Consumer<TodoViewModel>(builder: (context, vm, child) {
+              if (vm.isLoading) {
+                return const Loading();
+              } else if (vm.error.isEmpty) {
+                if (vm.doneData.isNotEmpty || vm.todoData.isNotEmpty) {
+                  return Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16),
+                      child: RefreshIndicator(
+                        onRefresh: vm.fetchNote,
+                        child: CustomScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          controller: _scrollController,
+                          slivers: [
+                            _listViewSection(vm.todoData),
+                            SliverToBoxAdapter(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 24,
+                                ),
+                                Text(
+                                    key: widgetKey,
+                                    AppLocalizations.of(context)!.completed,
+                                    style: vm.todoData.isEmpty
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                            )
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(color: _textColor)),
+                                const SizedBox(
+                                  height: 24,
+                                )
+                              ],
+                            )),
+                            _listViewSection(vm.doneData),
+                            const SliverToBoxAdapter(
+                              child: SizedBox(
+                                height: 30,
+                              ),
+                            )
+                          ],
+                        ),
+                      ));
+                }
+                return Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.images.logo.path,
+                        height: 100,
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.textHolder,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      )
+                    ],
+                  ),
+                );
+              } else if (vm.error.isNotEmpty) {
+                return Center(
+                  child: SizedBox(
+                    height: screenHeight * 0.3,
+                    width: screenWidth * 0.8,
+                    child: Column(
+                      children: [
+                        Text(
+                          vm.error,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Provider.of<TodoViewModel>(context, listen: false)
+                                  .fetchNote();
+                            },
+                            child: Text(AppLocalizations.of(context)!.reload))
+                      ],
+                    ),
+                  ),
+                );
+              } else {
+                return Center(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        Assets.images.logo.path,
+                        height: 48,
+                        width: 48,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.textHolder,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      )
+                    ],
+                  ),
+                );
+              }
+            }))
+      ],
+    );
+  }
+
+//========================================================
+
+//MARK: Add New Task Button
+
+  Widget _addNewTaskButton() {
+    return Positioned(
+        left: 16,
+        right: 16,
+        bottom: 24,
+        height: 56,
+        child: MainBottomButton(
+          ontap: () {
+            final todoViewmodel =
+                Provider.of<TodoViewModel>(context, listen: false);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddNewTaskScreen()),
+            ).then((_) {
+              todoViewmodel.fetchNote();
+            });
+          },
+          buttonLabel: AppLocalizations.of(context)!.addNewTaskButtonTitle,
+        ));
+  }
+
+//========================================================
 
 //MARK: Listview
 

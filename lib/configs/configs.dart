@@ -52,4 +52,8 @@ class Configs {
 
   //Notification
   static const defaultNotificationHour = 7;
+
+  //Locale
+  static const defaultLocale = Locale('en', 'US');
+  static const viLocale = Locale('vi', 'VN');
 }

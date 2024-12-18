@@ -87,82 +87,16 @@ class NoteCardState extends State<NoteCard>
                 child: Center(
                   child: Row(
                     children: [
-                      //MARK: Icon of category
+//MARK: Icon of category
+                      _categoryIcon(),
 
-                      ClipOval(
-                        child: Container(
-                          color: Configs.cateIconBackgroundColor(widget.data.category),
-                          width: 48,
-                          height: 48,
-                          child: Center(
-                            child: SvgPicture.asset(
-                              Configs.cateIcon(widget.data.category),
-                              width: 24,
-                              height: 24,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
                       const SizedBox(width: 12),
 
-                      //========================================================
+//MARK: Title and Time
+                      _titleAndTimeText(),
 
-                      //MARK: Title and Time
-
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.data.taskTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(
-                                      decoration: widget.data.status
-                                          ? TextDecoration.lineThrough
-                                          : TextDecoration.none),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            if (widget.data.time != null) ...[
-                              const SizedBox(height: 2),
-                              Text(
-                                ConverseDateTime.timeFormat(
-                                        widget.data.time!, context)
-                                    .toString(),
-                                style: TextStyle(
-                                    decoration: widget.data.status
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-
-                      //========================================================
-
-                      //MARK: Check box
-
-                      Checkbox(
-                        side: BorderSide(
-                            color: Theme.of(context).colorScheme.primary),
-                        value: widget.data.status,
-                        onChanged: (value) {
-                          _controller.forward();
-                          _controller.addStatusListener((status) {
-                            if (status == AnimationStatus.completed) {
-                              widget.checkBoxAction(value!);
-                              _controller.removeStatusListener((status) {});
-                            }
-                          });
-                        },
-                      )
-
-                      //========================================================
+//MARK: Check box
+                      _checkBox()
                     ],
                   ),
                 ),
@@ -173,4 +107,80 @@ class NoteCardState extends State<NoteCard>
       ),
     );
   }
+
+//MARK: Icon of category
+
+  Widget _categoryIcon() {
+    return ClipOval(
+      child: Container(
+        color: Configs.cateIconBackgroundColor(widget.data.category),
+        width: 48,
+        height: 48,
+        child: Center(
+          child: SvgPicture.asset(
+            Configs.cateIcon(widget.data.category),
+            width: 24,
+            height: 24,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+    );
+  }
+
+//========================================================
+
+//MARK: Title and Time
+
+  Widget _titleAndTimeText() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.data.taskTitle,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                decoration: widget.data.status
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          if (widget.data.time != null) ...[
+            const SizedBox(height: 2),
+            Text(
+              ConverseDateTime.timeFormat(widget.data.time!, context)
+                  .toString(),
+              style: TextStyle(
+                  decoration: widget.data.status
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+//========================================================
+
+//MARK: Check box
+  Widget _checkBox() {
+    return Checkbox(
+      side: BorderSide(color: Theme.of(context).colorScheme.primary),
+      value: widget.data.status,
+      onChanged: (value) {
+        _controller.forward();
+        _controller.addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            widget.checkBoxAction(value!);
+            _controller.removeStatusListener((status) {});
+          }
+        });
+      },
+    );
+  }
+
+//========================================================
 }

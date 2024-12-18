@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/common/notification/alarm_notification.dart';
-import 'package:todo_app/common/permission/permission_manager.dart';
 import 'package:todo_app/configs/configs.dart';
+import 'package:todo_app/manager/permission_manager.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -128,7 +128,8 @@ class AddNewTaskViewModel extends ChangeNotifier {
 
   //Function set the date value
   void setDate(BuildContext context, DateTime newDate) {
-    if (Localizations.localeOf(context).languageCode == 'vi') {
+    if (Localizations.localeOf(context).languageCode ==
+        Configs.viLocale.languageCode) {
       _date = DateFormat(Configs.mediumVnDate).format(newDate);
     } else {
       _date = DateFormat(Configs.mediumEnDate).format(newDate);
@@ -156,7 +157,8 @@ class AddNewTaskViewModel extends ChangeNotifier {
       DateTime date = ConverseDateTime.convertStringToDateTimeByLocale(
               context, _data!.date) ??
           DateTime.now();
-      if (Localizations.localeOf(context).languageCode == 'vi') {
+      if (Localizations.localeOf(context).languageCode ==
+          Configs.viLocale.languageCode) {
         _date = DateFormat(Configs.mediumVnDate).format(date);
       } else {
         _date = DateFormat(Configs.mediumEnDate).format(date);
@@ -227,7 +229,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
     _stopLoading();
     _isSuccess.value = response.data != null ? true : false;
     if (_isSuccess.value) {
-      if (await requestNotificationPermission()) {
+      if (PermissionManager.shared.notificationPermission) {
         if (response.data!.time == null) {
           DateTime activeTime =
               ConverseDateTime.convertStringToDateTime(response.data!.date);

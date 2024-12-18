@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/manager/auth_manager.dart';
+import 'package:todo_app/manager/permission_manager.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/views/setting/setting_view_model.dart';
 import 'package:todo_app/theme/theme.dart';
@@ -27,7 +29,7 @@ void main() async {
 
   final lastUserLoginToken = await AuthManager.shared.getUserToken();
 
-  // requestNotificationPermission();
+  PermissionManager.shared.notificationPermissionRequest();
 
   runApp(MultiProvider(
     providers: [
@@ -58,8 +60,7 @@ class MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    final settingProvider =
-        Provider.of<SettingViewModel>(context);
+    final settingProvider = Provider.of<SettingViewModel>(context);
 
     return MaterialApp(
       theme: AppTheme.lightTheme,
@@ -68,8 +69,8 @@ class MainAppState extends State<MainApp> {
       locale: settingProvider.currentLocale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('vi', 'VN'),
+        Configs.defaultLocale,
+        Configs.viLocale,
       ],
       home: Scaffold(
         body: Center(

@@ -14,11 +14,9 @@ class PrivacyScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(
-                  title: AppLocalizations.of(context)!.privacy,
-                  action: () {
-                    Navigator.pop(context);
-                  }),
+//MARK: App Bar
+              _appBar(context),
+
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
@@ -32,4 +30,16 @@ class PrivacyScreen extends StatelessWidget {
       ),
     );
   }
+
+//MARK: App Bar
+
+  Widget _appBar(BuildContext context) {
+    return CustomAppBar(
+        title: AppLocalizations.of(context)!.privacy,
+        action: () {
+          Navigator.pop(context);
+        });
+  }
+
+//========================================================
 }

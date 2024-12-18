@@ -26,10 +26,10 @@ class ConverseDateTime {
       return time.format(context);
     }
     if (Platform.isIOS) {
-      if (currentLocale.languageCode == 'en') {
+      if (currentLocale.languageCode == Configs.defaultLocale.languageCode) {
         return MaterialLocalizations.of(context)
             .formatTimeOfDay(time, alwaysUse24HourFormat: false);
-      } else if (currentLocale.languageCode == 'vi') {
+      } else if (currentLocale.languageCode == Configs.viLocale.languageCode) {
         return time.format(context);
       }
     }

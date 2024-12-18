@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -49,9 +50,9 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          locale: const Locale('en', 'US'),
+          locale: Configs.defaultLocale,
           supportedLocales: const [
-            Locale('en', 'US'),
+            Configs.defaultLocale,
           ],
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           home: Builder(
@@ -72,9 +73,9 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          locale: const Locale('vi', 'VN'),
+          locale: Configs.viLocale,
           supportedLocales: const [
-            Locale('vi', 'VN'),
+            Configs.viLocale,
           ],
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           home: Builder(
@@ -95,9 +96,9 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          locale: const Locale('en', 'US'),
+          locale: Configs.defaultLocale,
           supportedLocales: const [
-            Locale('en', 'US'),
+            Configs.defaultLocale,
           ],
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           home: Builder(
@@ -118,7 +119,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          locale: const Locale('vi', 'VN'),
+          locale: Configs.viLocale,
           home: MediaQuery(
             data: const MediaQueryData(alwaysUse24HourFormat: true),
             child: Builder(
@@ -142,7 +143,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          locale: const Locale('vi', 'VN'),
+          locale: Configs.viLocale,
           home: MediaQuery(
             data: const MediaQueryData(alwaysUse24HourFormat: true),
             child: Builder(
