@@ -56,10 +56,30 @@ class ConverseDateTime {
     return null;
   }
 
+  //Convert DateTime to String type based on locale
+  static String convertDateTimeToStringFormattedByLocale(
+      BuildContext context, DateTime inputDate) {
+    final Locale currentLocale = Localizations.localeOf(context);
+
+    if (currentLocale == Configs.viLocale) {
+      String date = DateFormat(Configs.mediumVnDate).format(inputDate);
+      String time = timeFormat(TimeOfDay.fromDateTime(inputDate), context);
+      return '$time $date';
+    } else {
+      String date = DateFormat(Configs.mediumEnDate).format(inputDate);
+      String time = timeFormat(TimeOfDay.fromDateTime(inputDate), context);
+      return '$time $date';
+    }
+  }
+
   //Convert String to DateTime type
-  static DateTime convertStringToDateTime(String inputDate) {
-    DateTime date = DateFormat(Configs.mediumDefaltDate).parse(inputDate);
-    return date;
+  static DateTime convertStringToDateTimeType(String inputDate) {
+    try {
+      DateTime date = DateFormat(Configs.longDefaltDateTime).parse(inputDate);
+      return date;
+    } catch (e) {
+      return DateTime.now();
+    }
   }
 
   //Function converse custom String date to ISO 8601 String date

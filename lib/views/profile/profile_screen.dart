@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
+import 'package:todo_app/common/views/custom_divider.dart';
+import 'package:todo_app/common/views/custom_personal_information_field.dart';
+import 'package:todo_app/common/views/custom_separated_part_title.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/profile/profile_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,8 +26,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
 
     _vm = ProfileViewModel(ApiProvider.shared);
-
-    _vm.fetchUserInformation();
   }
 
   @override
@@ -43,21 +45,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       action: () {
                         Navigator.pop(context);
                       }),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Selector<ProfileViewModel, User?>(
                       builder: (context, data, child) {
                         if (data != null) {
-                          return Column(
-                            children: [
-                              Text("Username: ${data.email}"),
-                              Text('UUID: ${data.id}'),
-                              Text('Created at: ${data.createdAt}'),
-                              Text('Aud: ${data.aud}'),
-                              Text('Last signin at: ${data.lastSignInAt}'),
-                              Text('Phone: ${data.phone}'),
-                              Text('Update at: ${data.updatedAt}'),
-                              Text('Aud: ${data.userMetadata}')
-                            ],
-                          );
+                          return _informationBox(data);
                         }
                         return Center(
                           child: Align(
@@ -83,13 +77,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         );
                       },
-                      selector: (context, viewmodel) => viewmodel.user)
+                      selector: (context, viewmodel) => viewmodel.userData)
                 ],
               ),
             ),
           ),
+          floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              child: Image.asset(
+                Assets.icons.pencil.path,
+                height: 32,
+                width: 32,
+              )),
         );
       },
+    );
+  }
+
+  Widget _informationBox(User data) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    return Container(
+      width: screenWidth - 16,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            CustomSeparatedPartTitle(
+                title: AppLocalizations.of(context)!.personalInformation),
+            CustomPersonalInformationField(
+                title: AppLocalizations.of(context)!.email,
+                information: _vm.getEmail()),
+            const CustomDivider(),
+            CustomPersonalInformationField(
+                title: AppLocalizations.of(context)!.phone,
+                information: _vm.getPhone()),
+            const CustomDivider(),
+            CustomPersonalInformationField(
+                title: AppLocalizations.of(context)!.createAt,
+                information: _vm.getCreateAt(context)),
+            const CustomDivider(),
+            CustomPersonalInformationField(
+                title: AppLocalizations.of(context)!.lastTimeUpdated,
+                information: _vm.getUpdateAt(context)),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -335,5 +335,29 @@
   "advancedSettings": "Advanced Settings",
   "@advancedSettings": {
     "description": "Title of advanced settings"
+  },
+  "personalInformation": "Personal Information",
+  "@personalInformation": {
+    "description": "Lable of personal information part"
+  },
+  "createAt": "Create at",
+  "@createAt": {
+    "description": "Label of create at account"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Label of email"
+  },
+  "phone": "Phone",
+  "@phone" : {
+    "description": "Label of phone"
+  },
+  "lastTimeUpdated": "Last time updated",
+  "@lastTimeUpdated": {
+    "description": "Label of last time updating information"
+  },
+  "uuid": "UUID",
+  "@uuid": {
+    "description": "Label of UUID"
   }
 }

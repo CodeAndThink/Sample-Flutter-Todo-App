@@ -9,7 +9,7 @@ void showAlert(
     Function() mainAction,
     String mainActionLabel,
     Function()? subAction,
-    String? subActionLabel) {
+    String? subActionLabel,) {
   showDialog(
     context: context,
     builder: (BuildContext context) {

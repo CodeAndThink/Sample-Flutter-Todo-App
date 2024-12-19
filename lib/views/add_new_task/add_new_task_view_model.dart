@@ -232,7 +232,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
       if (PermissionManager.shared.notificationPermission) {
         if (response.data!.time == null) {
           DateTime activeTime =
-              ConverseDateTime.convertStringToDateTime(response.data!.date);
+              ConverseDateTime.convertStringToDateTimeType(response.data!.date);
           activeTime =
               activeTime.copyWith(hour: Configs.defaultNotificationHour);
           AlarmNotification.createAlarm(
@@ -246,7 +246,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
           TimeOfDay timeOfDay =
               ConverseDateTime.parseTimeOfDay(response.data!.time!);
           DateTime activeTime =
-              ConverseDateTime.convertStringToDateTime(response.data!.date);
+              ConverseDateTime.convertStringToDateTimeType(response.data!.date);
           activeTime = activeTime.copyWith(
               hour: timeOfDay.hour, minute: timeOfDay.minute);
           AlarmNotification.createAlarm(

@@ -335,5 +335,29 @@
   "advancedSettings": "Cài đặt nâng cao",
   "@advancedSettings": {
     "description": "Tiêu đề phần cài đặt nâng cao"
+  },
+  "personalInformation": "Thông tin cá nhân",
+  "@personalInformation": {
+    "description": "Nhãn của phần thông tin cá nhân"
+  },
+  "createAt": "Tạo lúc",
+  "@createAt": {
+    "description": "Nhãn của thời gian tạo tài khoản"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Nhãn của email"
+  },
+  "phone": "Số điện thoại",
+  "@phone": {
+    "description": "Nhãn của số điện thoại"
+  },
+  "lastTimeUpdated": "Lần cập nhật cuối",
+  "@lastTimeUpdated": {
+    "description": "Nhãn của lần cập nhật thông tin cuối"
+  },
+  "uuid": "UUID",
+  "@uuid": {
+    "description": "Nhãn của UUID"
   }
 }

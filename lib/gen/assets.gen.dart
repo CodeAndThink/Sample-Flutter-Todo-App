@@ -76,6 +76,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/note.svg
   String get note => 'assets/icons/note.svg';
 
+  /// File path: assets/icons/pencil.png
+  AssetGenImage get pencil => const AssetGenImage('assets/icons/pencil.png');
+
   /// File path: assets/icons/plus.png
   AssetGenImage get plus => const AssetGenImage('assets/icons/plus.png');
 
@@ -127,6 +130,7 @@ class $AssetsIconsGen {
         info,
         lang,
         note,
+        pencil,
         plus,
         privacyPolicy,
         profile,

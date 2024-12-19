@@ -41,6 +41,7 @@ class Configs {
   static Duration animationDuration = const Duration(milliseconds: 400);
 
   //Date Format
+  static const longTimeDefault = 'hh:mm:ss';
   static const longEnDate = 'MMMM d';
   static const mediumEnDate = 'dd MMM yyyy';
   static const mediumVnDate = 'dd/MM/yyyy';
