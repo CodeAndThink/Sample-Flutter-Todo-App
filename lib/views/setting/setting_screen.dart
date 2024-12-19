@@ -8,6 +8,7 @@ import 'package:todo_app/common/views/custom_separated_part_title.dart';
 import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/utils/gif_overlay_show.dart';
+import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/about/about_screen.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
 import 'package:todo_app/views/privacy/privacy_screen.dart';
@@ -263,12 +264,23 @@ class _SettingScreenState extends State<SettingScreen> {
             const ColorFilter.mode(Colors.redAccent, BlendMode.srcATop),
       ),
       onTap: () {
-        Provider.of<SettingViewModel>(context, listen: false).signout();
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-          (route) => false,
-        );
+        showAlert(
+            context,
+            AppLocalizations.of(context)!.logout_confirmation_title,
+            AppLocalizations.of(context)!.logout_confirmation_message,
+            () {
+              Provider.of<SettingViewModel>(context, listen: false).signout();
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                (route) => false,
+              );
+            },
+            AppLocalizations.of(context)!.logout_confirmation_confirm,
+            () {
+              Navigator.pop(context);
+            },
+            AppLocalizations.of(context)!.logout_confirmation_cancel);
       },
     );
   }

@@ -37,14 +37,13 @@ class Alert extends StatelessWidget {
                 mainActionLabel,
               ),
             ),
-            if (subAction != null && subActionLabel != null) ...[
+            if (subAction != null && subActionLabel != null)
               ElevatedButton(
                 onPressed: subAction,
                 child: Text(
-                  subActionLabel!,
+                  subActionLabel ?? '',
                 ),
               ),
-            ]
           ],
         )
       ],

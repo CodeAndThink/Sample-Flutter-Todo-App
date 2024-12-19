@@ -359,5 +359,25 @@
   "uuid": "UUID",
   "@uuid": {
     "description": "Label of UUID"
+  },
+  "settingsButtonTip": "This is Setting button to navigate to Settings screen",
+  "@settingsButtonTip": {
+    "description": "This is tip of setting button"
+  },
+  "logout_confirmation_title": "Confirm Logout",
+  "@logout_confirmation_title": {
+    "description": "The title displayed in the logout confirmation dialog."
+  },
+  "logout_confirmation_message": "Are you sure you want to log out?",
+  "@logout_confirmation_message": {
+    "description": "The message asking the user to confirm their intent to log out."
+  },
+  "logout_confirmation_cancel": "Cancel",
+  "@logout_confirmation_cancel": {
+    "description": "The label for the button to cancel the logout action."
+  },
+  "logout_confirmation_confirm": "Log Out",
+  "@logout_confirmation_confirm": {
+    "description": "The label for the button to confirm the logout action."
   }
 }

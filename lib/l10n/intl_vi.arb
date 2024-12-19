@@ -359,5 +359,25 @@
   "uuid": "UUID",
   "@uuid": {
     "description": "Nhãn của UUID"
+  },
+  "settingsButtonTip": "Đây là tuỳ chọn mở màn hình cài đặt",
+  "@settingsButtonTip": {
+    "description": "Đây là gợi ý của nút cài đặt"
+  },
+  "logout_confirmation_title": "Xác nhận đăng xuất",
+  "@logout_confirmation_title": {
+    "description": "Tiêu đề hiển thị trong hộp thoại xác nhận đăng xuất."
+  },
+  "logout_confirmation_message": "Bạn có chắc chắn muốn đăng xuất không?",
+  "@logout_confirmation_message": {
+    "description": "Thông báo yêu cầu người dùng xác nhận ý định đăng xuất."
+  },
+  "logout_confirmation_cancel": "Hủy",
+  "@logout_confirmation_cancel": {
+    "description": "Nhãn cho nút hủy hành động đăng xuất."
+  },
+  "logout_confirmation_confirm": "Đăng xuất",
+  "@logout_confirmation_confirm": {
+    "description": "Nhãn cho nút xác nhận hành động đăng xuất."
   }
 }

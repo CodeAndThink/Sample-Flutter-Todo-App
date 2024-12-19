@@ -44,7 +44,7 @@ class _TodoScreenState extends State<TodoScreen> {
       if (locale == 'en_US') {
         String formattedDate =
             DateFormat(Configs.longEnDate, locale).format(date);
-        result = '${formattedDate.capitalizeFirstLetter}, ${date.year}';
+        result = '${formattedDate.capitalized}, ${date.year}';
       } else {
         result = Configs.formatLongVnDate(date);
       }
@@ -181,7 +181,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
   Widget _settingButton() {
     return Tooltip(
-      message: AppLocalizations.of(context)!.changeLanguageTip,
+      message: AppLocalizations.of(context)!.settingsButtonTip,
       child: IconButton(
           onPressed: () {
             Navigator.push(context,
