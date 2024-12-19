@@ -56,8 +56,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _analizedDetails(),
-                        _pieChart(),
+                        _analizedDetails(context),
+                        _pieChart(context),
                       ],
                     ),
                   ),
@@ -91,7 +91,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                     Icons.arrow_forward_ios_outlined)),
                           ],
                         ),
-                        _barChart(),
+                        _barChart(context),
                       ],
                     ),
                   )
@@ -116,7 +116,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 //MARK: Pie Chart
 
-  Widget _pieChart() {
+  Widget _pieChart(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
@@ -193,7 +193,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 //MARK: Analized Details
 
-  Widget _analizedDetails() {
+  Widget _analizedDetails(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     return Column(
@@ -271,7 +271,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 //MARK: Bar Chart
 
-  Widget _barChart() {
+  Widget _barChart(BuildContext context) {
     return SizedBox(
       height: 200,
       child: BarChart(

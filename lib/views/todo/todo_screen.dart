@@ -130,10 +130,10 @@ class _TodoScreenState extends State<TodoScreen> {
                           child: Row(
                             children: [
 //MARK: Setting Button
-                              _settingButton(),
+                              _settingButton(context),
 
 //MARK: Header Date
-                              _headerDate(),
+                              _headerDate(context),
 
                               const SizedBox(
                                 width: 48,
@@ -144,16 +144,16 @@ class _TodoScreenState extends State<TodoScreen> {
                       ]),
 
 //MARK: Header Title
-                  _headerTitle()
+                  _headerTitle(context)
                 ],
               ),
             ),
 
 //MARK: COnsumer - Main List
-            _consumerMainList(),
+            _consumerMainList(context),
 
 //MARK: Add New Task Button
-            _addNewTaskButton()
+            _addNewTaskButton(context)
           ],
         ),
       ),
@@ -162,7 +162,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //MARK: Header Title
 
-  Widget _headerTitle() {
+  Widget _headerTitle(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: Text(
@@ -179,7 +179,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //MARK: Settings Button
 
-  Widget _settingButton() {
+  Widget _settingButton(BuildContext context) {
     return Tooltip(
       message: AppLocalizations.of(context)!.settingsButtonTip,
       child: IconButton(
@@ -200,7 +200,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //MARK: Local Date
 
-  Widget _headerDate() {
+  Widget _headerDate(BuildContext context) {
     final currentDate = DateTime.now();
     final formattedDate = formatDate(currentDate);
     return Expanded(
@@ -219,7 +219,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //MARK: Consumer - Main List
 
-  Widget _consumerMainList() {
+  Widget _consumerMainList(BuildContext context) {
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
 
@@ -245,7 +245,7 @@ class _TodoScreenState extends State<TodoScreen> {
                           physics: const BouncingScrollPhysics(),
                           controller: _scrollController,
                           slivers: [
-                            _listViewSection(vm.todoData),
+                            _listViewSection(context, vm.todoData),
                             SliverToBoxAdapter(
                                 child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -272,7 +272,7 @@ class _TodoScreenState extends State<TodoScreen> {
                                 )
                               ],
                             )),
-                            _listViewSection(vm.doneData),
+                            _listViewSection(context, vm.doneData),
                             const SliverToBoxAdapter(
                               child: SizedBox(
                                 height: 30,
@@ -356,7 +356,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //MARK: Add New Task Button
 
-  Widget _addNewTaskButton() {
+  Widget _addNewTaskButton(BuildContext context) {
     return Positioned(
         left: 16,
         right: 16,
@@ -381,7 +381,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
 //MARK: Listview
 
-  Widget _listViewSection(List<NoteModel> inputData) {
+  Widget _listViewSection(BuildContext context, List<NoteModel> inputData) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {

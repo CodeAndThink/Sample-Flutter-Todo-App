@@ -27,7 +27,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         bottom: false,
         child: Column(
           children: [
-            _appBar(),
+            _appBar(context),
           ],
         ),
       ),
@@ -36,7 +36,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
 //MARK: App Bar
 
-  Widget _appBar() {
+  Widget _appBar(BuildContext context) {
     return CustomAppBar(
         title: AppLocalizations.of(context)!.history_screen_title,
         action: () {

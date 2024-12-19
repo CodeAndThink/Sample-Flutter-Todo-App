@@ -77,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           appBar: AppBar(
             toolbarHeight: screenHeight * 0.11,
             backgroundColor: Theme.of(context).colorScheme.primary,
-            title: _customAppBar(),
+            title: _customAppBar(context),
             automaticallyImplyLeading: false,
           ),
           body: SafeArea(
@@ -124,8 +124,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-//MARK: Username Textbox                                    
-                                    _usernameTextBox(),
+//MARK: Username Textbox
+                                    _usernameTextBox(context),
                                     const SizedBox(
                                       height: 8,
                                     ),
@@ -139,8 +139,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-//MARK: Password Textbox                                    
-                                    _passwordTextBox(),
+//MARK: Password Textbox
+                                    _passwordTextBox(context),
                                     const SizedBox(
                                       height: 8,
                                     ),
@@ -154,15 +154,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-//MARK: Confirm Password Textbox                                    
-                                    _confirmPasswordTextBox(),
+//MARK: Confirm Password Textbox
+                                    _confirmPasswordTextBox(context),
                                     const SizedBox(
                                       height: 16,
                                     ),
                                   ],
                                 ),
-//MARK: Register Button                                
-                                _registerButton(),
+//MARK: Register Button
+                                _registerButton(context),
                                 const SizedBox(
                                   height: 16,
                                 ),
@@ -171,15 +171,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       .alreadyHaveAccount,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
-//MARK: Move To Login Screen Button                            
-                                _navigateLoginScreenTextButton()
+//MARK: Move To Login Screen Button
+                                _navigateLoginScreenTextButton(context),
                               ]),
                         ),
                       ),
                     ]),
                   ),
 //MARK: Loading Animation
-                  _loadingAnimation() 
+                  _loadingAnimation(context),
                 ]),
               ),
             ),
@@ -191,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: App Bar
 
-  Widget _customAppBar() {
+  Widget _customAppBar(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     return Container(
@@ -224,7 +224,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: Username Textbox
 
-  Widget _usernameTextBox() {
+  Widget _usernameTextBox(BuildContext context) {
     return Selector<RegisterViewModel, dartz.Tuple2<String, String?>>(
       selector: (context, viewmodel) =>
           dartz.Tuple2(viewmodel.username, viewmodel.errorUsernameText),
@@ -252,7 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: Password Textbox
 
-  Widget _passwordTextBox() {
+  Widget _passwordTextBox(BuildContext context) {
     return Selector<RegisterViewModel, dartz.Tuple2<String, String?>>(
       selector: (context, viewmodel) =>
           dartz.Tuple2(viewmodel.password, viewmodel.errorPasswordText),
@@ -276,7 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: Confirm Password Textbox
 
-  Widget _confirmPasswordTextBox() {
+  Widget _confirmPasswordTextBox(BuildContext context) {
     return Selector<RegisterViewModel, dartz.Tuple2<String, String?>>(
       selector: (context, viewmodel) =>
           dartz.Tuple2(viewmodel.repassword, viewmodel.errorRepasswordText),
@@ -300,7 +300,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: Register Button
 
-  Widget _registerButton() {
+  Widget _registerButton(BuildContext context) {
     return Row(children: [
       Expanded(
         child: SizedBox(
@@ -320,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: Move To Login Screen Button
 
-  Widget _navigateLoginScreenTextButton() {
+  Widget _navigateLoginScreenTextButton(BuildContext context) {
     return TextButton(
         onPressed: () {
           Navigator.of(context).pop();
@@ -338,7 +338,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 //MARK: Loading Animation
 
-  Widget _loadingAnimation() {
+  Widget _loadingAnimation(BuildContext context) {
     return Positioned(
       left: 0,
       right: 0,

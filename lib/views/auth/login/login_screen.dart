@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Stack(
                   children: [
 //MARK: Change Language Button
-                    _changeLanguageButton(),
+                    _changeLanguageButton(context),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
 
 //MARK: Username Text Box
-                                      _usernameTextBox(),
+                                      _usernameTextBox(context),
 
                                       const SizedBox(
                                         height: 8,
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
 
 //MARK: Password Text Box
-                                      _passwordTextBox(),
+                                      _passwordTextBox(context),
 
                                       const SizedBox(
                                         height: 16,
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
 
 //MARK: Login Button
-                                  _loginButton(),
+                                  _loginButton(context),
 
                                   const SizedBox(
                                     height: 16,
@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
 
 //MARK: Register Button
-                                      _navigateRegisterScreenTextButton()
+                                      _navigateRegisterScreenTextButton(context)
                                     ],
                                   ),
                                   Text(
@@ -214,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .bodySmall),
 
 //MARK: Google - Facebook - Apple Login Buttons
-                                  _otherWayLoginButton()
+                                  _otherWayLoginButton(context)
                                 ]),
                           ),
                         ),
@@ -222,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
 
 //MARK: Loading Animation
-                    _loadingAnimation()
+                    _loadingAnimation(context)
                   ],
                 ),
               ),
@@ -235,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Change Language Button
 
-  Widget _changeLanguageButton() {
+  Widget _changeLanguageButton(BuildContext context) {
     return Positioned(
       left: 16,
       child: IconButton(
@@ -255,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Username Text Box
 
-  Widget _usernameTextBox() {
+  Widget _usernameTextBox(BuildContext context) {
     return Selector<LoginViewModel, dartz.Tuple2<String, String?>>(
       selector: (context, viewmodel) =>
           dartz.Tuple2(viewmodel.username, viewmodel.errorUsernameText),
@@ -283,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Password Text Box
 
-  Widget _passwordTextBox() {
+  Widget _passwordTextBox(BuildContext context) {
     return Selector<LoginViewModel, dartz.Tuple2<String, String?>>(
       selector: (context, viewmodel) =>
           dartz.Tuple2(viewmodel.password, viewmodel.errorPasswordText),
@@ -307,7 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Login Button
 
-  Widget _loginButton() {
+  Widget _loginButton(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -328,7 +328,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Register Button
 
-  Widget _navigateRegisterScreenTextButton() {
+  Widget _navigateRegisterScreenTextButton(BuildContext context) {
     return TextButton(
         onPressed: () {
           Navigator.push(context,
@@ -347,7 +347,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Google - Facebook - Apple Login Buttons
 
-  Widget _otherWayLoginButton() {
+  Widget _otherWayLoginButton(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -368,7 +368,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //MARK: Loading Animation
 
-  Widget _loadingAnimation() {
+  Widget _loadingAnimation(BuildContext context) {
     return Positioned(
       left: 0,
       right: 0,
