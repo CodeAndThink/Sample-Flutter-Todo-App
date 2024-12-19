@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/manager/auth_manager.dart';
 import 'package:todo_app/manager/setting_manager.dart';

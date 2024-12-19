@@ -7,7 +7,6 @@ import 'package:todo_app/common/views/custom_personal_information_field.dart';
 import 'package:todo_app/common/views/custom_separated_part_title.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/network/api_provider.dart';
-import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/profile/profile_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

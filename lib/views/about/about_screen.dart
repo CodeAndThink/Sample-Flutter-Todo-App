@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/views/about/about_view_model.dart';
-import 'package:todo_app/views/setting/setting_view_model.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
