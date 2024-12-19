@@ -10,7 +10,9 @@ import 'package:todo_app/gen/assets.gen.dart';
 import 'package:todo_app/utils/gif_overlay_show.dart';
 import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/about/about_screen.dart';
+import 'package:todo_app/views/analysis/analysis_screen.dart';
 import 'package:todo_app/views/auth/login/login_screen.dart';
+import 'package:todo_app/views/history/history_screen.dart';
 import 'package:todo_app/views/privacy/privacy_screen.dart';
 import 'package:todo_app/views/profile/profile_screen.dart';
 import 'package:todo_app/views/setting/setting_view_model.dart';
@@ -48,12 +50,21 @@ class _SettingScreenState extends State<SettingScreen> {
                         delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         if (index == 0) {
+//MARK: Navigate To Profile Screen
                           return _navigateProfileScreenListTile();
+                        }
+                        if (index == 1) {
+//MARK: Navigate To Analysis Screen                         
+                          return _navigateAnalysisScreenListTile();
+                        }
+                        if (index == 2) {
+//MARK: Navigate To History Screen                          
+                          return _navigateHistoryScreenListTile();
                         }
 
                         return null;
                       },
-                      childCount: 1,
+                      childCount: 3,
                     )),
                     SliverToBoxAdapter(
                         child: CustomSeparatedPartTitle(
@@ -136,6 +147,46 @@ class _SettingScreenState extends State<SettingScreen> {
       onTap: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const ProfileScreen()));
+      },
+    );
+  }
+
+//========================================================
+
+//MARK: Navigate To Analysis Screen
+
+  Widget _navigateAnalysisScreenListTile() {
+    return ListTile(
+      title: Text(AppLocalizations.of(context)!.stats_screen_title),
+      leading: Image.asset(
+        Assets.icons.chart.path,
+        height: 24,
+        width: 24,
+        fit: BoxFit.cover,
+      ),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const AnalysisScreen()));
+      },
+    );
+  }
+
+//========================================================
+
+//MARK: Navigate To History Screen
+
+  Widget _navigateHistoryScreenListTile() {
+    return ListTile(
+      title: Text(AppLocalizations.of(context)!.history_screen_title),
+      leading: Image.asset(
+        Assets.icons.history.path,
+        height: 24,
+        width: 24,
+        fit: BoxFit.cover,
+      ),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HistoryScreen()));
       },
     );
   }

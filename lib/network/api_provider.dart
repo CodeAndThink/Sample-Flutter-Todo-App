@@ -111,4 +111,49 @@ class ApiProvider {
       return Result(error: e.toString());
     }
   }
+
+  Future<Result<int>> doneNoteCount() async {
+    try {
+      final response = await Supabase.instance.client
+          .from('Notes')
+          .select('id')
+          .eq('status', true)
+          .timeout(Configs.timeOut);
+      return Result(data: response.length);
+    } on TimeoutException catch (_) {
+      return Result(error: "Error: Request timed out");
+    } catch (e) {
+      return Result(error: e.toString());
+    }
+  }
+
+  Future<Result<int>> todoNoteCount() async {
+    try {
+      final response = await Supabase.instance.client
+          .from('Notes')
+          .select('id')
+          .eq('status', false)
+          .timeout(Configs.timeOut);
+      return Result(data: response.length);
+    } on TimeoutException catch (_) {
+      return Result(error: "Error: Request timed out");
+    } catch (e) {
+      return Result(error: e.toString());
+    }
+  }
+
+  Future<Result<int>> totalNoteCount() async {
+    try {
+      final response = await Supabase.instance.client
+          .from('Notes')
+          .select('id')
+          .eq('userId', Supabase.instance.client.auth.currentUser!.id)
+          .timeout(Configs.timeOut);
+      return Result(data: response.length);
+    } on TimeoutException catch (_) {
+      return Result(error: "Error: Request timed out");
+    } catch (e) {
+      return Result(error: e.toString());
+    }
+  }
 }

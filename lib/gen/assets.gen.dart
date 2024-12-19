@@ -50,6 +50,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cele.svg
   String get cele => 'assets/icons/cele.svg';
 
+  /// File path: assets/icons/chart.png
+  AssetGenImage get chart => const AssetGenImage('assets/icons/chart.png');
+
   /// File path: assets/icons/coffeeCup.png
   AssetGenImage get coffeeCup =>
       const AssetGenImage('assets/icons/coffeeCup.png');
@@ -66,6 +69,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/hide.svg
   String get hide => 'assets/icons/hide.svg';
+
+  /// File path: assets/icons/history.png
+  AssetGenImage get history => const AssetGenImage('assets/icons/history.png');
 
   /// File path: assets/icons/info.png
   AssetGenImage get info => const AssetGenImage('assets/icons/info.png');
@@ -122,11 +128,13 @@ class $AssetsIconsGen {
         bell,
         calendar,
         cele,
+        chart,
         coffeeCup,
         facebook,
         google,
         heart,
         hide,
+        history,
         info,
         lang,
         note,

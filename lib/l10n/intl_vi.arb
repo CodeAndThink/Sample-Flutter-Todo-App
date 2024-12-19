@@ -379,5 +379,45 @@
   "logout_confirmation_confirm": "Đăng xuất",
   "@logout_confirmation_confirm": {
     "description": "Nhãn cho nút xác nhận hành động đăng xuất."
+  },
+  "stats_screen_title": "Số liệu",
+  "@stats_screen_title": {
+    "description": "Tiêu đề cho màn hình số liệu."
+  },
+  "history_screen_title": "Lịch sử",
+  "@history_screen_title": {
+    "description": "Tiêu đề cho màn hình lịch sử."
+  },
+  "total_notes_label": "Tổng số ghi chú",
+  "@total_notes_label": {
+    "description": "Nhãn cho tổng số lượng ghi chú."
+  },
+  "todo_notes_label": "Ghi chú cần làm",
+  "@todo_notes_label": {
+    "description": "Nhãn cho các ghi chú cần thực hiện."
+  },
+  "done_notes_label": "Ghi chú đã hoàn thành",
+  "@done_notes_label": {
+    "description": "Nhãn cho các ghi chú đã hoàn thành."
+  },
+  "pie_chart_todo_label": "Cần làm",
+  "@pie_chart_todo_label": {
+    "description": "Nhãn cho phần 'Cần làm' trong biểu đồ tròn."
+  },
+  "pie_chart_done_label": "Đã hoàn thành",
+  "@pie_chart_done_label": {
+    "description": "Nhãn cho phần 'Đã hoàn thành' trong biểu đồ tròn."
+  },
+  "notes_done_label": "Ghi chú đã hoàn thành",
+  "@notes_done_label": {
+    "description": "Nhãn chỉ số lượng ghi chú đã được hoàn thành."
+  },
+  "notes_todo_label": "Ghi chú cần làm",
+  "@notes_todo_label": {
+    "description": "Nhãn chỉ số lượng ghi chú cần thực hiện."
+  },
+  "notes_total_label": "Tổng số ghi chú",
+  "@notes_total_label": {
+    "description": "Nhãn chỉ tổng số lượng ghi chú."
   }
 }

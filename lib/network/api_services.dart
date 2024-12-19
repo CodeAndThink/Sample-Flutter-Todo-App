@@ -1,10 +1,11 @@
 enum ApiService {
   // Authentication
-  login,
-  register,
+  signIn,
+  signUp,
+  signOut,
 
   // Profile
-  getProfile,
+  fetchUserInformation,
 
   // CRUD Data
   createNote,

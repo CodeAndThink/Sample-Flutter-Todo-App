@@ -17,10 +17,10 @@ class AppTheme {
         ),
         textTheme: const TextTheme(
             headlineLarge: TextStyle(
-              fontSize: 30,
+              fontSize: 25,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: Colors.black,
             ),
             headlineMedium: TextStyle(
               fontSize: 18,
@@ -74,10 +74,10 @@ class AppTheme {
         ),
         textTheme: const TextTheme(
             headlineLarge: TextStyle(
-              fontSize: 30,
+              fontSize: 25,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w700,
-              color: Colors.black,
+              color: Colors.white,
             ),
             headlineMedium: TextStyle(
               fontSize: 18,
