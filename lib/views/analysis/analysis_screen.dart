@@ -35,67 +35,69 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             body: SafeArea(
               top: false,
               bottom: false,
-              child: Column(
-                children: [
-                  _appBar(),
-                  Container(
-                    margin: const EdgeInsets.all(16),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _appBar(),
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _analizedDetails(context),
+                          _pieChart(context),
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _analizedDetails(context),
-                        _pieChart(context),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(16),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Spacer(),
-                            IconButton(
-                                onPressed: () {},
-                                icon:
-                                    const Icon(Icons.arrow_back_ios_outlined)),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                    Icons.arrow_forward_ios_outlined)),
-                          ],
-                        ),
-                        _barChart(context),
-                      ],
-                    ),
-                  )
-                ],
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Spacer(),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                      Icons.arrow_back_ios_outlined)),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                      Icons.arrow_forward_ios_outlined)),
+                            ],
+                          ),
+                          _barChart(context),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
