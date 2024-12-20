@@ -211,116 +211,145 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 //MARK: Analized Details
 
   Widget _analizedDetails(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenWidth = screenSize.width;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Selector<AnalysisViewModel, int>(
-            builder: (context, numDone, child) {
-              return Text(
-                "$numDone",
+    Widget _analizedDetails(BuildContext context) {
+      final screenSize = MediaQuery.of(context).size;
+      final screenWidth = screenSize.width;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Selector<AnalysisViewModel, int>(
+              builder: (context, numDone, child) {
+                return Text(
+                  "$numDone",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge
+                      ?.copyWith(fontSize: 35, color: Colors.green),
+                );
+              },
+              selector: (context, viewmodel) => viewmodel.doneNote),
+          SizedBox(
+            width: screenWidth * 0.4,
+            child: Container(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text(
+                AppLocalizations.of(context)!.notes_done_label,
                 style: Theme.of(context)
                     .textTheme
-                    .headlineLarge
-                    ?.copyWith(fontSize: 35, color: Colors.green),
-              );
-            },
-            selector: (context, viewmodel) => viewmodel.doneNote),
-        SizedBox(
-          width: screenWidth * 0.4,
-          child: Container(
-            padding: const EdgeInsets.only(left: 16),
-            child: Text(
-              AppLocalizations.of(context)!.notes_done_label,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(color: Colors.green),
-              overflow: TextOverflow.clip,
+                    .headlineSmall
+                    ?.copyWith(color: Colors.green),
+                overflow: TextOverflow.clip,
+              ),
             ),
           ),
-        ),
-        Selector<AnalysisViewModel, int>(
-            builder: (context, numTodo, child) {
-              return Text(
-                "$numTodo",
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    fontSize: 35, color: Theme.of(context).colorScheme.primary),
-              );
-            },
-            selector: (context, viewmodel) => viewmodel.todoNote),
-        Container(
-          padding: const EdgeInsets.only(left: 16),
-          width: screenWidth * 0.4,
-          child: Text(AppLocalizations.of(context)!.notes_todo_label,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
-              overflow: TextOverflow.clip),
-        ),
-        Selector<AnalysisViewModel, int>(
-            builder: (context, total, child) {
-              return Text(
-                "$total",
+          Selector<AnalysisViewModel, int>(
+              builder: (context, numTodo, child) {
+                return Text(
+                  "$numTodo",
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontSize: 35,
+                      color: Theme.of(context).colorScheme.primary),
+                );
+              },
+              selector: (context, viewmodel) => viewmodel.todoNote),
+          Container(
+            padding: const EdgeInsets.only(left: 16),
+            width: screenWidth * 0.4,
+            child: Text(AppLocalizations.of(context)!.notes_todo_label,
                 style: Theme.of(context)
                     .textTheme
-                    .headlineLarge
-                    ?.copyWith(fontSize: 35),
-              );
-            },
-            selector: (context, viewmodel) => viewmodel.totalNote),
-        SizedBox(
-          width: screenWidth * 0.4,
-          child: Container(
-            padding: const EdgeInsets.only(left: 16),
-            child: Text(AppLocalizations.of(context)!.notes_total_label,
-                style: Theme.of(context).textTheme.headlineSmall,
+                    .headlineSmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.primary),
                 overflow: TextOverflow.clip),
           ),
-        ),
-      ],
-    );
-  }
+          Selector<AnalysisViewModel, int>(
+              builder: (context, total, child) {
+                return Text(
+                  "$total",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge
+                      ?.copyWith(fontSize: 35),
+                );
+              },
+              selector: (context, viewmodel) => viewmodel.totalNote),
+          SizedBox(
+            width: screenWidth * 0.4,
+            child: Container(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text(AppLocalizations.of(context)!.notes_total_label,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  overflow: TextOverflow.clip),
+            ),
+          ),
+        ],
+      );
+    }
 
 //========================================================
 
 //MARK: Bar Chart
 
-  Widget _barChart(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: Selector<AnalysisViewModel, List<List<int>>>(
-          builder: (context, data, child) {
-            return BarChart(
-              BarChartData(
-                alignment: BarChartAlignment.spaceAround,
-                barGroups: [
-                  
-                  for (int i = 0; i < 31; i++) ...{
-                    
-                    BarChartGroupData(
-                      x: i,
-                      barRods: [
-                        BarChartRodData(
-                          toY: data[DateTime.now().month - 1][i].toDouble(),
-                          color: Colors.lightBlueAccent,
-                          width: 3,
-                        ),
-                      ],
+    Widget _barChart(BuildContext context) {
+      return SizedBox(
+        height: 200,
+        child: Selector<AnalysisViewModel, List<List<int>>>(
+            builder: (context, data, child) {
+              return BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceAround,
+                  barGroups: [
+                    for (int i = 0; i < 31; i++) ...{
+                      BarChartGroupData(
+                        x: i,
+                        barRods: [
+                          BarChartRodData(
+                            toY: data[DateTime.now().month - 1][i].toDouble(),
+                            color: Colors.lightBlueAccent,
+                            width: 3,
+                          ),
+                        ],
+                      ),
+                    }
+                  ],
+                  titlesData: FlTitlesData(
+                    show: true,
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 28,
+                        interval: 10,
+                        getTitlesWidget: (value, meta) {
+                          if (value % 5 == 0) {
+                            return Text(
+                              value.toInt().toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 10,
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
                     ),
-                  }
-                ],
-                titlesData: FlTitlesData(
-                  show: true,
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 28,
-                      interval: 10,
-                      getTitlesWidget: (value, meta) {
-                        if (value % 5 == 0) {
+                    rightTitles: const AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: false,
+                      ),
+                    ),
+                    topTitles: const AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: false,
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 28,
+                        interval: 1,
+                        getTitlesWidget: (value, meta) {
                           return Text(
                             value.toInt().toString(),
                             style: const TextStyle(
@@ -328,45 +357,17 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                               fontSize: 10,
                             ),
                           );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    ),
-                  ),
-                  rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: false,
-                    ),
-                  ),
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: false,
-                    ),
-                  ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 28,
-                      interval: 1,
-                      getTitlesWidget: (value, meta) {
-                        return Text(
-                          value.toInt().toString(),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 10,
-                          ),
-                        );
-                      },
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
-          selector: (context, viewmodel) => viewmodel.notesCountByDayInYear),
-    );
-  }
+              );
+            },
+            selector: (context, viewmodel) => viewmodel.notesCountByDayInYear),
+      );
+    }
 
 //========================================================
+  }
 }

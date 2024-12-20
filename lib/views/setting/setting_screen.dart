@@ -51,15 +51,15 @@ class _SettingScreenState extends State<SettingScreen> {
                       (BuildContext context, int index) {
                         if (index == 0) {
 //MARK: Navigate To Profile Screen
-                          return _navigateProfileScreenListTile();
+                          return _navigateProfileScreenListTile(context);
                         }
                         if (index == 1) {
-//MARK: Navigate To Analysis Screen                         
-                          return _navigateAnalysisScreenListTile();
+//MARK: Navigate To Analysis Screen
+                          return _navigateAnalysisScreenListTile(context);
                         }
                         if (index == 2) {
-//MARK: Navigate To History Screen                          
-                          return _navigateHistoryScreenListTile();
+//MARK: Navigate To History Screen
+                          return _navigateHistoryScreenListTile(context);
                         }
 
                         return null;
@@ -74,10 +74,10 @@ class _SettingScreenState extends State<SettingScreen> {
                         (BuildContext context, int index) {
                           if (index == 0) {
 //MARK: Change Language Button
-                            return _changeLanguageSwitchListTile();
+                            return _changeLanguageSwitchListTile(context);
                           } else if (index == 1) {
 //MARK: Change Notification Setting Button
-                            return _changeNotificationSettingSwitchListTile();
+                            return _changeNotificationSettingSwitchListTile(context);
                           }
                           return null;
                         },
@@ -92,13 +92,13 @@ class _SettingScreenState extends State<SettingScreen> {
                         (BuildContext context, int index) {
                           if (index == 0) {
 //MARK: Navigate To Privacy Screen
-                            return _navigatePrivacyScreenListTile();
+                            return _navigatePrivacyScreenListTile(context);
                           } else if (index == 1) {
 //MARK: Navigate To About Screen
-                            return _navigateAboutScreenListTile();
+                            return _navigateAboutScreenListTile(context);
                           } else if (index == 2) {
 //MARK: Buy Me Coffee Button
-                            return _buyMeCoffeeListTile();
+                            return _buyMeCoffeeListTile(context);
                           }
 
                           return null;
@@ -115,7 +115,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         (BuildContext context, int index) {
                           if (index == 0) {
 //MARK: Logout And Navigate To Login Screen
-                            return _logoutListTile();
+                            return _logoutListTile(context);
                           }
 
                           return null;
@@ -135,7 +135,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Navigate To Profile Screen
 
-  Widget _navigateProfileScreenListTile() {
+  Widget _navigateProfileScreenListTile(BuildContext context) {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.profile),
       leading: Image.asset(
@@ -155,7 +155,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Navigate To Analysis Screen
 
-  Widget _navigateAnalysisScreenListTile() {
+  Widget _navigateAnalysisScreenListTile(BuildContext context) {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.stats_screen_title),
       leading: Image.asset(
@@ -175,7 +175,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Navigate To History Screen
 
-  Widget _navigateHistoryScreenListTile() {
+  Widget _navigateHistoryScreenListTile(BuildContext context) {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.history_screen_title),
       leading: Image.asset(
@@ -195,7 +195,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Change Language Button
 
-  Widget _changeLanguageSwitchListTile() {
+  Widget _changeLanguageSwitchListTile(BuildContext context) {
     return Selector<SettingViewModel, bool>(
         selector: (context, viewmodel) =>
             viewmodel.currentLocale.languageCode !=
@@ -220,7 +220,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Change Notification Setting Button
 
-  Widget _changeNotificationSettingSwitchListTile() {
+  Widget _changeNotificationSettingSwitchListTile(BuildContext context) {
     return Selector<SettingViewModel, bool>(
         selector: (context, viewmodel) => viewmodel.isNotiEnable,
         builder: (context, isEnable, child) {
@@ -239,7 +239,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Navigate To Privacy Screen
 
-  Widget _navigatePrivacyScreenListTile() {
+  Widget _navigatePrivacyScreenListTile(BuildContext context) {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.privacy),
       leading: Image.asset(
@@ -259,7 +259,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Navigate To About Screen
 
-  Widget _navigateAboutScreenListTile() {
+  Widget _navigateAboutScreenListTile(BuildContext context) {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.about),
       leading: Image.asset(
@@ -279,7 +279,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Buy Me Coffee Button
 
-  Widget _buyMeCoffeeListTile() {
+  Widget _buyMeCoffeeListTile(BuildContext context) {
     return ListTile(
       title: Text(AppLocalizations.of(context)!.buyMeACoffee),
       leading: Image.asset(
@@ -298,7 +298,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
 //MARK: Logout Button
 
-  Widget _logoutListTile() {
+  Widget _logoutListTile(BuildContext context) {
     return ListTile(
       title: Text(
         AppLocalizations.of(context)!.logout,
