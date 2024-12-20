@@ -55,7 +55,7 @@ class TodoViewModel extends ChangeNotifier {
       _silentLoading();
     }
 
-    final response = await _provider.fetchNotes();
+    final response = await _provider.fetchNotesForToday();
 
     if (_data != response.data) {
       _data = response.data ?? [];

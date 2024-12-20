@@ -73,9 +73,19 @@ class ConverseDateTime {
   }
 
   //Convert String to DateTime type
-  static DateTime convertStringToDateTimeType(String inputDate) {
+  static DateTime convertStringToLongDateTimeType(String inputDate) {
     try {
       DateTime date = DateFormat(Configs.longDefaltDateTime).parse(inputDate);
+      return date;
+    } catch (e) {
+      return DateTime.now();
+    }
+  }
+
+  //Convert String to DateTime type
+  static DateTime convertStringToMediumDateTimeType(String inputDate) {
+    try {
+      DateTime date = DateFormat(Configs.mediumDefaltDate).parse(inputDate);
       return date;
     } catch (e) {
       return DateTime.now();

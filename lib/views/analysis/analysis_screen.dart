@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
 import 'package:todo_app/network/api_provider.dart';
+import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/analysis/analysis_view_model.dart';
 
 class AnalysisScreen extends StatefulWidget {
@@ -22,8 +23,24 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     super.initState();
     _vm = AnalysisViewModel(ApiProvider.shared);
 
+    _vm.error.addListener(() {
+      if (_vm.error.value.isNotEmpty) {
+        showAlert(context, AppLocalizations.of(context)!.error,
+            AppLocalizations.of(context)!.fetchDataError, () {
+          Navigator.pop(context);
+        }, AppLocalizations.of(context)!.ok, null, null);
+      }
+    });
+
     _vm.countDoneNote();
     _vm.countTodoNote();
+    _vm.countNoteBasedOnDayInYear();
+  }
+
+  @override
+  void dispose() {
+    _vm.error.dispose();
+    super.dispose();
   }
 
   @override
@@ -37,9 +54,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               bottom: false,
               child: Column(
                 children: [
-                  _appBar(),
+                  _appBar(context),
                   Container(
-                    margin: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -56,13 +73,13 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _analizedDetails(),
-                        _pieChart(),
+                        _analizedDetails(context),
+                        _pieChart(context),
                       ],
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -91,7 +108,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                     Icons.arrow_forward_ios_outlined)),
                           ],
                         ),
-                        _barChart(),
+                        _barChart(context),
                       ],
                     ),
                   )
@@ -104,7 +121,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 //MARK: App Bar
 
-  Widget _appBar() {
+  Widget _appBar(BuildContext context) {
     return CustomAppBar(
         title: AppLocalizations.of(context)!.stats_screen_title,
         action: () {
@@ -116,7 +133,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 //MARK: Pie Chart
 
-  Widget _pieChart() {
+  Widget _pieChart(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
@@ -193,7 +210,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 //MARK: Analized Details
 
-  Widget _analizedDetails() {
+  Widget _analizedDetails(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     return Column(
@@ -271,77 +288,83 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 //MARK: Bar Chart
 
-  Widget _barChart() {
+  Widget _barChart(BuildContext context) {
     return SizedBox(
       height: 200,
-      child: BarChart(
-        BarChartData(
-          alignment: BarChartAlignment.spaceAround,
-          barGroups: [
-            for (int i = 0; i < 31; i++) ...{
-              BarChartGroupData(
-                x: i,
-                barRods: [
-                  BarChartRodData(
-                    toY: i % 2 == 0 ? 8 : 10,
-                    color: Colors.lightBlueAccent,
-                    width: 3,
-                  ),
-                ],
-              ),
-            }
-          ],
-          titlesData: FlTitlesData(
-            show: true,
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 28,
-                interval: 10,
-                getTitlesWidget: (value, meta) {
-                  if (value % 5 == 0) {
-                    return Text(
-                      value.toInt().toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-            ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: false,
-              ),
-            ),
-            topTitles: const AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: false,
-              ),
-            ),
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 28,
-                interval: 1,
-                getTitlesWidget: (value, meta) {
-                  return Text(
-                    value.toInt().toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
+      child: Selector<AnalysisViewModel, List<List<int>>>(
+          builder: (context, data, child) {
+            return BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                barGroups: [
+                  
+                  for (int i = 0; i < 31; i++) ...{
+                    
+                    BarChartGroupData(
+                      x: i,
+                      barRods: [
+                        BarChartRodData(
+                          toY: data[DateTime.now().month - 1][i].toDouble(),
+                          color: Colors.lightBlueAccent,
+                          width: 3,
+                        ),
+                      ],
                     ),
-                  );
-                },
+                  }
+                ],
+                titlesData: FlTitlesData(
+                  show: true,
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 28,
+                      interval: 10,
+                      getTitlesWidget: (value, meta) {
+                        if (value % 5 == 0) {
+                          return Text(
+                            value.toInt().toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 10,
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 28,
+                      interval: 1,
+                      getTitlesWidget: (value, meta) {
+                        return Text(
+                          value.toInt().toString(),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 10,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
+            );
+          },
+          selector: (context, viewmodel) => viewmodel.notesCountByDayInYear),
     );
   }
 

@@ -18,19 +18,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late ProfileViewModel _vm;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _vm = ProfileViewModel(ApiProvider.shared);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => _vm,
+      create: (context) => ProfileViewModel(ApiProvider.shared),
       builder: (context, child) {
         return Scaffold(
           body: SafeArea(
@@ -50,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Selector<ProfileViewModel, User?>(
                       builder: (context, data, child) {
                         if (data != null) {
-                          return _informationBox(data);
+                          return _informationBox(context, data);
                         }
                         return Center(
                           child: Align(
@@ -94,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _informationBox(User data) {
+  Widget _informationBox(BuildContext context, User data) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     return Container(
@@ -119,19 +110,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: AppLocalizations.of(context)!.personalInformation),
             CustomPersonalInformationField(
                 title: AppLocalizations.of(context)!.email,
-                information: _vm.getEmail()),
+                information:
+                    Provider.of<ProfileViewModel>(context, listen: false)
+                        .getEmail()),
             const CustomDivider(),
             CustomPersonalInformationField(
                 title: AppLocalizations.of(context)!.phone,
-                information: _vm.getPhone()),
+                information:
+                    Provider.of<ProfileViewModel>(context, listen: false)
+                        .getPhone()),
             const CustomDivider(),
             CustomPersonalInformationField(
                 title: AppLocalizations.of(context)!.createAt,
-                information: _vm.getCreateAt(context)),
+                information:
+                    Provider.of<ProfileViewModel>(context, listen: false)
+                        .getCreateAt(context)),
             const CustomDivider(),
             CustomPersonalInformationField(
                 title: AppLocalizations.of(context)!.lastTimeUpdated,
-                information: _vm.getUpdateAt(context)),
+                information:
+                    Provider.of<ProfileViewModel>(context, listen: false)
+                        .getUpdateAt(context)),
           ],
         ),
       ),
