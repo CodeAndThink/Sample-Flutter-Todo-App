@@ -150,7 +150,7 @@ class NoteCardState extends State<NoteCard>
           if (widget.data.time != null) ...[
             const SizedBox(height: 2),
             Text(
-              ConverseDateTime.timeFormat(widget.data.time!, context)
+              ConverseDateTime.timeFormat(context, widget.data.time!)
                   .toString(),
               style: TextStyle(
                   decoration: widget.data.status

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
+import 'package:todo_app/configs/configs.dart';
 import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/utils/show_alert_dialog.dart';
 import 'package:todo_app/views/analysis/analysis_view_model.dart';
@@ -54,7 +55,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               bottom: false,
               child: Column(
                 children: [
+                  //MARK: App Bar
                   _appBar(context),
+
                   Container(
                     margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
                     padding: const EdgeInsets.all(8),
@@ -73,7 +76,10 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
+                        //MARK: Analized Details
                         _analizedDetails(context),
+
+                        //MARK: Pie Chart
                         _pieChart(context),
                       ],
                     ),
@@ -98,6 +104,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         Row(
                           children: [
                             const Spacer(),
+                            Text(
+                                '${DateTime.now().month.toString()} - ${DateTime.now().year.toString()}'),
+                            const Spacer(),
                             IconButton(
                                 onPressed: () {},
                                 icon:
@@ -108,6 +117,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                     Icons.arrow_forward_ios_outlined)),
                           ],
                         ),
+                        //MARK: Bar Chart
                         _barChart(context),
                       ],
                     ),
@@ -154,7 +164,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     sections: [
                       PieChartSectionData(
                         value: data.value1.toDouble(),
-                        color: Colors.green,
+                        color: Configs.todoPartPieChartColor,
                         showTitle: false,
                       ),
                       PieChartSectionData(
@@ -175,7 +185,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       Container(
                         width: 16,
                         height: 16,
-                        color: Colors.green,
+                        color: Configs.todoPartPieChartColor,
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -220,10 +230,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             builder: (context, numDone, child) {
               return Text(
                 "$numDone",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge
-                    ?.copyWith(fontSize: 35, color: Colors.green),
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontSize: 35, color: Configs.todoPartPieChartColor),
               );
             },
             selector: (context, viewmodel) => viewmodel.doneNote),
@@ -236,7 +244,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
-                  ?.copyWith(color: Colors.green),
+                  ?.copyWith(color: Configs.todoPartPieChartColor),
               overflow: TextOverflow.clip,
             ),
           ),
@@ -303,7 +311,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       barRods: [
                         BarChartRodData(
                           toY: data[DateTime.now().month - 1][i].toDouble(),
-                          color: Colors.lightBlueAccent,
+                          color: DateTime.now().day - 1 != i
+                              ? Configs.otherDayBarChartColor
+                              : Configs.todayBarChartColor,
                           width: 3,
                         ),
                       ],

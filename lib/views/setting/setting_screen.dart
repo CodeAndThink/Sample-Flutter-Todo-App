@@ -305,14 +305,14 @@ class _SettingScreenState extends State<SettingScreen> {
         style: Theme.of(context)
             .textTheme
             .headlineMedium
-            ?.copyWith(color: Colors.redAccent),
+            ?.copyWith(color: Configs.deleteActionColor),
       ),
       leading: SvgPicture.asset(
         Assets.icons.signout,
         height: 24,
         width: 24,
         colorFilter:
-            const ColorFilter.mode(Colors.redAccent, BlendMode.srcATop),
+            const ColorFilter.mode(Configs.deleteActionColor, BlendMode.srcATop),
       ),
       onTap: () {
         showAlert(

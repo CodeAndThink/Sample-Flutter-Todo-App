@@ -37,7 +37,7 @@ class _TodoScreenState extends State<TodoScreen> {
   }
 
   //Function format the date time on header of screen
-  String formatDate(DateTime date) {
+  String formatDate(BuildContext context, DateTime date) {
     final locale = Localizations.localeOf(context).toString();
     String result = "";
     setState(() {
@@ -202,7 +202,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
   Widget _headerDate(BuildContext context) {
     final currentDate = DateTime.now();
-    final formattedDate = formatDate(currentDate);
+    final formattedDate = formatDate(context, currentDate);
     return Expanded(
       child: Text(
         formattedDate,
@@ -400,13 +400,13 @@ class _TodoScreenState extends State<TodoScreen> {
               }
             },
             background: Container(
-              color: Colors.green,
+              color: Configs.todoPartPieChartColor,
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: const Icon(Icons.save, color: Colors.white),
             ),
             secondaryBackground: Container(
-                color: Colors.red,
+                color: Configs.deleteActionColor,
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(

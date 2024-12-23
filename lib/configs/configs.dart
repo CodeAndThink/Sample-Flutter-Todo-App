@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:todo_app/gen/assets.gen.dart';
 
 class Configs {
@@ -57,4 +57,13 @@ class Configs {
   //Locale
   static const defaultLocale = Locale('en', 'US');
   static const viLocale = Locale('vi', 'VN');
+
+  //Todo Screen
+  static const saveActionColor = Colors.green;
+  static const deleteActionColor = Colors.redAccent;
+
+  //Analysis Screen
+  static const todoPartPieChartColor = Colors.green;
+  static const otherDayBarChartColor = Colors.lightBlueAccent;
+  static const todayBarChartColor = Colors.orange;
 }

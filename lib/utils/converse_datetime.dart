@@ -13,7 +13,7 @@ class ConverseDateTime {
   }
 
   //Function converses time to suitable locale
-  static String timeFormat(dynamic inputTime, BuildContext context) {
+  static String timeFormat( BuildContext context, dynamic inputTime) {
     final TimeOfDay time;
     if (inputTime is String) {
       time = parseTimeOfDay(inputTime);
@@ -63,11 +63,11 @@ class ConverseDateTime {
 
     if (currentLocale == Configs.viLocale) {
       String date = DateFormat(Configs.mediumVnDate).format(inputDate);
-      String time = timeFormat(TimeOfDay.fromDateTime(inputDate), context);
+      String time = timeFormat(context, TimeOfDay.fromDateTime(inputDate));
       return '$time $date';
     } else {
       String date = DateFormat(Configs.mediumEnDate).format(inputDate);
-      String time = timeFormat(TimeOfDay.fromDateTime(inputDate), context);
+      String time = timeFormat(context, TimeOfDay.fromDateTime(inputDate));
       return '$time $date';
     }
   }

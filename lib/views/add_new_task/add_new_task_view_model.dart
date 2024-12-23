@@ -65,7 +65,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
           _content.isEmpty);
     } else {
       String time = _data!.time != null
-          ? ConverseDateTime.timeFormat(_data!.time, context)
+          ? ConverseDateTime.timeFormat(context, _data!.time)
           : "";
       String content = _data!.content ?? "";
       String date =
@@ -139,7 +139,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
 
   //Function set the time value
   void setTime(BuildContext context, TimeOfDay newTime) {
-    _time = ConverseDateTime.timeFormat(newTime, context);
+    _time = ConverseDateTime.timeFormat(context, newTime);
     notifyListeners();
   }
 
@@ -164,7 +164,7 @@ class AddNewTaskViewModel extends ChangeNotifier {
         _date = DateFormat(Configs.mediumEnDate).format(date);
       }
       if (_data!.time != null) {
-        _time = ConverseDateTime.timeFormat(_data!.time, context);
+        _time = ConverseDateTime.timeFormat(context, _data!.time);
       }
       _content = _data!.content ?? "";
     }
