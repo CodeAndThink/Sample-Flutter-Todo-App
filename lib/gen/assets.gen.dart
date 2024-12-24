@@ -57,6 +57,9 @@ class $AssetsIconsGen {
   AssetGenImage get coffeeCup =>
       const AssetGenImage('assets/icons/coffeeCup.png');
 
+  /// File path: assets/icons/done.png
+  AssetGenImage get done => const AssetGenImage('assets/icons/done.png');
+
   /// File path: assets/icons/facebook.png
   AssetGenImage get facebook =>
       const AssetGenImage('assets/icons/facebook.png');
@@ -78,6 +81,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/lang.svg
   String get lang => 'assets/icons/lang.svg';
+
+  /// File path: assets/icons/notdone.png
+  AssetGenImage get notdone => const AssetGenImage('assets/icons/notdone.png');
 
   /// File path: assets/icons/note.svg
   String get note => 'assets/icons/note.svg';
@@ -130,6 +136,7 @@ class $AssetsIconsGen {
         cele,
         chart,
         coffeeCup,
+        done,
         facebook,
         google,
         heart,
@@ -137,6 +144,7 @@ class $AssetsIconsGen {
         history,
         info,
         lang,
+        notdone,
         note,
         pencil,
         plus,

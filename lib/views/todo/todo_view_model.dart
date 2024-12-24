@@ -46,7 +46,7 @@ class TodoViewModel extends ChangeNotifier {
     }
   }
 
-  //Function for fetching note from database
+  //Function for fetching notes from database
   Future<void> fetchNote() async {
     if (_data.isEmpty) {
       _startLoading();

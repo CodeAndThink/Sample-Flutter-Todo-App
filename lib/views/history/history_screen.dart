@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/common/views/custom_app_bar.dart';
+import 'package:todo_app/common/views/loading.dart';
+import 'package:todo_app/gen/assets.gen.dart';
+import 'package:todo_app/network/api_provider.dart';
 import 'package:todo_app/views/history/history_view_model.dart';
+import 'package:todo_app/views/history/item/history_section.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -11,26 +16,42 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  final ScrollController _scrollController = ScrollController();
   late HistoryViewModel _vm;
 
   @override
   void initState() {
     super.initState();
-    _vm = HistoryViewModel();
+
+    _vm = HistoryViewModel(ApiProvider.shared);
+
+    _vm.fetchNote();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        top: false,
-        bottom: false,
-        child: Column(
-          children: [
-            _appBar(context),
-          ],
-        ),
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => _vm,
+      builder: (context, child) {
+        return Scaffold(
+          body: SafeArea(
+            top: false,
+            bottom: false,
+            child: Stack(
+              children: [
+                _consumerMainList(context),
+                _appBar(context),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -42,6 +63,107 @@ class _HistoryScreenState extends State<HistoryScreen> {
         action: () {
           Navigator.pop(context);
         });
+  }
+
+//========================================================
+
+//MARK: Consumer - Main List
+
+  Widget _consumerMainList(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenHeight = screenSize.height;
+    final screenWidth = screenSize.width;
+    return Column(
+      children: [
+        SizedBox(
+          height: screenHeight * 0.1 > 96 ? screenHeight * 0.1 : 96,
+        ),
+        Expanded(
+          child: Consumer<HistoryViewModel>(builder: (context, vm, child) {
+            if (vm.isLoading) {
+              return const Loading();
+            } else if (vm.error.isEmpty) {
+              if (vm.filteredData.isNotEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: ListView.builder(
+                      itemCount: vm.filteredData.length,
+                      itemBuilder: (context, index) {
+                        return HistorySection(data: vm.filteredData[index]);
+                      }),
+                );
+              } else {
+                return Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.images.logo.path,
+                        height: 100,
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.textHolder,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      )
+                    ],
+                  ),
+                );
+              }
+            } else if (vm.error.isNotEmpty) {
+              return Center(
+                child: SizedBox(
+                  height: screenHeight * 0.3,
+                  width: screenWidth * 0.8,
+                  child: Column(
+                    children: [
+                      Text(
+                        vm.error,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Provider.of<HistoryViewModel>(context,
+                                    listen: false)
+                                .fetchNote();
+                          },
+                          child: Text(AppLocalizations.of(context)!.reload))
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return Center(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      Assets.images.logo.path,
+                      height: 48,
+                      width: 48,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.textHolder,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    )
+                  ],
+                ),
+              );
+            }
+          }),
+        ),
+      ],
+    );
   }
 
 //========================================================

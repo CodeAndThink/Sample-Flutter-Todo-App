@@ -101,22 +101,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     ),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            const Spacer(),
-                            Text(
-                                '${DateTime.now().month.toString()} - ${DateTime.now().year.toString()}'),
-                            const Spacer(),
-                            IconButton(
-                                onPressed: () {},
-                                icon:
-                                    const Icon(Icons.arrow_back_ios_outlined)),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                    Icons.arrow_forward_ios_outlined)),
-                          ],
-                        ),
+                        Text(
+                            "Data ${DateTime.now().month} - ${DateTime.now().year}"),
                         //MARK: Bar Chart
                         _barChart(context),
                       ],
