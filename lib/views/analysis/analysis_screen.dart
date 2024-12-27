@@ -101,8 +101,13 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     ),
                     child: Column(
                       children: [
-                        Text(
-                            "Data ${DateTime.now().month} - ${DateTime.now().year}"),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            "${AppLocalizations.of(context)!.data_of} ${DateTime.now().month} - ${DateTime.now().year}",
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
                         //MARK: Bar Chart
                         _barChart(context),
                       ],

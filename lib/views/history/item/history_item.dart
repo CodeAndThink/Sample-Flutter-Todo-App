@@ -8,7 +8,7 @@ class HistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox  (
+    return SizedBox(
       child: Padding(
         padding: const EdgeInsets.all(6),
         child: Row(

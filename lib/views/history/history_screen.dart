@@ -17,38 +17,29 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   final ScrollController _scrollController = ScrollController();
-  late HistoryViewModel _vm;
 
   @override
   void initState() {
     super.initState();
-
-    _vm = HistoryViewModel(ApiProvider.shared);
-
-    _vm.fetchNote();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => _vm,
+      create: (context) => HistoryViewModel(ApiProvider.shared),
       builder: (context, child) {
         return Scaffold(
-          body: SafeArea(
-            top: false,
-            bottom: false,
-            child: Stack(
-              children: [
-                _consumerMainList(context),
-                _appBar(context),
-              ],
-            ),
+          body: Stack(
+            children: [
+              _consumerMainList(context),
+              _appBar(context),
+            ],
           ),
         );
       },
@@ -76,7 +67,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Column(
       children: [
         SizedBox(
-          height: screenHeight * 0.1 > 96 ? screenHeight * 0.1 : 96,
+          height: screenHeight * 0.15 > 96 ? screenHeight * 0.15 : 96,
         ),
         Expanded(
           child: Consumer<HistoryViewModel>(builder: (context, vm, child) {
@@ -85,8 +76,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
             } else if (vm.error.isEmpty) {
               if (vm.filteredData.isNotEmpty) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.all(16),
                   child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: vm.filteredData.length,
                       itemBuilder: (context, index) {
                         return HistorySection(data: vm.filteredData[index]);

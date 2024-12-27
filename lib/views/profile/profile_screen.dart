@@ -86,10 +86,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _informationBox(BuildContext context, User data) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenWidth = screenSize.width;
     return Container(
-      width: screenWidth - 16,
+      margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),

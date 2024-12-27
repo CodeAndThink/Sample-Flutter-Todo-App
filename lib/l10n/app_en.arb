@@ -419,5 +419,9 @@
   "notes_total_label": "Notes in Total",
   "@notes_total_label": {
     "description": "The label indicating the total number of notes."
+  },
+  "data_of": "Data of",
+  "@data_of": {
+    "description": "The title of bar chart in Analysis screen"
   }
 }

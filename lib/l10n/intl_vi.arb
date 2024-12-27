@@ -419,5 +419,9 @@
   "notes_total_label": "Tổng số ghi chú",
   "@notes_total_label": {
     "description": "Nhãn chỉ tổng số lượng ghi chú."
+  },
+  "data_of": "Dữ liệu vào thời điểm",
+  "@data_of": {
+    "description": "Tiêu đề của biểu đồ cột trong màn hình phân tích"
   }
 }

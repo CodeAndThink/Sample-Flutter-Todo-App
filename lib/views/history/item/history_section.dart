@@ -13,13 +13,17 @@ class HistorySection extends StatelessWidget {
       Column(
         children: [
           CustomSeparatedPartTitle(title: data.first.date),
-          ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                return HistoryItem(note: data[index]);
-              }),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return HistoryItem(note: data[index]);
+                }),
+          ),
         ],
       ),
     ]);

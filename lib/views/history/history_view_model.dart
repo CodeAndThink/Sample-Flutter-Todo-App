@@ -23,6 +23,7 @@ class HistoryViewModel extends ChangeNotifier {
 
   HistoryViewModel(ApiProvider provider) {
     _provider = provider;
+    fetchNote();
   }
 
   //MARK: Public Methods
@@ -43,7 +44,8 @@ class HistoryViewModel extends ChangeNotifier {
   //Function of filtering data
   void _filterData(List<NoteModel> inputData) {
     var grouped = groupBy(inputData, (NoteModel note) => note.date);
-    _filteredData = grouped.values.toList();
+    var sortedKeys = grouped.keys.toList()..sort();
+    _filteredData = sortedKeys.map((key) => grouped[key]!).toList();
     notifyListeners();
   }
 
