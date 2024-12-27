@@ -364,64 +364,64 @@
   "@settingsButtonTip": {
     "description": "This is tip of setting button"
   },
-  "logout_confirmation_title": "Confirm Logout",
-  "@logout_confirmation_title": {
+  "logoutConfirmationTitle": "Confirm Logout",
+  "@logoutConfirmationTitle": {
     "description": "The title displayed in the logout confirmation dialog."
   },
-  "logout_confirmation_message": "Are you sure you want to log out?",
-  "@logout_confirmation_message": {
+  "logoutConfirmationMessage": "Are you sure you want to log out?",
+  "@logoutConfirmationMessage": {
     "description": "The message asking the user to confirm their intent to log out."
   },
-  "logout_confirmation_cancel": "Cancel",
-  "@logout_confirmation_cancel": {
+  "logoutConfirmationCancel": "Cancel",
+  "@logoutConfirmationCancel": {
     "description": "The label for the button to cancel the logout action."
   },
-  "logout_confirmation_confirm": "Log Out",
-  "@logout_confirmation_confirm": {
+  "logoutConfirmationConfirm": "Log Out",
+  "@logoutConfirmationConfirm": {
     "description": "The label for the button to confirm the logout action."
   },
-  "stats_screen_title": "Statistics",
-  "@stats_screen_title": {
+  "statsScreenTitle": "Statistics",
+  "@statsScreenTitle": {
     "description": "The title for the statistics screen."
   },
-  "history_screen_title": "History",
-  "@history_screen_title": {
+  "historyScreenTitle": "History",
+  "@historyScreenTitle": {
     "description": "The title for the history screen."
   },
-  "total_notes_label": "Total Notes",
-  "@total_notes_label": {
+  "totalNotesLabel": "Total Notes",
+  "@totalNotesLabel": {
     "description": "The label for the total number of notes."
   },
-  "todo_notes_label": "Todo Notes",
-  "@todo_notes_label": {
+  "todoNotesLabel": "Todo Notes",
+  "@todoNotesLabel": {
     "description": "The label for the notes that are still to be done."
   },
-  "done_notes_label": "Done Notes",
-  "@done_notes_label": {
+  "doneNotesLabel": "Done Notes",
+  "@doneNotesLabel": {
     "description": "The label for the notes that have been completed."
   },
-  "pie_chart_todo_label": "Todo",
-  "@pie_chart_todo_label": {
+  "pieChartTodoLabel": "Todo",
+  "@pieChartTodoLabel": {
     "description": "The label for the 'Todo' section in the pie chart."
   },
-  "pie_chart_done_label": "Done",
-  "@pie_chart_done_label": {
+  "pieChartDoneLabel": "Done",
+  "@pieChartDoneLabel": {
     "description": "The label for the 'Done' section in the pie chart."
   },
-  "notes_done_label": "Notes Completed",
-  "@notes_done_label": {
+  "notesDoneLabel": "Notes Completed",
+  "@notesDoneLabel": {
     "description": "The label indicating the notes that have been completed."
   },
-  "notes_todo_label": "Notes to Be Done",
-  "@notes_todo_label": {
+  "notesTodoLabel": "Notes to Be Done",
+  "@notesTodoLabel": {
     "description": "The label indicating the notes that still need to be completed."
   },
-  "notes_total_label": "Notes in Total",
-  "@notes_total_label": {
+  "notesTotalLabel": "Notes in Total",
+  "@notesTotalLabel": {
     "description": "The label indicating the total number of notes."
   },
-  "data_of": "Data of",
-  "@data_of": {
+  "dataOf": "Data of",
+  "@dataOf": {
     "description": "The title of bar chart in Analysis screen"
   }
 }
