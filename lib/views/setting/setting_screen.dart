@@ -77,7 +77,8 @@ class _SettingScreenState extends State<SettingScreen> {
                             return _changeLanguageSwitchListTile(context);
                           } else if (index == 1) {
 //MARK: Change Notification Setting Button
-                            return _changeNotificationSettingSwitchListTile(context);
+                            return _changeNotificationSettingSwitchListTile(
+                                context);
                           }
                           return null;
                         },
@@ -157,7 +158,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Widget _navigateAnalysisScreenListTile(BuildContext context) {
     return ListTile(
-      title: Text(AppLocalizations.of(context)!.stats_screen_title),
+      title: Text(AppLocalizations.of(context)!.statsScreenTitle),
       leading: Image.asset(
         Assets.icons.chart.path,
         height: 24,
@@ -177,7 +178,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Widget _navigateHistoryScreenListTile(BuildContext context) {
     return ListTile(
-      title: Text(AppLocalizations.of(context)!.history_screen_title),
+      title: Text(AppLocalizations.of(context)!.historyScreenTitle),
       leading: Image.asset(
         Assets.icons.history.path,
         height: 24,
@@ -311,14 +312,14 @@ class _SettingScreenState extends State<SettingScreen> {
         Assets.icons.signout,
         height: 24,
         width: 24,
-        colorFilter:
-            const ColorFilter.mode(Configs.deleteActionColor, BlendMode.srcATop),
+        colorFilter: const ColorFilter.mode(
+            Configs.deleteActionColor, BlendMode.srcATop),
       ),
       onTap: () {
         showAlert(
             context,
-            AppLocalizations.of(context)!.logout_confirmation_title,
-            AppLocalizations.of(context)!.logout_confirmation_message,
+            AppLocalizations.of(context)!.logoutConfirmationTitle,
+            AppLocalizations.of(context)!.logoutConfirmationMessage,
             () {
               Provider.of<SettingViewModel>(context, listen: false).signout();
               Navigator.pushAndRemoveUntil(
@@ -327,11 +328,11 @@ class _SettingScreenState extends State<SettingScreen> {
                 (route) => false,
               );
             },
-            AppLocalizations.of(context)!.logout_confirmation_confirm,
+            AppLocalizations.of(context)!.logoutConfirmationConfirm,
             () {
               Navigator.pop(context);
             },
-            AppLocalizations.of(context)!.logout_confirmation_cancel);
+            AppLocalizations.of(context)!.logoutConfirmationCancel);
       },
     );
   }

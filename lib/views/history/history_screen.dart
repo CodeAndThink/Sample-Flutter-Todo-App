@@ -50,7 +50,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   Widget _appBar(BuildContext context) {
     return CustomAppBar(
-        title: AppLocalizations.of(context)!.history_screen_title,
+        title: AppLocalizations.of(context)!.historyScreenTitle,
         action: () {
           Navigator.pop(context);
         });

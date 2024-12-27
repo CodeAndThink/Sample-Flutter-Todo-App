@@ -104,7 +104,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         Container(
                           margin: const EdgeInsets.only(bottom: 8),
                           child: Text(
-                            "${AppLocalizations.of(context)!.data_of} ${DateTime.now().month} - ${DateTime.now().year}",
+                            "${AppLocalizations.of(context)!.dataOf} ${DateTime.now().month} - ${DateTime.now().year}",
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
@@ -124,7 +124,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
   Widget _appBar(BuildContext context) {
     return CustomAppBar(
-        title: AppLocalizations.of(context)!.stats_screen_title,
+        title: AppLocalizations.of(context)!.statsScreenTitle,
         action: () {
           Navigator.pop(context);
         });
@@ -180,7 +180,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        AppLocalizations.of(context)!.pie_chart_done_label,
+                        AppLocalizations.of(context)!.pieChartDoneLabel,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
@@ -194,7 +194,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       const SizedBox(width: 8),
-                      Text(AppLocalizations.of(context)!.pie_chart_todo_label,
+                      Text(AppLocalizations.of(context)!.pieChartTodoLabel,
                           style: Theme.of(context).textTheme.headlineSmall),
                     ],
                   ),
@@ -231,7 +231,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           child: Container(
             padding: const EdgeInsets.only(left: 16),
             child: Text(
-              AppLocalizations.of(context)!.notes_done_label,
+              AppLocalizations.of(context)!.notesDoneLabel,
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
@@ -252,7 +252,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         Container(
           padding: const EdgeInsets.only(left: 16),
           width: screenWidth * 0.4,
-          child: Text(AppLocalizations.of(context)!.notes_todo_label,
+          child: Text(AppLocalizations.of(context)!.notesTodoLabel,
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall
@@ -274,7 +274,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           width: screenWidth * 0.4,
           child: Container(
             padding: const EdgeInsets.only(left: 16),
-            child: Text(AppLocalizations.of(context)!.notes_total_label,
+            child: Text(AppLocalizations.of(context)!.notesTotalLabel,
                 style: Theme.of(context).textTheme.headlineSmall,
                 overflow: TextOverflow.clip),
           ),
